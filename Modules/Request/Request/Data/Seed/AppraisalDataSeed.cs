@@ -1,0 +1,13 @@
+namespace Request.Data.Seed;
+
+public class RequestDataSeed(RequestDbContext context) : IDataSeeder
+{
+    public async Task SeedAllAsync()
+    {
+        if (!await context.Requests.AnyAsync())
+        {
+            await context.Requests.AddRangeAsync(InitialData.Requests);
+            await context.SaveChangesAsync();
+        }
+    }
+}

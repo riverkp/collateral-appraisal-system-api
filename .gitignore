@@ -1,0 +1,71 @@
+# -------------------------------------
+# .NET Core / ASP.NET Core
+# -------------------------------------
+bin/
+obj/
+out/
+[Ll]og/
+
+# macOS system files
+.DS_Store
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio
+.vs/
+.vsconfig
+
+# Rider
+.idea/
+*.sln.iml
+
+# VS Code
+.vscode/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Environment files
+.env
+.env.*
+
+# NuGet
+*.nupkg
+*.snupkg
+*.nuspec
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Publish output
+wwwroot/dist/
+wwwroot/node_modules/
+node_modules/
+dist/
+TestResults/
+
+# ReSharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Backup & misc
+*.bak
+*.old
+*.orig
+*.swp
+*.tmp
+*.tmp.*
+
+# -------------------------------------
+# Docker (keep Dockerfile & docker-compose.yml)
+# -------------------------------------
+.dockerignore
+**/.docker/         # Only ignore custom internal docker folders, not Dockerfile
+
+# Optional: ignore generated Docker volume folders (if any)
+docker-volumes/

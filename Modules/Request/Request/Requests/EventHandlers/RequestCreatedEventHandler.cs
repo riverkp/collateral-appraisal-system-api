@@ -1,0 +1,23 @@
+using MassTransit;
+using Microsoft.Extensions.Logging;
+using Shared.Messaging.Events;
+
+namespace Request.Requests.EventHandlers;
+
+public class RequestCreatedEventHandler(ILogger<RequestCreatedEventHandler> logger, IBus bus)
+    : INotificationHandler<RequestCreatedEvent>
+{
+    public async Task Handle(RequestCreatedEvent notification, CancellationToken cancellationToken)
+    {
+        logger.LogInformation("Domain Event handled: {DomainEvent}", notification.GetType().Name);
+
+        var integrationEvent = new RequestCreatedIntegrationEvent
+        {
+            RequestId = notification.Request.Id,
+            Purpose = notification.Request.Purpose,
+            Channel = notification.Request.Channel
+        };
+
+        await bus.Publish(integrationEvent, cancellationToken);
+    }
+}

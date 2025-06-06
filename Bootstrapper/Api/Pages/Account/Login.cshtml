@@ -3,245 +3,58 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, width=device-width">
 
-    <link rel="stylesheet" href="index.css"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"/>
+    <link rel="stylesheet" href="~/css/login.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" />
 
-    <style>
-        .left-icon {
-            flex: 1;
-            max-width: 100%;
-            overflow: hidden;
-            height: 1117px;
-            object-fit: cover;
-            z-index: 0;
-        }
-
-        .logo-icon {
-            width: 250px;
-            position: relative;
-            height: 60px;
-            overflow: hidden;
-            flex-shrink: 0;
-            object-fit: cover;
-        }
-
-        .collateral-appraisal {
-            margin: 0;
-        }
-
-        .collateral-appraisal-system-container {
-            align-self: stretch;
-            position: relative;
-            font-size: 24px;
-            font-weight: 500;
-            color: #68b7be;
-        }
-
-        .input-child {
-            position: absolute;
-            width: 100.16%;
-            top: 21.75px;
-            right: -0.08%;
-            left: -0.08%;
-            border-radius: 4px;
-            border: 0.5px solid #d2d2d2;
-            box-sizing: border-box;
-            height: 36.5px;
-        }
-
-        .label {
-            position: relative;
-        }
-
-        .div {
-            position: relative;
-            color: #e63946;
-        }
-
-        .label-parent {
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            width: 87px;
-            height: 14px;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 2px;
-        }
-
-        .input {
-            width: 320px;
-            position: relative;
-            height: 58px;
-            text-align: left;
-        }
-
-        .radiocheckbox-child {
-            width: 18px;
-            position: relative;
-            border-radius: 50%;
-            background-color: #e6e6e6;
-            height: 18px;
-        }
-
-        .radiocheckbox {
-            width: 136px;
-            border-radius: 40px;
-            background-color: #fff;
-            border: 1px solid rgba(0, 0, 0, 0.15);
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 8px;
-            gap: 16px;
-            min-width: 88px;
-        }
-
-        .remember-me {
-            align-self: stretch;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: flex-start;
-            text-align: left;
-            color: #000;
-        }
-
-        .login-child {
-            position: absolute;
-            width: 100%;
-            top: 0px;
-            right: 0px;
-            left: 0px;
-            background-color: #68b7be;
-            height: 48px;
-        }
-
-        .button {
-            position: absolute;
-            top: calc(50% - 8px);
-            left: calc(50% - 20px);
-            letter-spacing: 0.01em;
-            text-transform: uppercase;
-            font-weight: 500;
-        }
-
-        .login1 {
-            width: 320px;
-            position: relative;
-            border-radius: 4px;
-            height: 48px;
-            overflow: hidden;
-            flex-shrink: 0;
-            font-size: 14px;
-            color: #f7f7f7;
-        }
-
-        .secure-access-unauthorized {
-            align-self: stretch;
-            position: relative;
-            color: #e63946;
-        }
-
-        .form {
-            margin: 0 !important;
-            position: absolute;
-            top: 314px;
-            left: 672px;
-            box-shadow: 0px 1px 4px rgba(12, 12, 13, 0.05);
-            border-radius: 16px;
-            background-color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 64px 32px;
-            gap: 16px;
-            z-index: 1;
-        }
-
-        .left-parent {
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            width: 1728px;
-            height: 1117px;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            gap: 0px;
-        }
-
-        .login {
-            width: 100%;
-            position: relative;
-            background-color: #fff;
-            height: 1117px;
-            overflow: hidden;
-            text-align: center;
-            font-size: 12px;
-            color: #383838;
-            font-family: Roboto;
-        }
-
-
-    </style>
+    <title>Login</title>
 </head>
+
 <body>
-
-<div class="login">
-    <div class="left-parent">
-        <img class="left-icon" alt="" src="Left.png">
-
-        <div class="form">
-            <img class="logo-icon" alt="" src="Logo.png">
-
-            <div class="collateral-appraisal-system-container">
-                <p class="collateral-appraisal">COLLATERAL APPRAISAL </p>
-                <p class="collateral-appraisal">SYSTEM</p>
+    <div class="login">
+        <div class="login-container">
+            <div class="left-bg-container">
+                <img class="left-bg" alt="Background image" src="~/images/login-bg.png">
             </div>
-            <div class="input">
-                <div class="input-child">
-                </div>
-                <div class="label-parent">
-                    <div class="label">Username</div>
-                    <div class="div">*</div>
-                </div>
-            </div>
-            <div class="input">
-                <div class="input-child">
-                </div>
-                <div class="label-parent">
-                    <div class="label">Password</div>
-                    <div class="div">*</div>
-                </div>
-            </div>
-            <div class="remember-me">
-                <div class="radiocheckbox">
-                    <div class="radiocheckbox-child">
+            <div class="form-container">
+                <form method="post">
+                    <img class="logo-icon" alt="LH Bank logo" src="@Url.Content("/images/logo-lh-bank.svg")">
+                    <div class="collateral-appraisal-system-container">
+                        <h1 class="collateral-appraisal">COLLATERAL APPRAISAL SYSTEM</h1>
                     </div>
-                    <div class="label">Remember me</div>
-                </div>
+                    <div class="input-container">
+                        <label class="input-label" for="name">
+                            Username
+                        </label>
+                        <input class="text-input" type="text" id="name">
+                    </div>
+                    <div class="input-container">
+                        <label class="input-label" for="password">
+                            Password
+                        </label>
+                        <input class="text-input" type="password" id="password">
+                    </div>
+                    <div class="remember-me-container">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember-me">
+                            <label for="remember-me" class="circle-label"></label>
+                            <label for="remember-me" class="remember-me-text">Remember me</label>
+                        </div>
+                    </div>
+                    <div class="login-button-container">
+                        <button type="submit" class="login-button">Login</button>
+                    </div>
+                    <div class="secure-access-unauthorized">* Secure access. Unauthorized use is prohibited and
+                        monitored.
+                    </div>
+                </form>
             </div>
-            <div class="login1">
-                <div class="login-child">
-                </div>
-                <div class="button">Login</div>
-            </div>
-            <div class="secure-access-unauthorized">* Secure access. Unauthorized use is prohibited and monitored.</div>
         </div>
     </div>
-</div>
-
-
 </body>
+
 </html>

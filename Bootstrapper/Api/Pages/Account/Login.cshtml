@@ -2,7 +2,7 @@
 @model Api.Pages.Account.Login
 
 <!DOCTYPE html>
-<html>
+<html lang="en" xml:lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -18,40 +18,44 @@
     <div class="login">
         <div class="login-container">
             <div class="left-bg-container">
-                <img class="left-bg" alt="Background image" src="~/images/login-bg.png">
+                <img class="left-bg" alt="Background" src="~/images/login-bg.png">
             </div>
             <div class="form-container">
-                <form method="post">
-                    <img class="logo-icon" alt="LH Bank logo" src="@Url.Content("/images/logo-lh-bank.svg")">
+                <div class="">
+                    <img class="logo-icon" alt="LH Bank logo" src="@Url.Content(" /images/logo-lh-bank.svg")">
                     <div class="collateral-appraisal-system-container">
                         <h1 class="collateral-appraisal">COLLATERAL APPRAISAL SYSTEM</h1>
                     </div>
-                    <div class="input-container">
-                        <label class="input-label" for="name">
-                            Username
-                        </label>
-                        <input class="text-input" type="text" id="name">
-                    </div>
-                    <div class="input-container">
-                        <label class="input-label" for="password">
-                            Password
-                        </label>
-                        <input class="text-input" type="password" id="password">
-                    </div>
-                    <div class="remember-me-container">
-                        <div class="remember-me">
-                            <input type="checkbox" id="remember-me">
-                            <label for="remember-me" class="circle-label"></label>
-                            <label for="remember-me" class="remember-me-text">Remember me</label>
+                    <form method="post">
+                        <div class="input-container">
+                            <label class="input-label" for="name">
+                                Username
+                            </label>
+                            <input class="text-input" type="text" id="name">
                         </div>
-                    </div>
-                    <div class="login-button-container">
-                        <button type="submit" class="login-button">Login</button>
-                    </div>
-                    <div class="secure-access-unauthorized">* Secure access. Unauthorized use is prohibited and
-                        monitored.
-                    </div>
-                </form>
+                        <div class="input-container">
+                            <label class="input-label" for="password">
+                                Password
+                            </label>
+                            <input class="text-input" type="password" id="password">
+                        </div>
+                        <div class="remember-me-container">
+                            <div class="remember-me">
+                                <input type="checkbox" id="remember-me">
+                                <label for="remember-me" class="circle-label" aria-label="Remember me"></label>
+                                <label for="remember-me" class="remember-me-text">Remember</label>
+                            </div>
+                        </div>
+                        <div class="login-button-container">
+                            <button type="submit" class="login-button">Login</button>
+                        </div>
+                        <div class="secure-access-unauthorized">
+                            <p>
+                                Secure access. Unauthorized use is prohibited and monitored.
+                            </p>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

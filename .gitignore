@@ -69,3 +69,5 @@ _ReSharper*/
 
 # Optional: ignore generated Docker volume folders (if any)
 docker-volumes/
+
+*.css.map

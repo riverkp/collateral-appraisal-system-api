@@ -16,6 +16,11 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\Shared\Shared\Shared.csproj"/>
+        <ProjectReference Include="..\OAuth2OpenId\OAuth2OpenId.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Auth\Features\Logout\"/>
     </ItemGroup>
 
 </Project>

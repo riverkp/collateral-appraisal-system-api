@@ -71,3 +71,4 @@ volumes:
   sql_data:
   seq_data:
   rabbitmq_data:
+

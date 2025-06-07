@@ -1,0 +1,33 @@
+name: .NET CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  dotnet-ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.x'
+
+      - name: Restore
+        run: dotnet restore collateral-appraisal-system-api.sln
+
+      - name: Lint (dotnet format)
+        run: dotnet format --verify-no-changes
+        continue-on-error: true # Don't fail pipeline if just formatting
+
+      - name: Build
+        run: dotnet build collateral-appraisal-system-api.sln --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test collateral-appraisal-system-api.sln --no-restore --verbosity normal

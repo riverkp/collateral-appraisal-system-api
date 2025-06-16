@@ -13,9 +13,7 @@ public class RequestCreatedEventHandler(ILogger<RequestCreatedEventHandler> logg
 
         var integrationEvent = new RequestCreatedIntegrationEvent
         {
-            RequestId = notification.Request.Id,
-            Purpose = notification.Request.Purpose,
-            Channel = notification.Request.Channel
+            RequestId = notification.Request.Id
         };
 
         await bus.Publish(integrationEvent, cancellationToken);

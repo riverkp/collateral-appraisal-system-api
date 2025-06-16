@@ -1,7 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using OAuth2OpenId.Identity.Models;
-
 namespace OAuth2OpenId.Data.Configurations;
 
 public class RolePermissionConfiguration : IEntityTypeConfiguration<RolePermission>

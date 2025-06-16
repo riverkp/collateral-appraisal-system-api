@@ -8,35 +8,53 @@ namespace Shared.Exceptions.Handler;
 
 public class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger) : IExceptionHandler
 {
-    public async ValueTask<bool> TryHandleAsync(HttpContext context, Exception exception, CancellationToken cancellationToken)
+    public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception,
+        CancellationToken cancellationToken)
     {
         logger.LogError("An error occurred: {Message} {Time}", exception.Message, DateTime.UtcNow);
 
-        (string Detail, string Title, int StatusCode) = exception switch
+        var (detail, title, statusCode) = exception switch
         {
-            InternalServerException => (exception.Message, exception.GetType().Name, StatusCodes.Status500InternalServerError),
-            ValidationException => (exception.Message, exception.GetType().Name, StatusCodes.Status400BadRequest),
-            BadRequestException => (exception.Message, exception.GetType().Name, StatusCodes.Status400BadRequest),
-            NotFoundException => (exception.Message, exception.GetType().Name, StatusCodes.Status404NotFound),
-            _ => (exception.Message, exception.GetType().Name, StatusCodes.Status500InternalServerError)
+            BadRequestException =>
+            (
+                exception.Message,
+                exception.GetType().Name,
+                httpContext.Response.StatusCode = StatusCodes.Status400BadRequest
+            ),
+            ValidationException =>
+            (
+                exception.Message,
+                exception.GetType().Name,
+                httpContext.Response.StatusCode = StatusCodes.Status400BadRequest
+            ),
+            NotFoundException =>
+            (
+                exception.Message,
+                exception.GetType().Name,
+                httpContext.Response.StatusCode = StatusCodes.Status404NotFound
+            ),
+            _ =>
+            (
+                exception.Message,
+                exception.GetType().Name,
+                httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError
+            )
         };
 
         var problemDetails = new ProblemDetails
         {
-            Detail = Detail,
-            Title = Title,
-            Status = StatusCode,
-            Instance = context.Request.Path
+            Detail = detail,
+            Title = title,
+            Status = statusCode,
+            Instance = httpContext.Request.Path
         };
 
-        problemDetails.Extensions.Add("traceId", context.TraceIdentifier);
+        problemDetails.Extensions.Add("traceId", httpContext.TraceIdentifier);
 
         if (exception is ValidationException validationException)
-        {
             problemDetails.Extensions.Add("ValidationErrors", validationException.Errors);
-        }
 
-        await context.Response.WriteAsJsonAsync(problemDetails, cancellationToken: cancellationToken);
+        await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
         return true;
     }
 }

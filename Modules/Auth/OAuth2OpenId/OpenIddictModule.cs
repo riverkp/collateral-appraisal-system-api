@@ -1,15 +1,7 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OAuth2OpenId.Data;
-using OAuth2OpenId.Data.Seed;
-using OAuth2OpenId.Identity.Models;
-using OAuth2OpenId.Pages.Account;
-using OpenIddict.Abstractions;
-using Shared.Data;
-using Shared.Data.Seed;
+using Shared.Data.Extensions;
 
 namespace OAuth2OpenId;
 
@@ -83,10 +75,7 @@ public static class OpenIddictModule
 
     public static IApplicationBuilder UseOpenIddictModule(this IApplicationBuilder app)
     {
-        // Configure your module's middleware here
-        // For example:
-        // app.UseMiddleware<YourMiddleware>();
-
+        // Configure your module's middleware here,
         app.UseMigration<OpenIddictDbContext>();
 
         return app;

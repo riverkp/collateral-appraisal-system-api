@@ -1,17 +1,8 @@
-using System;
-using System.Reflection;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using OAuth2OpenId.Identity.Models;
-
 namespace OAuth2OpenId.Data;
 
-public class OpenIddictDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
+public class OpenIddictDbContext(DbContextOptions<OpenIddictDbContext> options)
+    : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>(options)
 {
-    public OpenIddictDbContext(DbContextOptions<OpenIddictDbContext> options) : base(options)
-    {
-    }
-
     public DbSet<UserPermission> UserPermissions => Set<UserPermission>();
     public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
 
@@ -19,6 +10,9 @@ public class OpenIddictDbContext : IdentityDbContext<ApplicationUser, Applicatio
     {
         // Configure the default schema for the database
         builder.HasDefaultSchema("auth");
+
+        // Apply global conventions for the model
+        builder.ApplyGlobalConventions();
 
         // Apply configurations from the current assembly
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

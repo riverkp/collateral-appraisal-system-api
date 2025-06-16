@@ -19,3 +19,6 @@ global using Microsoft.AspNetCore.Routing;
 global using FluentValidation;
 global using Request.Requests.Exceptions;
 global using Request.Contracts.Requests.Features.GetRequestById;
+global using Request.Requests.ValueObjects;
+global using System.Text.Json.Serialization;
+global using Shared.Data.Extensions;

@@ -1,5 +1,3 @@
-using System;
-
 namespace OAuth2OpenId.Identity.Models;
 
 public class UserPermission

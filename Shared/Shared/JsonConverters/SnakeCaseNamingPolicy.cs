@@ -10,7 +10,7 @@ public class SnakeCaseNamingPolicy : JsonNamingPolicy
         return Regex.Replace(
             name,
             @"([a-z0-9])([A-Z])",
-            "$1_$2"
+            "$1_$2", RegexOptions.NonBacktracking
         ).ToLower();
     }
 }

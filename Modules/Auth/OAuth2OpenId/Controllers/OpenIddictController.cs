@@ -1,12 +1,7 @@
-using System;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
-using OpenIddict.Abstractions;
 using OpenIddict.Server.AspNetCore;
-using OpenIddictConstants = OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace OAuth2OpenId.Controllers;
 
@@ -18,7 +13,7 @@ public class OpenIddictController : Controller
         var request = HttpContext.GetOpenIddictServerRequest();
 
         if (HttpContext.User.Identity?.IsAuthenticated != true)
-            // Not logged in → redirect to login UI with returnUrl
+            // Not logged in → redirect to log in UI with returnUrl
             return Redirect(
                 $"/Account/Login?ReturnUrl={Uri.EscapeDataString(HttpContext.Request.Path + HttpContext.Request.QueryString)}");
 

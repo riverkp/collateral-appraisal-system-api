@@ -1,5 +1,4 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Request.Data.JsonConverters;
 
@@ -10,7 +9,7 @@ public class RequestCustomerConverter : JsonConverter<RequestCustomer>
         var jsonDocument = JsonDocument.ParseValue(ref reader);
         var root = jsonDocument.RootElement;
 
-        var id = root.GetProperty("id").GetGuid();
+        var id = root.GetProperty("id").GetInt64();
         var name = root.GetProperty("name").GetString() ?? throw new JsonException("Name is required.");
         var email = root.GetProperty("email").GetString() ?? throw new JsonException("Email is required.");
 
@@ -23,7 +22,7 @@ public class RequestCustomerConverter : JsonConverter<RequestCustomer>
 
         writer.WriteString("id", value.Id.ToString());
         writer.WriteString("name", value.Name);
-        writer.WriteString("email", value.Email);
+        writer.WriteString("contactNumber", value.ContactNumber);
 
         writer.WriteEndObject();
     }

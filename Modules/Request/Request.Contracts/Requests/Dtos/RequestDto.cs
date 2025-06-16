@@ -1,8 +1,8 @@
 namespace Request.Contracts.Requests.Dtos;
 
-public record RequestDto
-(
-    Guid Id,
-    string Purpose,
-    string Channel
+public record RequestDto(
+    long Id,
+    string AppraisalNo,
+    string Status,
+    RequestDetailDto Detail
 );

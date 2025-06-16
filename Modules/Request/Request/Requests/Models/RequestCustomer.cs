@@ -1,32 +1,31 @@
-using System.Text.Json.Serialization;
-
 namespace Request.Requests.Models;
 
-public class RequestCustomer : Entity<Guid>
+public class RequestCustomer : Entity<long>
 {
-    public string Name { get; private set; } = default!;
-    public string Email { get; private set; } = default!;
-
-    public RequestCustomer(string name, string email)
+    public RequestCustomer(string name, string contactNumber)
     {
         Name = name;
-        Email = email;
+        ContactNumber = contactNumber;
     }
 
     [JsonConstructor]
-    public RequestCustomer(Guid id, string name, string email)
+    public RequestCustomer(long id, string name, string contactNumber)
     {
         Id = id;
         Name = name;
-        Email = email;
+        ContactNumber = contactNumber;
     }
 
-    public void Update(string name, string email)
+    public long RequestId { get; private set; }
+    public string Name { get; private set; }
+    public string ContactNumber { get; private set; }
+
+    public void Update(string name, string contactNumber)
     {
         ArgumentException.ThrowIfNullOrEmpty(name);
-        ArgumentException.ThrowIfNullOrEmpty(email);
+        ArgumentException.ThrowIfNullOrEmpty(contactNumber);
 
         Name = name;
-        Email = email;
+        ContactNumber = contactNumber;
     }
 }

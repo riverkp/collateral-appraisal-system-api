@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Data.Seed;
 
-namespace Shared.Data;
+namespace Shared.Data.Extensions;
 
-public static class Extension
+public static class MigrationExtension
 {
     public static IApplicationBuilder UseMigration<TContext>(this IApplicationBuilder app) where TContext : DbContext
     {

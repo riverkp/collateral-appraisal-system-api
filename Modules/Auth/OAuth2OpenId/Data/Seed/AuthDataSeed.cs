@@ -1,10 +1,3 @@
-using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using OAuth2OpenId.Identity.Models;
-using OpenIddict.Abstractions;
-using Shared.Data.Seed;
-
 namespace OAuth2OpenId.Data.Seed;
 
 public class AuthDataSeed(UserManager<ApplicationUser> userManager, IOpenIddictApplicationManager manager) : IDataSeeder

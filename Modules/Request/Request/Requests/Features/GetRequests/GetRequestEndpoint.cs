@@ -7,7 +7,7 @@ public class GetRequestEndpoint : ICarterModule
         app.MapGet("/requests", async (ISender sender) =>
             {
                 var result = await sender.Send(new GetRequestQuery());
-                return Results.Ok(result);
+                return Results.Ok(result.Requests);
             })
             .WithName("GetRequest")
             .Produces<GetRequestResult>()

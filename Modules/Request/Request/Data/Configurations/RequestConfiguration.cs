@@ -69,6 +69,16 @@ public class RequestConfiguration : IEntityTypeConfiguration<Requests.Models.Req
             });
         });
 
-        builder.HasMany(p => p.Customers).WithOne().HasForeignKey(p => p.RequestId).OnDelete(DeleteBehavior.Cascade);
+        builder.OwnsMany(p => p.Customers, customer =>
+        {
+            customer.ToTable("RequestCustomers");
+            customer.WithOwner().HasForeignKey("RequestId");
+
+            customer.Property<long>("CustomerId");
+            customer.HasKey("CustomerId");
+
+            customer.Property(p => p.Name).HasMaxLength(80).HasColumnName("Name");
+            customer.Property(p => p.ContactNumber).HasColumnType("varchar").HasMaxLength(20).HasColumnName("ContactNumber");
+        });
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Request.Data;
 
@@ -11,9 +12,11 @@ using Request.Data;
 namespace Request.Data.Migrations
 {
     [DbContext(typeof(RequestDbContext))]
-    partial class RequestDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250620074552_CustomerModelDeletion")]
+    partial class CustomerModelDeletion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,7 +77,7 @@ namespace Request.Data.Migrations
                             b1.Property<string>("ContactNumber")
                                 .IsRequired()
                                 .HasMaxLength(20)
-                                .HasColumnType("varchar")
+                                .HasColumnType("nvarchar(20)")
                                 .HasColumnName("ContactNumber");
 
                             b1.Property<string>("Name")

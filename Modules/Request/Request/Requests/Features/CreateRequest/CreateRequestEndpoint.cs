@@ -1,8 +1,6 @@
-using RequestDto = Request.Contracts.Requests.Dtos.RequestDto;
+using CreateRequestRequest = Request.Contracts.Requests.Dtos.RequestDto;
 
 namespace Request.Requests.Features.CreateRequest;
-
-public record CreateRequestRequest(RequestDto Request);
 
 public record CreateRequestResponse(long Id);
 

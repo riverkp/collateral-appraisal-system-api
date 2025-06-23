@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Request.Data;
 
@@ -11,9 +12,11 @@ using Request.Data;
 namespace Request.Data.Migrations
 {
     [DbContext(typeof(RequestDbContext))]
-    partial class RequestDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250623042254_InitialByMe1")]
+    partial class InitialByMe1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -378,7 +381,7 @@ namespace Request.Data.Migrations
 
                             b1.HasIndex("RequestId");
 
-                            b1.ToTable("RequestPropertys", "request");
+                            b1.ToTable("RequestProperties", "request");
 
                             b1.WithOwner()
                                 .HasForeignKey("RequestId");

@@ -13,7 +13,7 @@ public class CachedRequestRepository(IRequestRepository repository, IDistributed
         Converters =
         {
             new RequestConverter(),
-            new RequestCustomerConverter()
+            //new RequestCustomerConverter()
         }
     };
 

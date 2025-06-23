@@ -1,6 +1,8 @@
+using UpdateRequestRequest = Request.Contracts.Requests.Dtos.RequestDto;
+
 namespace Request.Requests.Features.UpdateRequest;
 
-public record UpdateRequestRequest(RequestDto Request);
+//public record UpdateRequestRequest(RequestDto Request);
 
 public record UpdateRequestResponse(bool IsSuccess);
 

@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
 namespace Request.Data.Configurations;
 
 public class RequestConfiguration : IEntityTypeConfiguration<Requests.Models.Request>
@@ -69,6 +71,30 @@ public class RequestConfiguration : IEntityTypeConfiguration<Requests.Models.Req
             });
         });
 
-        builder.HasMany(p => p.Customers).WithOne().HasForeignKey(p => p.RequestId).OnDelete(DeleteBehavior.Cascade);
+        //builder.HasMany(p => p.Customers).WithOne().HasForeignKey(p => p.RequestId).OnDelete(DeleteBehavior.Cascade);
+        builder.OwnsMany(p => p.Customers, customer =>
+        {
+            customer.WithOwner().HasForeignKey("RequestId");
+            customer.ToTable("RequestCustomers");
+
+            customer.Property<long>("CustomerId");
+            customer.HasKey("CustomerId");
+
+            customer.Property(p => p.CustName).HasMaxLength(80).HasColumnName("Name");
+            customer.Property(p => p.ContactNo).HasColumnType("varchar").HasMaxLength(20).HasColumnName("ContactNumber");
+        });
+
+        builder.OwnsMany(p => p.Property, property =>
+        {
+            property.WithOwner().HasForeignKey("RequestId");
+            property.ToTable("RequestPropertys");
+
+            property.Property<long>("PropertyId");
+            property.HasKey("PropertyId");
+
+            property.Property(p => p.PropertyType).HasColumnType("varchar").HasMaxLength(10).HasColumnName("PropertyType");
+            property.Property(p => p.BuildingType).HasColumnType("varchar").HasMaxLength(10).HasColumnName("BuildingType");
+            property.Property(p => p.SellingPrice).HasColumnType("decimal(19,4)").HasColumnName("SellingPrice");
+        });
     }
 }

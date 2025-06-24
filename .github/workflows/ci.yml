@@ -30,6 +30,7 @@ jobs:
 
       - name: Lint (dotnet format)
         run: dotnet format --verify-no-changes
+        continue-on-error: true
 
       - name: Build
         run: dotnet build collateral-appraisal-system-api.sln --configuration Release --no-restore

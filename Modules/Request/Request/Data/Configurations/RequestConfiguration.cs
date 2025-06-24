@@ -73,14 +73,14 @@ public class RequestConfiguration : IEntityTypeConfiguration<Requests.Models.Req
 
         builder.OwnsMany(p => p.Customers, customer =>
         {
-            customer.WithOwner().HasForeignKey("RequestId");
             customer.ToTable("RequestCustomers");
+            customer.WithOwner().HasForeignKey("RequestId");
 
             customer.Property<long>("CustomerId");
             customer.HasKey("CustomerId");
 
-            customer.Property(p => p.CustName).HasMaxLength(80).HasColumnName("Name");
-            customer.Property(p => p.ContactNo).HasColumnType("varchar").HasMaxLength(20).HasColumnName("ContactNumber");
+            customer.Property(p => p.Name).HasMaxLength(80).HasColumnName("Name");
+            customer.Property(p => p.ContactNumber).HasColumnType("varchar").HasMaxLength(20).HasColumnName("ContactNumber");
         });
 
         builder.OwnsMany(p => p.Property, property =>

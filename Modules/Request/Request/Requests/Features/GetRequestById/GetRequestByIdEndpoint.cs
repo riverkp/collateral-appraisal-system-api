@@ -12,7 +12,7 @@ public class GetRequestByIdEndpoint : ICarterModule
             {
                 var result = await sender.Send(new GetRequestByIdQuery(id));
 
-                return Results.Ok(result);
+                return Results.Ok(result.Request);
             })
             .WithName("GetRequestById")
             .Produces<GetRequestByIdResponse>()

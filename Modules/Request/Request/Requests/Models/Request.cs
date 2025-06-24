@@ -3,6 +3,7 @@ namespace Request.Requests.Models;
 public class Request : Aggregate<long>
 {
     private readonly List<RequestCustomer> _customers = [];
+    private readonly List<RequestProperty> _property = [];
 
     private Request()
     {
@@ -21,6 +22,7 @@ public class Request : Aggregate<long>
     public string Status { get; private set; } = default!;
     public RequestDetail Detail { get; private set; } = default!;
     public IReadOnlyList<RequestCustomer> Customers => _customers.AsReadOnly();
+    public IReadOnlyList<RequestProperty> Property => _property.AsReadOnly();
 
     // Method
     public static Request From(RequestDetail detail)
@@ -99,5 +101,12 @@ public class Request : Aggregate<long>
         ArgumentNullException.ThrowIfNull(customer);
 
         _customers.Add(customer);
+    }
+
+    public void AddProperty(RequestProperty property)
+    {
+        ArgumentNullException.ThrowIfNull(property);
+
+        _property.Add(property);
     }
 }

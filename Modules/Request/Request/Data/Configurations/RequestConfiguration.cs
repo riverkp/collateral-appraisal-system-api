@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
 namespace Request.Data.Configurations;
 
 public class RequestConfiguration : IEntityTypeConfiguration<Requests.Models.Request>
@@ -79,6 +81,19 @@ public class RequestConfiguration : IEntityTypeConfiguration<Requests.Models.Req
 
             customer.Property(p => p.Name).HasMaxLength(80).HasColumnName("Name");
             customer.Property(p => p.ContactNumber).HasColumnType("varchar").HasMaxLength(20).HasColumnName("ContactNumber");
+        });
+
+        builder.OwnsMany(p => p.Property, property =>
+        {
+            property.WithOwner().HasForeignKey("RequestId");
+            property.ToTable("RequestProperties");
+
+            property.Property<long>("PropertyId");
+            property.HasKey("PropertyId");
+
+            property.Property(p => p.PropertyType).HasColumnType("varchar").HasMaxLength(10).HasColumnName("PropertyType");
+            property.Property(p => p.BuildingType).HasColumnType("varchar").HasMaxLength(10).HasColumnName("BuildingType");
+            property.Property(p => p.SellingPrice).HasColumnType("decimal(19,4)").HasColumnName("SellingPrice");
         });
     }
 }

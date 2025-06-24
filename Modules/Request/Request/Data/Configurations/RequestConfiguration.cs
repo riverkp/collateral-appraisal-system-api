@@ -71,7 +71,6 @@ public class RequestConfiguration : IEntityTypeConfiguration<Requests.Models.Req
             });
         });
 
-        //builder.HasMany(p => p.Customers).WithOne().HasForeignKey(p => p.RequestId).OnDelete(DeleteBehavior.Cascade);
         builder.OwnsMany(p => p.Customers, customer =>
         {
             customer.WithOwner().HasForeignKey("RequestId");
@@ -87,7 +86,7 @@ public class RequestConfiguration : IEntityTypeConfiguration<Requests.Models.Req
         builder.OwnsMany(p => p.Property, property =>
         {
             property.WithOwner().HasForeignKey("RequestId");
-            property.ToTable("RequestPropertys");
+            property.ToTable("RequestProperties");
 
             property.Property<long>("PropertyId");
             property.HasKey("PropertyId");

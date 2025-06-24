@@ -100,9 +100,6 @@ public class Request : Aggregate<long>
     {
         ArgumentNullException.ThrowIfNull(customer);
 
-        // if (_customers.Any(c => c.Id == customer.Id))
-        //     throw new InvalidOperationException("Customer already exists in the request.");
-
         _customers.Add(customer);
     }
 

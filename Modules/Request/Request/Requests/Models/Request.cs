@@ -103,6 +103,11 @@ public class Request : Aggregate<long>
         _customers.Add(customer);
     }
 
+    public void ClearCustomer()
+    {
+        _customers.Clear();
+    }
+
     public void AddProperty(RequestProperty property)
     {
         ArgumentNullException.ThrowIfNull(property);

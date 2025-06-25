@@ -34,25 +34,21 @@ namespace Request.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RequestCustomer",
+                name: "RequestCustomers",
                 schema: "request",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RequestId = table.Column<long>(type: "bigint", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false),
                     ContactNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedBy = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true)
+                    RequestId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RequestCustomer", x => x.Id);
+                    table.PrimaryKey("PK_RequestCustomers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RequestCustomer_Requests_RequestId",
+                        name: "FK_RequestCustomers_Requests_RequestId",
                         column: x => x.RequestId,
                         principalSchema: "request",
                         principalTable: "Requests",
@@ -70,9 +66,9 @@ namespace Request.Data.Migrations
                     HasAppraisalBook = table.Column<bool>(type: "bit", nullable: false),
                     Priority = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Channel = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    OccurConstInspec = table.Column<int>(type: "int", nullable: true),
                     LoanApplicationNo = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     LimitAmt = table.Column<decimal>(type: "decimal(19,4)", precision: 19, scale: 4, nullable: true),
-                    OccurConstInspec = table.Column<int>(type: "int", nullable: true),
                     TotalSellingPrice = table.Column<decimal>(type: "decimal(19,4)", precision: 19, scale: 4, nullable: true),
                     PrevAppraisalNo = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     PrevAppraisalValue = table.Column<decimal>(type: "decimal(19,4)", precision: 19, scale: 4, nullable: true),
@@ -113,10 +109,40 @@ namespace Request.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_RequestCustomer_RequestId",
+            migrationBuilder.CreateTable(
+                name: "RequestProperties",
                 schema: "request",
-                table: "RequestCustomer",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PropertyType = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    BuildingType = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    SellingPrice = table.Column<decimal>(type: "decimal(19,4)", precision: 19, scale: 4, nullable: true),
+                    RequestId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RequestProperties", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RequestProperties_Requests_RequestId",
+                        column: x => x.RequestId,
+                        principalSchema: "request",
+                        principalTable: "Requests",
+                        principalColumn: "RequestId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RequestCustomers_RequestId",
+                schema: "request",
+                table: "RequestCustomers",
+                column: "RequestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RequestProperties_RequestId",
+                schema: "request",
+                table: "RequestProperties",
                 column: "RequestId");
         }
 
@@ -124,11 +150,15 @@ namespace Request.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "RequestCustomer",
+                name: "RequestCustomers",
                 schema: "request");
 
             migrationBuilder.DropTable(
                 name: "RequestDetails",
+                schema: "request");
+
+            migrationBuilder.DropTable(
+                name: "RequestProperties",
                 schema: "request");
 
             migrationBuilder.DropTable(

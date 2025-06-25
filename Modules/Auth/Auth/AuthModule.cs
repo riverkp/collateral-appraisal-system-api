@@ -16,7 +16,6 @@ public static class AuthModule
     {
         // Configure your module's middleware here
         // For example:
-        // app.UseMiddleware<YourMiddleware>();
 
         //app.UseMigration<AuthDbContext>();
         //app.UseOpenIddictModule();

@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-
 namespace Request.Data.Configurations;
 
 public class RequestConfiguration : IEntityTypeConfiguration<Requests.Models.Request>
@@ -22,10 +20,7 @@ public class RequestConfiguration : IEntityTypeConfiguration<Requests.Models.Req
             detail.Property(p => p.HasAppraisalBook).HasColumnName("HasAppraisalBook");
             detail.Property(p => p.Priority).UseCodeConfig().HasColumnName("Priority");
             detail.Property(p => p.Channel).UseCodeConfig().HasColumnName("Channel");
-            detail.Property(p => p.LoanApplicationNo).HasMaxLength(20).HasColumnName("LoanApplicationNo");
-            detail.Property(p => p.LimitAmt).UseMoneyConfig().HasColumnName("LimitAmt");
             detail.Property(p => p.OccurConstInspec).HasColumnName("OccurConstInspec");
-            detail.Property(p => p.TotalSellingPrice).UseMoneyConfig().HasColumnName("TotalSellingPrice");
 
             detail.OwnsOne(p => p.Reference, prevAppraisal =>
             {
@@ -33,6 +28,13 @@ public class RequestConfiguration : IEntityTypeConfiguration<Requests.Models.Req
                 prevAppraisal.Property(p => p.PrevAppraisalValue).UseMoneyConfig()
                     .HasColumnName("PrevAppraisalValue");
                 prevAppraisal.Property(p => p.PrevAppraisalDate).HasColumnName("PrevAppraisalDate");
+            });
+
+            detail.OwnsOne(p => p.LoanDetail, loanDetail =>
+            {
+                loanDetail.Property(p => p.LoanApplicationNo).HasMaxLength(20).HasColumnName("LoanApplicationNo");
+                loanDetail.Property(p => p.LimitAmt).UseMoneyConfig().HasColumnName("LimitAmt");
+                loanDetail.Property(p => p.TotalSellingPrice).UseMoneyConfig().HasColumnName("TotalSellingPrice");
             });
 
             detail.OwnsOne(p => p.Address, address =>
@@ -76,24 +78,24 @@ public class RequestConfiguration : IEntityTypeConfiguration<Requests.Models.Req
             customer.ToTable("RequestCustomers");
             customer.WithOwner().HasForeignKey("RequestId");
 
-            customer.Property<long>("CustomerId");
-            customer.HasKey("CustomerId");
+            customer.Property<long>("Id");
+            customer.HasKey("Id");
 
             customer.Property(p => p.Name).HasMaxLength(80).HasColumnName("Name");
-            customer.Property(p => p.ContactNumber).HasColumnType("varchar").HasMaxLength(20).HasColumnName("ContactNumber");
+            customer.Property(p => p.ContactNumber).HasMaxLength(20).HasColumnName("ContactNumber");
         });
 
-        builder.OwnsMany(p => p.Property, property =>
+        builder.OwnsMany(p => p.Properties, property =>
         {
-            property.WithOwner().HasForeignKey("RequestId");
             property.ToTable("RequestProperties");
+            property.WithOwner().HasForeignKey("RequestId");
 
-            property.Property<long>("PropertyId");
-            property.HasKey("PropertyId");
+            property.Property<long>("Id");
+            property.HasKey("Id");
 
-            property.Property(p => p.PropertyType).HasColumnType("varchar").HasMaxLength(10).HasColumnName("PropertyType");
-            property.Property(p => p.BuildingType).HasColumnType("varchar").HasMaxLength(10).HasColumnName("BuildingType");
-            property.Property(p => p.SellingPrice).HasColumnType("decimal(19,4)").HasColumnName("SellingPrice");
+            property.Property(p => p.PropertyType).UseCodeConfig().HasColumnName("PropertyType");
+            property.Property(p => p.BuildingType).UseCodeConfig().HasColumnName("BuildingType");
+            property.Property(p => p.SellingPrice).UseMoneyConfig().HasColumnName("SellingPrice");
         });
     }
 }

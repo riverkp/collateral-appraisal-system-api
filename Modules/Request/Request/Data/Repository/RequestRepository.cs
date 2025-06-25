@@ -15,7 +15,7 @@ public class RequestRepository(RequestDbContext dbContext) : IRequestRepository
         return request ?? throw new RequestNotFoundException(requestId);
     }
 
-    public async Task<Requests.Models.Request> CreateReques(Requests.Models.Request request,
+    public async Task<Requests.Models.Request> CreateRequest(Requests.Models.Request request,
         CancellationToken cancellationToken = default)
     {
         dbContext.Requests.Add(request);

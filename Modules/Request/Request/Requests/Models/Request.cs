@@ -3,7 +3,7 @@ namespace Request.Requests.Models;
 public class Request : Aggregate<long>
 {
     private readonly List<RequestCustomer> _customers = [];
-    private readonly List<RequestProperty> _property = [];
+    private readonly List<RequestProperty> _properties = [];
 
     private Request()
     {
@@ -22,36 +22,73 @@ public class Request : Aggregate<long>
     public string Status { get; private set; } = default!;
     public RequestDetail Detail { get; private set; } = default!;
     public IReadOnlyList<RequestCustomer> Customers => _customers.AsReadOnly();
-    public IReadOnlyList<RequestProperty> Property => _property.AsReadOnly();
+    public IReadOnlyList<RequestProperty> Properties => _properties.AsReadOnly();
 
     // Method
-    public static Request From(RequestDetail detail)
+    public static Request From(
+        string purpose,
+        bool hasAppraisalBook,
+        string priority,
+        string channel,
+        int? occurConstInspec,
+        Reference reference,
+        LoanDetail loanDetail,
+        Address address,
+        Contact contact,
+        Fee fee,
+        Requestor requestor
+    )
     {
-        ArgumentNullException.ThrowIfNull(detail);
-
         var requestDetail = RequestDetail.Of(
-            detail.Purpose,
-            detail.HasAppraisalBook,
-            detail.Priority,
-            detail.Channel,
-            detail.LoanApplicationNo,
-            detail.LimitAmt,
-            detail.OccurConstInspec,
-            detail.TotalSellingPrice,
-            new Reference(detail.Reference.PrevAppraisalNo,
-                detail.Reference.PrevAppraisalValue, detail.Reference.PrevAppraisalDate),
-            Address.Create(detail.Address.HouseNo, detail.Address.RoomNo, detail.Address.FloorNo,
-                detail.Address.LocationIdentifier, detail.Address.Moo, detail.Address.Soi, detail.Address.Road,
-                detail.Address.SubDistrict,
-                detail.Address.District, detail.Address.Province, detail.Address.Postcode),
-            new Contact(detail.Contact.ContactPersonName, detail.Contact.ContactPersonContactNo,
-                detail.Contact.ProjectCode),
-            new Fee(detail.Fee.FeeType, detail.Fee.FeeRemark),
-            Requestor.Create(detail.Requestor.RequestorEmpId, detail.Requestor.RequestorName,
-                detail.Requestor.RequestorEmail, detail.Requestor.RequestorContactNo, detail.Requestor.RequestorAo,
-                detail.Requestor.RequestorBranch, detail.Requestor.RequestorBusinessUnit,
-                detail.Requestor.RequestorDepartment,
-                detail.Requestor.RequestorSection, detail.Requestor.RequestorCostCenter)
+            purpose,
+            hasAppraisalBook,
+            priority,
+            channel,
+            occurConstInspec,
+            new Reference(
+                reference.PrevAppraisalNo,
+                reference.PrevAppraisalValue,
+                reference.PrevAppraisalDate
+            ),
+            new LoanDetail(
+                loanDetail.LoanApplicationNo,
+                loanDetail.LimitAmt,
+                loanDetail.TotalSellingPrice
+            ),
+            Address.Create(
+                address.HouseNo,
+                address.RoomNo,
+                address.FloorNo,
+                address.LocationIdentifier,
+                address.Moo,
+                address.Soi,
+                address.Road,
+                address.SubDistrict,
+                address.District,
+                address.Province,
+                address.Postcode
+            ),
+            new Contact(
+                contact.ContactPersonName,
+                contact.ContactPersonContactNo,
+                contact.ProjectCode
+            ),
+            new Fee(
+                fee.FeeType,
+                fee.FeeRemark
+            ),
+            Requestor.Create(
+                requestor.RequestorEmpId,
+                requestor.RequestorName,
+                requestor.RequestorEmail,
+                requestor.RequestorContactNo,
+                requestor.RequestorAo,
+                requestor.RequestorBranch,
+                requestor.RequestorBusinessUnit,
+                requestor.RequestorDepartment,
+                requestor.RequestorSection,
+                requestor.RequestorCostCenter
+            )
         );
 
         return new Request("67A", "N", requestDetail);
@@ -64,33 +101,70 @@ public class Request : Aggregate<long>
         Status = status;
     }
 
-    public void UpdateDetail(RequestDetail detail)
+    public void UpdateDetail(
+        string purpose,
+        bool hasAppraisalBook,
+        string priority,
+        string channel,
+        int? occurConstInspec,
+        Reference reference,
+        LoanDetail loanDetail,
+        Address address,
+        Contact contact,
+        Fee fee,
+        Requestor requestor
+    )
     {
-        ArgumentNullException.ThrowIfNull(detail);
-
         var requestDetail = RequestDetail.Of(
-            detail.Purpose,
-            detail.HasAppraisalBook,
-            detail.Priority,
-            detail.Channel,
-            detail.LoanApplicationNo,
-            detail.LimitAmt,
-            detail.OccurConstInspec,
-            detail.TotalSellingPrice,
-            new Reference(detail.Reference.PrevAppraisalNo,
-                detail.Reference.PrevAppraisalValue, detail.Reference.PrevAppraisalDate),
-            Address.Create(detail.Address.HouseNo, detail.Address.RoomNo, detail.Address.FloorNo,
-                detail.Address.LocationIdentifier, detail.Address.Moo, detail.Address.Soi, detail.Address.Road,
-                detail.Address.SubDistrict,
-                detail.Address.District, detail.Address.Province, detail.Address.Postcode),
-            new Contact(detail.Contact.ContactPersonName, detail.Contact.ContactPersonContactNo,
-                detail.Contact.ProjectCode),
-            new Fee(detail.Fee.FeeType, detail.Fee.FeeRemark),
-            Requestor.Create(detail.Requestor.RequestorEmpId, detail.Requestor.RequestorName,
-                detail.Requestor.RequestorEmail, detail.Requestor.RequestorContactNo, detail.Requestor.RequestorAo,
-                detail.Requestor.RequestorBranch, detail.Requestor.RequestorBusinessUnit,
-                detail.Requestor.RequestorDepartment,
-                detail.Requestor.RequestorSection, detail.Requestor.RequestorCostCenter)
+            purpose,
+            hasAppraisalBook,
+            priority,
+            channel,
+            occurConstInspec,
+            new Reference(
+                reference.PrevAppraisalNo,
+                reference.PrevAppraisalValue,
+                reference.PrevAppraisalDate
+            ),
+            new LoanDetail(
+                loanDetail.LoanApplicationNo,
+                loanDetail.LimitAmt,
+                loanDetail.TotalSellingPrice
+            ),
+            Address.Create(
+                address.HouseNo,
+                address.RoomNo,
+                address.FloorNo,
+                address.LocationIdentifier,
+                address.Moo,
+                address.Soi,
+                address.Road,
+                address.SubDistrict,
+                address.District,
+                address.Province,
+                address.Postcode
+            ),
+            new Contact(
+                contact.ContactPersonName,
+                contact.ContactPersonContactNo,
+                contact.ProjectCode
+            ),
+            new Fee(
+                fee.FeeType,
+                fee.FeeRemark
+            ),
+            Requestor.Create(
+                requestor.RequestorEmpId,
+                requestor.RequestorName,
+                requestor.RequestorEmail,
+                requestor.RequestorContactNo,
+                requestor.RequestorAo,
+                requestor.RequestorBranch,
+                requestor.RequestorBusinessUnit,
+                requestor.RequestorDepartment,
+                requestor.RequestorSection,
+                requestor.RequestorCostCenter
+            )
         );
 
         Detail = requestDetail;
@@ -107,6 +181,6 @@ public class Request : Aggregate<long>
     {
         ArgumentNullException.ThrowIfNull(property);
 
-        _property.Add(property);
+        _properties.Add(property);
     }
 }

@@ -1,6 +1,6 @@
-namespace Request.Contracts.Requests.Dtos;
+namespace Request.Requests.Features.CreateRequest;
 
-public record RequestDetailDto(
+public record CreateRequestRequest(
     string Purpose,
     bool HasAppraisalBook,
     string Priority,

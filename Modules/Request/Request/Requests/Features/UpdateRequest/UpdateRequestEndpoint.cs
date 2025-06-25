@@ -1,8 +1,4 @@
-using UpdateRequestRequest = Request.Contracts.Requests.Dtos.RequestDto;
-
 namespace Request.Requests.Features.UpdateRequest;
-
-public record UpdateRequestResponse(bool IsSuccess);
 
 public class UpdateRequestEndpoint : ICarterModule
 {
@@ -10,7 +6,7 @@ public class UpdateRequestEndpoint : ICarterModule
     {
         app.MapPut("/requests/{id}", async (long id, UpdateRequestRequest request, ISender sender) =>
             {
-                var command = request.Adapt<UpdateRequestCommand>();
+                var command = request.Adapt<UpdateRequestCommand>() with { Id = id };
                 var result = await sender.Send(command);
                 var response = result.Adapt<UpdateRequestResponse>();
                 return Results.Ok(response);

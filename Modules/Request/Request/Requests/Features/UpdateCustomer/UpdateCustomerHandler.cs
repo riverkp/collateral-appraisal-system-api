@@ -4,7 +4,7 @@ public record UpdateCustomerCommand(long Id, List<RequestCustomerDto> Customers)
 
 public record UpdateCustomerResult(bool IsSuccess);
 
-public class UpdateCustomerHandler(RequestDbContext dbContext) : ICommandHandler<UpdateCustomerCommand, UpdateCustomerResult>
+internal class UpdateCustomerHandler(RequestDbContext dbContext) : ICommandHandler<UpdateCustomerCommand, UpdateCustomerResult>
 {
     public async Task<UpdateCustomerResult> Handle(UpdateCustomerCommand command, CancellationToken cancellationToken)
     {

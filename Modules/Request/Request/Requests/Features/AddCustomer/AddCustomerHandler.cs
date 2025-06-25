@@ -4,7 +4,7 @@ public record AddCustomerCommand(long Id, List<RequestCustomerDto> Customers) : 
 
 public record AddCustomerResult(bool IsSuccess);
 
-public class AddCustomerHandler(RequestDbContext dbContext) : ICommandHandler<AddCustomerCommand, AddCustomerResult>
+internal class AddCustomerHandler(RequestDbContext dbContext) : ICommandHandler<AddCustomerCommand, AddCustomerResult>
 {
     public async Task<AddCustomerResult> Handle(AddCustomerCommand command, CancellationToken cancellationToken)
     {

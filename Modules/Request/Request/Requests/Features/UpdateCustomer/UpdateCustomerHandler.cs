@@ -9,7 +9,7 @@ internal class UpdateCustomerHandler(RequestDbContext dbContext) : ICommandHandl
     public async Task<UpdateCustomerResult> Handle(UpdateCustomerCommand command, CancellationToken cancellationToken)
     {
         var request = await dbContext.Requests.FindAsync([command.Id], cancellationToken) ?? throw new RequestNotFoundException(command.Id);
-        var customers = command.Customers.Adapt<List<RequestCustomer>>();
+        var customers = command.Customers.Select(c => CreateNewCustomer(c));
 
         request.ClearCustomer();
         foreach (var customer in customers)
@@ -19,6 +19,11 @@ internal class UpdateCustomerHandler(RequestDbContext dbContext) : ICommandHandl
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return new UpdateCustomerResult(true);
+    }
+
+    private static RequestCustomer CreateNewCustomer(RequestCustomerDto customer)
+    {
+        return RequestCustomer.Create(customer.Name, customer.ContactNumber);
     }
 }
 

@@ -9,7 +9,7 @@ internal class AddCustomerHandler(RequestDbContext dbContext) : ICommandHandler<
     public async Task<AddCustomerResult> Handle(AddCustomerCommand command, CancellationToken cancellationToken)
     {
         var request = await dbContext.Requests.FindAsync([command.Id], cancellationToken) ?? throw new RequestNotFoundException(command.Id);
-        var customers = command.Customers.Adapt<List<RequestCustomer>>();
+        var customers = command.Customers.Select(c => CreateNewCustomer(c));
 
         foreach (var customer in customers)
         {
@@ -18,5 +18,10 @@ internal class AddCustomerHandler(RequestDbContext dbContext) : ICommandHandler<
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return new AddCustomerResult(true);
+    }
+
+    private static RequestCustomer CreateNewCustomer(RequestCustomerDto customer)
+    {
+        return RequestCustomer.Create(customer.Name, customer.ContactNumber);
     }
 }

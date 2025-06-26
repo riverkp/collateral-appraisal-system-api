@@ -11,11 +11,9 @@ public record RequestDetail
         bool hasAppraisalBook,
         string priority,
         string channel,
-        string? loanApplicationNo,
-        decimal? limitAmt,
         int? occurConstInspec,
-        decimal? totalSellingPrice,
         Reference reference,
+        LoanDetail loanDetail,
         Address address,
         Contact contact,
         Fee fee,
@@ -26,11 +24,9 @@ public record RequestDetail
         HasAppraisalBook = hasAppraisalBook;
         Priority = priority;
         Channel = channel;
-        LoanApplicationNo = loanApplicationNo;
-        LimitAmt = limitAmt;
         OccurConstInspec = occurConstInspec;
-        TotalSellingPrice = totalSellingPrice;
         Reference = reference;
+        LoanDetail = loanDetail;
         Address = address;
         Contact = contact;
         Fee = fee;
@@ -41,10 +37,8 @@ public record RequestDetail
     public bool HasAppraisalBook { get; }
     public string Priority { get; }
     public string Channel { get; }
-    public string? LoanApplicationNo { get; }
-    public decimal? LimitAmt { get; }
     public int? OccurConstInspec { get; }
-    public decimal? TotalSellingPrice { get; }
+    public LoanDetail LoanDetail { get; }
     public Reference Reference { get; }
     public Address Address { get; }
     public Contact Contact { get; }
@@ -56,11 +50,9 @@ public record RequestDetail
         bool hasAppraisalBook,
         string priority,
         string channel,
-        string? loanApplicationNo,
-        decimal? limitAmt,
         int? occurConstInspec,
-        decimal? totalSellingPrice,
         Reference reference,
+        LoanDetail loanDetail,
         Address address,
         Contact contact,
         Fee fee,
@@ -80,11 +72,9 @@ public record RequestDetail
             hasAppraisalBook,
             priority,
             channel,
-            loanApplicationNo,
-            limitAmt,
             occurConstInspec,
-            totalSellingPrice,
             reference,
+            loanDetail,
             address,
             contact,
             fee,

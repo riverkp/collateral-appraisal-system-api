@@ -1,6 +1,6 @@
-namespace Request.Contracts.Requests.Dtos;
+namespace Request.Requests.Features.UpdateRequest;
 
-public record RequestDetailDto(
+public record UpdateRequestRequest(
     string Purpose,
     bool HasAppraisalBook,
     string Priority,

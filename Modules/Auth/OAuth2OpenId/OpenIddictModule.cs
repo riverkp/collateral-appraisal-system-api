@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Data.Extensions;
 
 namespace OAuth2OpenId;
 
@@ -42,7 +41,6 @@ public static class OpenIddictModule
                 options.SetAuthorizationEndpointUris("/connect/authorize");
                 options.SetEndSessionEndpointUris("/connect/logout");
 
-                options.AllowPasswordFlow();
                 options.AllowAuthorizationCodeFlow().RequireProofKeyForCodeExchange();
                 options.AllowClientCredentialsFlow();
                 options.AllowRefreshTokenFlow();

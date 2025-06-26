@@ -1,8 +1,4 @@
-using CreateRequestRequest = Request.Contracts.Requests.Dtos.RequestDto;
-
 namespace Request.Requests.Features.CreateRequest;
-
-public record CreateRequestResponse(long Id);
 
 public class CreateRequestEndpoint : ICarterModule
 {

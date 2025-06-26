@@ -2,7 +2,7 @@ namespace Shared.DDD;
 
 public abstract class Aggregate<TId> : Entity<TId>, IAggregate<TId>
 {
-    public readonly List<IDomainEvent> _domainEvents = new();
+    public List<IDomainEvent> _domainEvents = new();
     public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
     public void AddDomainEvent(IDomainEvent domainEvent)

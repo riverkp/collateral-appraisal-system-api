@@ -65,19 +65,19 @@ namespace Request.Data.Migrations
                 {
                     b.OwnsMany("Request.Requests.ValueObjects.RequestCustomer", "Customers", b1 =>
                         {
-                            b1.Property<long>("CustomerId")
+                            b1.Property<long>("Id")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("bigint");
 
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("CustomerId"));
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("Id"));
 
-                            b1.Property<string>("ContactNo")
+                            b1.Property<string>("ContactNumber")
                                 .IsRequired()
                                 .HasMaxLength(20)
-                                .HasColumnType("varchar")
+                                .HasColumnType("nvarchar(20)")
                                 .HasColumnName("ContactNumber");
 
-                            b1.Property<string>("CustName")
+                            b1.Property<string>("Name")
                                 .IsRequired()
                                 .HasMaxLength(80)
                                 .HasColumnType("nvarchar(80)")
@@ -86,7 +86,7 @@ namespace Request.Data.Migrations
                             b1.Property<long>("RequestId")
                                 .HasColumnType("bigint");
 
-                            b1.HasKey("CustomerId");
+                            b1.HasKey("Id");
 
                             b1.HasIndex("RequestId");
 
@@ -111,16 +111,6 @@ namespace Request.Data.Migrations
                                 .HasColumnType("bit")
                                 .HasColumnName("HasAppraisalBook");
 
-                            b1.Property<decimal?>("LimitAmt")
-                                .HasPrecision(19, 4)
-                                .HasColumnType("decimal(19,4)")
-                                .HasColumnName("LimitAmt");
-
-                            b1.Property<string>("LoanApplicationNo")
-                                .HasMaxLength(20)
-                                .HasColumnType("nvarchar(20)")
-                                .HasColumnName("LoanApplicationNo");
-
                             b1.Property<int?>("OccurConstInspec")
                                 .HasColumnType("int")
                                 .HasColumnName("OccurConstInspec");
@@ -136,11 +126,6 @@ namespace Request.Data.Migrations
                                 .HasMaxLength(10)
                                 .HasColumnType("nvarchar(10)")
                                 .HasColumnName("Purpose");
-
-                            b1.Property<decimal?>("TotalSellingPrice")
-                                .HasPrecision(19, 4)
-                                .HasColumnType("decimal(19,4)")
-                                .HasColumnName("TotalSellingPrice");
 
                             b1.HasKey("RequestId");
 
@@ -228,6 +213,34 @@ namespace Request.Data.Migrations
                                         .HasMaxLength(10)
                                         .HasColumnType("nvarchar(10)")
                                         .HasColumnName("FeeType");
+
+                                    b2.HasKey("RequestDetailRequestId");
+
+                                    b2.ToTable("RequestDetails", "request");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("RequestDetailRequestId");
+                                });
+
+                            b1.OwnsOne("Request.Requests.ValueObjects.LoanDetail", "LoanDetail", b2 =>
+                                {
+                                    b2.Property<long>("RequestDetailRequestId")
+                                        .HasColumnType("bigint");
+
+                                    b2.Property<decimal?>("LimitAmt")
+                                        .HasPrecision(19, 4)
+                                        .HasColumnType("decimal(19,4)")
+                                        .HasColumnName("LimitAmt");
+
+                                    b2.Property<string>("LoanApplicationNo")
+                                        .HasMaxLength(20)
+                                        .HasColumnType("nvarchar(20)")
+                                        .HasColumnName("LoanApplicationNo");
+
+                                    b2.Property<decimal?>("TotalSellingPrice")
+                                        .HasPrecision(19, 4)
+                                        .HasColumnType("decimal(19,4)")
+                                        .HasColumnName("TotalSellingPrice");
 
                                     b2.HasKey("RequestDetailRequestId");
 
@@ -340,6 +353,9 @@ namespace Request.Data.Migrations
                             b1.Navigation("Fee")
                                 .IsRequired();
 
+                            b1.Navigation("LoanDetail")
+                                .IsRequired();
+
                             b1.Navigation("Reference")
                                 .IsRequired();
 
@@ -347,38 +363,39 @@ namespace Request.Data.Migrations
                                 .IsRequired();
                         });
 
-                    b.OwnsMany("Request.Requests.ValueObjects.RequestProperty", "Property", b1 =>
+                    b.OwnsMany("Request.Requests.ValueObjects.RequestProperty", "Properties", b1 =>
                         {
-                            b1.Property<long>("PropertyId")
+                            b1.Property<long>("Id")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("bigint");
 
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("PropertyId"));
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("Id"));
 
                             b1.Property<string>("BuildingType")
                                 .IsRequired()
                                 .HasMaxLength(10)
-                                .HasColumnType("varchar")
+                                .HasColumnType("nvarchar(10)")
                                 .HasColumnName("BuildingType");
 
                             b1.Property<string>("PropertyType")
                                 .IsRequired()
                                 .HasMaxLength(10)
-                                .HasColumnType("varchar")
+                                .HasColumnType("nvarchar(10)")
                                 .HasColumnName("PropertyType");
 
                             b1.Property<long>("RequestId")
                                 .HasColumnType("bigint");
 
                             b1.Property<decimal?>("SellingPrice")
+                                .HasPrecision(19, 4)
                                 .HasColumnType("decimal(19,4)")
                                 .HasColumnName("SellingPrice");
 
-                            b1.HasKey("PropertyId");
+                            b1.HasKey("Id");
 
                             b1.HasIndex("RequestId");
 
-                            b1.ToTable("RequestPropertys", "request");
+                            b1.ToTable("RequestProperties", "request");
 
                             b1.WithOwner()
                                 .HasForeignKey("RequestId");
@@ -389,7 +406,7 @@ namespace Request.Data.Migrations
                     b.Navigation("Detail")
                         .IsRequired();
 
-                    b.Navigation("Property");
+                    b.Navigation("Properties");
                 });
 #pragma warning restore 612, 618
         }

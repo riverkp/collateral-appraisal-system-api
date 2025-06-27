@@ -183,4 +183,9 @@ public class Request : Aggregate<long>
 
         _properties.Add(property);
     }
+
+    public void UpdateProperty()
+    {
+        _properties.Clear();
+    }
 }

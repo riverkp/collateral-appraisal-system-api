@@ -4,7 +4,7 @@ namespace Request.Requests.Features.AddProperty;
 
 public record AddPropertyResponse(bool IsSuccess);
 
-public class AddpropertyEndpoint : ICarterModule
+public class AddPropertyEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {

@@ -5,6 +5,7 @@ public class Request : Aggregate<long>
     private readonly List<RequestCustomer> _customers = [];
     private readonly List<RequestProperty> _properties = [];
     private readonly List<RequestComment> _comments = [];
+    private readonly List<RequestDocument> _documents = [];
 
     private Request()
     {
@@ -25,6 +26,7 @@ public class Request : Aggregate<long>
     public IReadOnlyList<RequestCustomer> Customers => _customers.AsReadOnly();
     public IReadOnlyList<RequestProperty> Properties => _properties.AsReadOnly();
     public IReadOnlyList<RequestComment> Comments => _comments.AsReadOnly();
+    public IReadOnlyList<RequestDocument> Documents => _documents.AsReadOnly();
 
     // Method
     public static Request From(

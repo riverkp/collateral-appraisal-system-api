@@ -87,5 +87,6 @@ public class RequestConfiguration : IEntityTypeConfiguration<Requests.Models.Req
 
         builder.HasMany(p => p.Properties).WithOne().HasForeignKey("RequestId").OnDelete(DeleteBehavior.Cascade);
         builder.HasMany(p => p.Comments).WithOne().HasForeignKey("RequestId").OnDelete(DeleteBehavior.Cascade);
+        builder.HasMany(p => p.Documents).WithOne().HasForeignKey("RequestId").OnDelete(DeleteBehavior.Cascade);
     }
 }

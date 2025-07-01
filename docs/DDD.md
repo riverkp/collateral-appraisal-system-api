@@ -2,6 +2,9 @@
 DDD is a way to design software based on the business domain. The idea is to model your code closely to the real-world business you're solving problems for, using Ubiquitous Language, Bounded Contexts, and rich domain models.
 
 # 📚 Key Concepts of DDD
+
+![Logo](./ddd_concepts_diagram.svg)
+
 ## Ubiquitous Language
 Ubiquitous Language is a shared language between developers and domain experts. It helps everyone understand the domain better and ensures that the code reflects the business concepts accurately.
 ## Bounded Contexts
@@ -114,6 +117,7 @@ public class ValuationService
 ## Factories
 Factories are responsible for creating complex objects or aggregates. They encapsulate the creation logic, ensuring that the domain model remains clean and focused on business rules rather than instantiation details.
 
+
 # 🔷 DDD Learning Roadmap
 ## 1. Core DDD Concepts
 - ✅ Entity, Value Object, Aggregate Root
@@ -123,17 +127,23 @@ Factories are responsible for creating complex objects or aggregates. They encap
 - ✅ Aggregate Lifecycle
 
 ## 2. Strategic DDD
-- Bounded Contexts
-- Context Maps (how domains relate to each other)
-- Ubiquitous Language per context
-- Anti-corruption layer (ACL)
+- ✅ Bounded Contexts
+- ✅ Context Maps (how domains relate to each other)
+- ✅ Ubiquitous Language per context
+- ✅ Anti-corruption layer (ACL)
+- ✅ Domain Model Evolution Strategies
+- ✅ Context Integration Patterns
 
 ## 3. Tactical Patterns in Depth
-- 🧱 Aggregate design best practices (invariants, consistency boundaries)
-- 📦 Factory Pattern vs Constructor
-- 🧮 Domain Events: modeling and raising them properly
-- 🔍 Specification Pattern for reusable business rules
-- 🧾 Event Sourcing (optional if you want advanced audit)
+- ✅ Aggregate design best practices (invariants, consistency boundaries)
+- ✅ Factory Pattern vs Constructor
+- ✅ Domain Events: modeling and raising them properly
+- ✅ Specification Pattern for reusable business rules
+- ✅ Event Sourcing (optional if you want advanced audit)
+- ✅ Unit of Work Pattern
+- ✅ Soft Delete Implementation
+- ✅ Optimistic Concurrency Control
+- ✅ Domain Model Validation
 
 ## 4. Modular Monolith / Vertical Slice Architecture
 - How to align modules = bounded contexts
@@ -436,6 +446,452 @@ public class RequestCreatedIntegrationEventHandler : IConsumer<RequestCreatedInt
 }
 ```
 
+# 🔧 Missing Tactical Patterns
+
+## Unit of Work Pattern
+
+Manage transaction boundaries and ensure consistency:
+
+```csharp
+// Unit of Work interface
+public interface IUnitOfWork : IDisposable
+{
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    Task BeginTransactionAsync(CancellationToken cancellationToken = default);
+    Task CommitTransactionAsync(CancellationToken cancellationToken = default);
+    Task RollbackTransactionAsync(CancellationToken cancellationToken = default);
+}
+
+// Implementation with EF Core
+public class EfUnitOfWork : IUnitOfWork
+{
+    private readonly DbContext _context;
+    private IDbContextTransaction? _transaction;
+
+    public EfUnitOfWork(DbContext context)
+    {
+        _context = context;
+    }
+
+    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        return await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task BeginTransactionAsync(CancellationToken cancellationToken = default)
+    {
+        _transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+    }
+
+    public async Task CommitTransactionAsync(CancellationToken cancellationToken = default)
+    {
+        if (_transaction != null)
+        {
+            await _transaction.CommitAsync(cancellationToken);
+            await _transaction.DisposeAsync();
+            _transaction = null;
+        }
+    }
+
+    public async Task RollbackTransactionAsync(CancellationToken cancellationToken = default)
+    {
+        if (_transaction != null)
+        {
+            await _transaction.RollbackAsync(cancellationToken);
+            await _transaction.DisposeAsync();
+            _transaction = null;
+        }
+    }
+
+    public void Dispose()
+    {
+        _transaction?.Dispose();
+        _context?.Dispose();
+    }
+}
+
+// Usage in application service
+public class TransferRequestHandler : ICommandHandler<TransferRequestCommand>
+{
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IRequestRepository _requestRepository;
+    private readonly ICustomerRepository _customerRepository;
+
+    public async Task Handle(TransferRequestCommand command, CancellationToken cancellationToken)
+    {
+        await _unitOfWork.BeginTransactionAsync(cancellationToken);
+        
+        try
+        {
+            // Multiple aggregate operations in single transaction
+            var request = await _requestRepository.GetById(command.RequestId);
+            var customer = await _customerRepository.GetById(command.NewCustomerId);
+            
+            request.TransferToCustomer(customer.Id);
+            customer.AddRequest(request.Id);
+            
+            await _requestRepository.Save(request);
+            await _customerRepository.Save(customer);
+            
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            await _unitOfWork.CommitTransactionAsync(cancellationToken);
+        }
+        catch
+        {
+            await _unitOfWork.RollbackTransactionAsync(cancellationToken);
+            throw;
+        }
+    }
+}
+```
+
+## Soft Delete Implementation
+
+Maintain audit trail without physical deletion:
+
+```csharp
+// Soft delete interface
+public interface ISoftDelete
+{
+    bool IsDeleted { get; }
+    DateTime? DeletedOn { get; }
+    string? DeletedBy { get; }
+    
+    void Delete(string deletedBy);
+    void Restore();
+}
+
+// Base entity with soft delete
+public abstract class AuditableEntity<TId> : Entity<TId>, ISoftDelete
+{
+    public bool IsDeleted { get; private set; }
+    public DateTime? DeletedOn { get; private set; }
+    public string? DeletedBy { get; private set; }
+    
+    public DateTime CreatedOn { get; private set; }
+    public string CreatedBy { get; private set; }
+    public DateTime? UpdatedOn { get; private set; }
+    public string? UpdatedBy { get; private set; }
+
+    public virtual void Delete(string deletedBy)
+    {
+        if (IsDeleted) return;
+        
+        IsDeleted = true;
+        DeletedOn = DateTime.UtcNow;
+        DeletedBy = deletedBy;
+    }
+
+    public virtual void Restore()
+    {
+        IsDeleted = false;
+        DeletedOn = null;
+        DeletedBy = null;
+    }
+}
+
+// Domain implementation
+public class Request : AuditableEntity<long>
+{
+    // Override to add business rules
+    public override void Delete(string deletedBy)
+    {
+        if (Status == "Approved")
+            throw new InvalidOperationException("Cannot delete approved requests");
+            
+        base.Delete(deletedBy);
+        AddDomainEvent(new RequestDeletedEvent(Id, deletedBy));
+    }
+}
+
+// EF Core interceptor for soft delete
+public class SoftDeleteInterceptor : SaveChangesInterceptor
+{
+    public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
+    {
+        if (eventData.Context is null) return result;
+        
+        HandleSoftDelete(eventData.Context);
+        return result;
+    }
+
+    private static void HandleSoftDelete(DbContext context)
+    {
+        var softDeleteEntries = context.ChangeTracker.Entries<ISoftDelete>()
+            .Where(e => e.State == EntityState.Deleted && !e.Entity.IsDeleted);
+
+        foreach (var entry in softDeleteEntries)
+        {
+            entry.State = EntityState.Modified;
+            entry.Entity.Delete("System"); // Or get from current user context
+        }
+    }
+}
+
+// Global query filter in DbContext
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    // Apply soft delete filter globally
+    foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+    {
+        if (typeof(ISoftDelete).IsAssignableFrom(entityType.ClrType))
+        {
+            var parameter = Expression.Parameter(entityType.ClrType, "e");
+            var property = Expression.Property(parameter, nameof(ISoftDelete.IsDeleted));
+            var filter = Expression.Lambda(Expression.Not(property), parameter);
+            modelBuilder.Entity(entityType.ClrType).HasQueryFilter(filter);
+        }
+    }
+}
+
+// Repository with soft delete support
+public class RequestRepository : IRequestRepository
+{
+    private readonly DbContext _context;
+
+    // Normal operations automatically filter deleted entities
+    public async Task<Request?> GetById(long id)
+    {
+        return await _context.Requests.FirstOrDefaultAsync(r => r.Id == id);
+        // IsDeleted filter applied automatically
+    }
+
+    // Include deleted entities when needed
+    public async Task<Request?> GetByIdIncludeDeleted(long id)
+    {
+        return await _context.Requests
+            .IgnoreQueryFilters()
+            .FirstOrDefaultAsync(r => r.Id == id);
+    }
+}
+```
+
+## Optimistic Concurrency Control
+
+Prevent lost updates with version control:
+
+```csharp
+// Aggregate with version control
+public abstract class Aggregate<TId> : Entity<TId>
+{
+    public int Version { get; private set; }
+    
+    protected void IncrementVersion()
+    {
+        Version++;
+    }
+    
+    // Called before any state change
+    protected void EnsureNotStale(int expectedVersion)
+    {
+        if (Version != expectedVersion)
+            throw new ConcurrencyException($"Expected version {expectedVersion}, but current version is {Version}");
+    }
+}
+
+// Domain implementation
+public class Request : Aggregate<long>
+{
+    public void UpdateStatus(string newStatus, int expectedVersion)
+    {
+        EnsureNotStale(expectedVersion);
+        
+        // Business logic
+        if (!CanTransitionTo(newStatus))
+            throw new InvalidOperationException($"Cannot transition from {Status} to {newStatus}");
+            
+        Status = newStatus;
+        IncrementVersion();
+        
+        AddDomainEvent(new RequestStatusChangedEvent(Id, Status, newStatus));
+    }
+}
+
+// EF Core configuration
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Request>(entity =>
+    {
+        // Configure version as concurrency token
+        entity.Property(e => e.Version)
+              .IsConcurrencyToken()
+              .HasDefaultValue(0);
+    });
+}
+
+// Command with version
+public record UpdateRequestStatusCommand(long RequestId, string Status, int ExpectedVersion) 
+    : ICommand<UpdateRequestStatusResult>;
+
+// Handler with concurrency check
+public class UpdateRequestStatusHandler : ICommandHandler<UpdateRequestStatusCommand, UpdateRequestStatusResult>
+{
+    public async Task<UpdateRequestStatusResult> Handle(UpdateRequestStatusCommand command, CancellationToken cancellationToken)
+    {
+        var request = await _repository.GetById(command.RequestId);
+        
+        try
+        {
+            request.UpdateStatus(command.Status, command.ExpectedVersion);
+            await _repository.Save(request);
+            
+            return new UpdateRequestStatusResult(request.Id, request.Version);
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new ConcurrencyException("Request was modified by another user. Please refresh and try again.");
+        }
+    }
+}
+
+// Custom concurrency exception
+public class ConcurrencyException : DomainException
+{
+    public ConcurrencyException(string message) : base(message) { }
+}
+```
+
+## Domain Model Validation
+
+Comprehensive validation strategies:
+
+```csharp
+// Validation interface
+public interface IValidator<T>
+{
+    ValidationResult Validate(T entity);
+}
+
+// Domain validation result
+public class ValidationResult
+{
+    public bool IsValid => Errors.Count == 0;
+    public List<ValidationError> Errors { get; } = new();
+    
+    public void AddError(string property, string message)
+    {
+        Errors.Add(new ValidationError(property, message));
+    }
+    
+    public void AddErrors(ValidationResult other)
+    {
+        Errors.AddRange(other.Errors);
+    }
+}
+
+public record ValidationError(string Property, string Message);
+
+// Domain-specific validator
+public class RequestValidator : IValidator<Request>
+{
+    public ValidationResult Validate(Request request)
+    {
+        var result = new ValidationResult();
+        
+        // Required field validation
+        if (string.IsNullOrEmpty(request.Detail.Purpose))
+            result.AddError(nameof(request.Detail.Purpose), "Purpose is required");
+            
+        // Business rule validation
+        if (request.Detail.LoanDetail?.LimitAmt <= 0)
+            result.AddError(nameof(request.Detail.LoanDetail.LimitAmt), "Loan amount must be positive");
+            
+        // Status transition validation
+        if (request.Status == "Submitted" && request.Customers.Count == 0)
+            result.AddError(nameof(request.Customers), "Submitted request must have at least one customer");
+            
+        // Cross-property validation
+        if (request.Detail.LoanDetail?.LimitAmt > request.Detail.LoanDetail?.TotalSellingPrice)
+            result.AddError("LoanDetails", "Loan amount cannot exceed property value");
+            
+        return result;
+    }
+}
+
+// Aggregate with validation
+public class Request : Aggregate<long>
+{
+    private readonly IValidator<Request> _validator;
+    
+    public void Submit()
+    {
+        // Validate before state change
+        var validationResult = _validator.Validate(this);
+        if (!validationResult.IsValid)
+            throw new ValidationException(validationResult.Errors);
+            
+        if (Status != "Draft")
+            throw new InvalidOperationException("Only draft requests can be submitted");
+            
+        Status = "Submitted";
+        AddDomainEvent(new RequestSubmittedEvent(this));
+    }
+}
+
+// Validation exception
+public class ValidationException : DomainException
+{
+    public List<ValidationError> Errors { get; }
+    
+    public ValidationException(List<ValidationError> errors) 
+        : base($"Validation failed: {string.Join(", ", errors.Select(e => $"{e.Property}: {e.Message}"))}")
+    {
+        Errors = errors;
+    }
+}
+
+// Fluent validation integration
+public class CreateRequestCommandValidator : AbstractValidator<CreateRequestCommand>
+{
+    public CreateRequestCommandValidator()
+    {
+        RuleFor(x => x.Purpose)
+            .NotEmpty()
+            .WithMessage("Purpose is required");
+            
+        RuleFor(x => x.LoanAmount)
+            .GreaterThan(0)
+            .WithMessage("Loan amount must be positive")
+            .LessThanOrEqualTo(10000000)
+            .WithMessage("Loan amount exceeds maximum limit");
+            
+        RuleFor(x => x)
+            .Must(HaveValidLoanToValueRatio)
+            .WithMessage("Loan to value ratio exceeds acceptable limit");
+    }
+    
+    private bool HaveValidLoanToValueRatio(CreateRequestCommand command)
+    {
+        if (command.LoanAmount <= 0 || command.PropertyValue <= 0) return true;
+        
+        var ltvRatio = command.LoanAmount / command.PropertyValue;
+        return ltvRatio <= 0.95m; // 95% max LTV
+    }
+}
+
+// Validation pipeline behavior
+public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    where TRequest : ICommand<TResponse>
+{
+    private readonly IEnumerable<IValidator<TRequest>> _validators;
+
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    {
+        if (_validators.Any())
+        {
+            var context = new ValidationContext<TRequest>(request);
+            var results = await Task.WhenAll(_validators.Select(v => v.ValidateAsync(context, cancellationToken)));
+            var failures = results.SelectMany(r => r.Errors).Where(f => f != null).ToList();
+
+            if (failures.Count > 0)
+                throw new FluentValidation.ValidationException(failures);
+        }
+
+        return await next();
+    }
+}
+```
+
 # 🚨 DDD Anti-Patterns to Avoid
 
 ## ❌ Anemic Domain Model
@@ -664,6 +1120,376 @@ public class Customer : Aggregate<CustomerId>
 }
 ```
 
+# 🗺️ Strategic DDD - Advanced Concepts
+
+## Bounded Context Design Principles
+
+### What Makes a Good Bounded Context
+
+A bounded context should have:
+- **Single Responsibility**: One cohesive business capability
+- **Autonomous Team**: Can be developed independently
+- **Clear Language**: Unambiguous terms within the context
+- **Data Ownership**: Owns its data and business rules
+
+### Identifying Context Boundaries
+
+```csharp
+// ❌ BAD - Mixed concerns in one context
+public class CustomerOrderSystem
+{
+    // Customer management (Identity context)
+    public void RegisterCustomer(Customer customer) { }
+    public void UpdateCustomerProfile(Customer customer) { }
+    
+    // Order processing (Sales context)
+    public void CreateOrder(Order order) { }
+    public void ProcessPayment(Payment payment) { }
+    
+    // Inventory management (Inventory context)
+    public void UpdateStock(Product product, int quantity) { }
+    public void ReserveItems(OrderItem[] items) { }
+}
+
+// ✅ GOOD - Separate bounded contexts
+namespace IdentityManagement
+{
+    public class CustomerService
+    {
+        public void RegisterCustomer(Customer customer) { }
+        public void UpdateProfile(CustomerId id, PersonalInfo info) { }
+    }
+}
+
+namespace SalesManagement  
+{
+    public class OrderService
+    {
+        public void CreateOrder(CustomerId customerId, OrderDetails details) { }
+        public void ProcessPayment(OrderId orderId, PaymentInfo payment) { }
+    }
+}
+
+namespace InventoryManagement
+{
+    public class StockService
+    {
+        public void UpdateStock(ProductId id, StockLevel level) { }
+        public void ReserveItems(ReservationRequest request) { }
+    }
+}
+```
+
+## Context Integration Patterns
+
+### 1. Shared Kernel
+Common domain concepts shared between contexts:
+
+```csharp
+// Shared Kernel - Common across Request and Collateral contexts
+namespace Shared.Domain
+{
+    public record CustomerId(long Value);
+    public record PropertyAddress(string Street, string City, string State, string ZipCode);
+    public record MonetaryAmount(decimal Value, string Currency = "USD");
+}
+
+// Request Context uses shared concepts
+namespace RequestManagement.Domain
+{
+    public class Request : Aggregate<long>
+    {
+        public CustomerId CustomerId { get; private set; }
+        public PropertyAddress PropertyAddress { get; private set; }
+        public MonetaryAmount LoanAmount { get; private set; }
+    }
+}
+
+// Collateral Context uses same shared concepts  
+namespace CollateralManagement.Domain
+{
+    public class Collateral : Aggregate<long> 
+    {
+        public PropertyAddress Address { get; private set; }
+        public MonetaryAmount EstimatedValue { get; private set; }
+    }
+}
+```
+
+### 2. Customer-Supplier Pattern
+One context depends on another:
+
+```csharp
+// Supplier: Risk Assessment Context
+namespace RiskAssessment.Domain
+{
+    public class RiskScore : ValueObject
+    {
+        public int Score { get; private set; }
+        public RiskLevel Level { get; private set; }
+        
+        public static RiskScore Calculate(decimal amount, CustomerProfile profile)
+        {
+            // Risk calculation logic
+            var score = CalculateRiskScore(amount, profile);
+            return new RiskScore { Score = score, Level = DetermineLevel(score) };
+        }
+    }
+}
+
+// Customer: Request Context consumes risk data
+namespace RequestManagement.Domain  
+{
+    public class RequestApprovalService
+    {
+        private readonly IRiskAssessmentService _riskService;
+        
+        public async Task<ApprovalDecision> EvaluateRequest(Request request)
+        {
+            // Call supplier context
+            var riskScore = await _riskService.AssessRisk(request.CustomerId, request.LoanAmount);
+            
+            return riskScore.Level switch
+            {
+                RiskLevel.High => ApprovalDecision.RequiresManualReview,
+                RiskLevel.Medium => ApprovalDecision.ConditionalApproval,
+                RiskLevel.Low => ApprovalDecision.AutoApproved,
+                _ => ApprovalDecision.Rejected
+            };
+        }
+    }
+}
+```
+
+### 3. Conformist Pattern
+Adapt to external system's model:
+
+```csharp
+// External credit bureau system (we have no control)
+public class ExternalCreditReport
+{
+    public string SSN { get; set; }
+    public int FICO_SCORE { get; set; }
+    public string CREDIT_STATUS { get; set; } // "GOOD", "BAD", "UNKNOWN"
+}
+
+// Our domain model (conformist adaptation)
+namespace CreditManagement.Domain
+{
+    public class CreditReport : ValueObject
+    {
+        public SocialSecurityNumber SSN { get; private set; }
+        public CreditScore Score { get; private set; }
+        public CreditStatus Status { get; private set; }
+        
+        // Factory method adapts external format to our domain
+        public static CreditReport FromExternal(ExternalCreditReport external)
+        {
+            return new CreditReport
+            {
+                SSN = SocialSecurityNumber.From(external.SSN),
+                Score = CreditScore.From(external.FICO_SCORE),
+                Status = external.CREDIT_STATUS switch
+                {
+                    "GOOD" => CreditStatus.Good,
+                    "BAD" => CreditStatus.Poor,
+                    _ => CreditStatus.Unknown
+                }
+            };
+        }
+    }
+}
+```
+
+## Domain Model Evolution Strategies
+
+### 1. Versioning Domain Events
+
+```csharp
+// V1 - Initial event
+public record CustomerRegisteredEventV1 : IDomainEvent
+{
+    public long CustomerId { get; init; }
+    public string Name { get; init; }
+    public string Email { get; init; }
+}
+
+// V2 - Added phone number
+public record CustomerRegisteredEventV2 : IDomainEvent
+{
+    public long CustomerId { get; init; }
+    public string FirstName { get; init; }
+    public string LastName { get; init; }
+    public string Email { get; init; }
+    public string? PhoneNumber { get; init; }
+}
+
+// Event handler supports both versions
+public class CustomerRegisteredEventHandler : 
+    INotificationHandler<CustomerRegisteredEventV1>,
+    INotificationHandler<CustomerRegisteredEventV2>
+{
+    public async Task Handle(CustomerRegisteredEventV1 notification, CancellationToken cancellationToken)
+    {
+        // Handle V1 format
+        await ProcessRegistration(notification.CustomerId, notification.Name, notification.Email, null);
+    }
+    
+    public async Task Handle(CustomerRegisteredEventV2 notification, CancellationToken cancellationToken)
+    {
+        // Handle V2 format
+        var fullName = $"{notification.FirstName} {notification.LastName}";
+        await ProcessRegistration(notification.CustomerId, fullName, notification.Email, notification.PhoneNumber);
+    }
+}
+```
+
+### 2. Aggregate Schema Evolution
+
+```csharp
+// Evolution of Request aggregate
+public class Request : Aggregate<long>
+{
+    // Original properties
+    public RequestDetail Detail { get; private set; }
+    public string Status { get; private set; }
+    
+    // Added in V2 - nullable for backward compatibility
+    public ApprovalWorkflow? Workflow { get; private set; }
+    
+    // Added in V3 - collection with default empty
+    private readonly List<RequestNote> _notes = new();
+    public IReadOnlyList<RequestNote> Notes => _notes.AsReadOnly();
+    
+    // Migration method for loading legacy data
+    public void ApplyLegacyMigration()
+    {
+        // Initialize new properties for old aggregates
+        if (Workflow == null)
+        {
+            Workflow = ApprovalWorkflow.CreateDefault(Status);
+        }
+    }
+}
+```
+
+### 3. Database Schema Migration Strategy
+
+```csharp
+// EF Core migration with backward compatibility
+public partial class AddWorkflowToRequest : Migration
+{
+    protected override void Up(MigrationBuilder migrationBuilder)
+    {
+        // Add new columns as nullable
+        migrationBuilder.AddColumn<string>(
+            name: "Workflow_CurrentStep",
+            table: "Requests", 
+            nullable: true);
+            
+        migrationBuilder.AddColumn<DateTime>(
+            name: "Workflow_StartedAt",
+            table: "Requests",
+            nullable: true);
+        
+        // Populate default values for existing records
+        migrationBuilder.Sql(@"
+            UPDATE Requests 
+            SET Workflow_CurrentStep = 'Initial', 
+                Workflow_StartedAt = CreatedOn 
+            WHERE Workflow_CurrentStep IS NULL");
+    }
+}
+```
+
+## Ubiquitous Language Management
+
+### 1. Language Evolution Process
+
+```csharp
+// Glossary as code - maintains domain vocabulary
+public static class AppraisalDomainGlossary
+{
+    public const string REQUEST = "A formal application for property appraisal services";
+    public const string COLLATERAL = "Property or asset securing a loan obligation";
+    public const string APPRAISAL = "Professional valuation of property worth";
+    public const string LOAN_TO_VALUE = "Ratio of loan amount to appraised property value";
+    
+    // Deprecated terms - maintain for backward compatibility
+    [Obsolete("Use 'Request' instead of 'Application'")]
+    public const string APPLICATION = REQUEST;
+    
+    // Evolution tracking
+    public record TermEvolution(string OldTerm, string NewTerm, string Reason, DateTime ChangedOn);
+    
+    public static readonly TermEvolution[] LanguageEvolution = 
+    {
+        new("Application", "Request", "Clearer business intent", new DateTime(2024, 1, 15)),
+        new("Asset", "Collateral", "Precise legal terminology", new DateTime(2024, 2, 10))
+    };
+}
+```
+
+### 2. Domain Vocabulary in Code
+
+```csharp
+// Domain language reflected in code
+namespace AppraisalManagement.Domain
+{
+    // Use business terms, not technical terms
+    public class AppraisalRequest // Not "AppraisalEntity" or "AppraisalModel"
+    {
+        public RequestPurpose Purpose { get; private set; } // Not "Type" or "Category"
+        public PropertyDetails Property { get; private set; } // Not "Asset" or "Item"
+        
+        // Methods use business language
+        public void SubmitForReview() { } // Not "SetStatusToReview()"
+        public void AssignAppraiser(AppraiserId appraiser) { } // Not "UpdateAssignee()"
+        public void CompleteAppraisal(AppraisalReport report) { } // Not "Finalize()"
+    }
+    
+    // Enums use domain language
+    public enum RequestPurpose
+    {
+        PurchaseLoan,           // Not "Type1"
+        RefinanceLoan,          // Not "Type2"  
+        HomeEquityLine,         // Not "Type3"
+        CollateralReview        // Not "Type4"
+    }
+}
+```
+
+### 3. Cross-Context Language Translation
+
+```csharp
+// Translation between contexts with different languages
+public class RequestToLoanTranslationService
+{
+    // Request context uses "Request"
+    // Loan context uses "Application"
+    public LoanApplication TranslateToLoanContext(AppraisalRequest request)
+    {
+        return new LoanApplication
+        {
+            // Translate domain concepts
+            ApplicationId = request.Id,
+            LoanPurpose = TranslatePurpose(request.Purpose),
+            PropertyInformation = TranslateProperty(request.Property),
+            Applicant = TranslateCustomer(request.Customer)
+        };
+    }
+    
+    private LoanPurpose TranslatePurpose(RequestPurpose purpose) => purpose switch
+    {
+        RequestPurpose.PurchaseLoan => LoanPurpose.Purchase,
+        RequestPurpose.RefinanceLoan => LoanPurpose.Refinance,
+        RequestPurpose.HomeEquityLine => LoanPurpose.HomeEquity,
+        RequestPurpose.CollateralReview => LoanPurpose.Evaluation,
+        _ => throw new ArgumentException($"Unknown purpose: {purpose}")
+    };
+}
+```
+
 ## Event Sourcing Concepts
 For advanced audit and state reconstruction:
 
@@ -756,37 +1582,508 @@ public async Task Save(Request request)
 }
 ```
 
+# 🏗️ Infrastructure Patterns & Best Practices
+
+## Testing DDD Applications
+
+### Unit Testing Aggregates
+
+```csharp
+// Aggregate unit tests
+public class RequestAggregateTests
+{
+    [Test]
+    public void Submit_WithValidRequest_ShouldChangeStatusAndRaiseDomainEvent()
+    {
+        // Arrange
+        var request = Request.Create(RequestDetail.Of("Purchase", true, "High", "Contact"));
+        request.AddCustomer(RequestCustomer.Of("John Doe", "123-456-7890"));
+        
+        // Act
+        request.Submit();
+        
+        // Assert
+        request.Status.Should().Be("Submitted");
+        request.DomainEvents.Should().ContainSingle(e => e is RequestSubmittedEvent);
+    }
+    
+    [Test]
+    public void Submit_WithoutCustomers_ShouldThrowDomainException()
+    {
+        // Arrange
+        var request = Request.Create(RequestDetail.Of("Purchase", true, "High", "Contact"));
+        
+        // Act & Assert
+        var act = () => request.Submit();
+        act.Should().Throw<InvalidOperationException>()
+           .WithMessage("*customers*");
+    }
+    
+    [Test]
+    public void UpdateStatus_WithInvalidTransition_ShouldThrowException()
+    {
+        // Arrange
+        var request = Request.Create(RequestDetail.Of("Purchase", true, "High", "Contact"));
+        request.Submit(); // Status becomes "Submitted"
+        
+        // Act & Assert
+        var act = () => request.UpdateStatus("Draft");
+        act.Should().Throw<InvalidOperationException>();
+    }
+}
+```
+
+### Integration Testing with Test Containers
+
+```csharp
+// Integration test base class
+public abstract class IntegrationTestBase : IAsyncLifetime
+{
+    protected readonly MsSqlContainer _sqlContainer;
+    protected readonly IServiceProvider _serviceProvider;
+    protected readonly ITestDatabase _database;
+
+    protected IntegrationTestBase()
+    {
+        _sqlContainer = new MsSqlBuilder()
+            .WithPassword("P@ssw0rd123")
+            .WithCleanUp(true)
+            .Build();
+    }
+
+    public async Task InitializeAsync()
+    {
+        await _sqlContainer.StartAsync();
+        
+        var services = new ServiceCollection();
+        services.AddDbContext<RequestDbContext>(options =>
+            options.UseSqlServer(_sqlContainer.GetConnectionString()));
+        
+        _serviceProvider = services.BuildServiceProvider();
+        _database = _serviceProvider.GetRequiredService<ITestDatabase>();
+        
+        await _database.InitializeAsync();
+    }
+
+    public async Task DisposeAsync()
+    {
+        await _sqlContainer.DisposeAsync();
+    }
+}
+
+// Feature integration test
+public class CreateRequestIntegrationTests : IntegrationTestBase
+{
+    [Test]
+    public async Task CreateRequest_WithValidData_ShouldPersistAndRaiseDomainEvent()
+    {
+        // Arrange
+        var command = new CreateRequestCommand("Purchase", true, "High", "Online");
+        var handler = _serviceProvider.GetRequiredService<CreateRequestHandler>();
+        
+        // Act
+        var result = await handler.Handle(command, CancellationToken.None);
+        
+        // Assert
+        result.Should().NotBeNull();
+        result.Id.Should().BeGreaterThan(0);
+        
+        // Verify persistence
+        var repository = _serviceProvider.GetRequiredService<IRequestRepository>();
+        var savedRequest = await repository.GetById(result.Id);
+        savedRequest.Should().NotBeNull();
+        savedRequest.Detail.Purpose.Should().Be("Purchase");
+    }
+}
+```
+
+## Performance Considerations
+
+### N+1 Query Prevention
+
+```csharp
+// ❌ BAD - Causes N+1 queries
+public class RequestService
+{
+    public async Task<IEnumerable<RequestSummary>> GetRequestSummaries()
+    {
+        var requests = await _context.Requests.ToListAsync();
+        
+        var summaries = new List<RequestSummary>();
+        foreach (var request in requests)
+        {
+            // This causes N additional queries
+            var customerCount = await _context.RequestCustomers
+                .CountAsync(c => c.RequestId == request.Id);
+                
+            summaries.Add(new RequestSummary(request.Id, request.Status, customerCount));
+        }
+        
+        return summaries;
+    }
+}
+
+// ✅ GOOD - Single query with projection
+public class RequestService
+{
+    public async Task<IEnumerable<RequestSummary>> GetRequestSummaries()
+    {
+        return await _context.Requests
+            .Select(r => new RequestSummary(
+                r.Id,
+                r.Status,
+                r.Customers.Count))
+            .ToListAsync();
+    }
+}
+```
+
+### Query Optimization with Specifications
+
+```csharp
+// Optimized query specification
+public class ActiveRequestsWithCustomersSpec : Specification<Request>
+{
+    public override Expression<Func<Request, bool>> ToExpression()
+    {
+        return r => r.Status != "Cancelled" && r.Status != "Completed";
+    }
+    
+    // Include related data for efficient loading
+    public IQueryable<Request> Apply(IQueryable<Request> query)
+    {
+        return query
+            .Where(ToExpression())
+            .Include(r => r.Customers)
+            .Include(r => r.Detail)
+            .AsNoTracking(); // Read-only optimization
+    }
+}
+
+// Usage in repository
+public async Task<List<Request>> GetActiveRequestsWithCustomers()
+{
+    var spec = new ActiveRequestsWithCustomersSpec();
+    return await spec.Apply(_context.Requests).ToListAsync();
+}
+```
+
+### Caching Strategies
+
+```csharp
+// Distributed caching decorator
+public class CachedRequestRepository : IRequestRepository
+{
+    private readonly IRequestRepository _repository;
+    private readonly IDistributedCache _cache;
+    private readonly ILogger<CachedRequestRepository> _logger;
+    private readonly TimeSpan _cacheExpiry = TimeSpan.FromMinutes(30);
+
+    public async Task<Request?> GetById(long id)
+    {
+        var cacheKey = $"request:{id}";
+        
+        // Try cache first
+        var cachedJson = await _cache.GetStringAsync(cacheKey);
+        if (!string.IsNullOrEmpty(cachedJson))
+        {
+            _logger.LogDebug("Cache hit for request {RequestId}", id);
+            return JsonSerializer.Deserialize<Request>(cachedJson);
+        }
+        
+        // Load from repository
+        var request = await _repository.GetById(id);
+        if (request != null)
+        {
+            // Cache the result
+            var serialized = JsonSerializer.Serialize(request);
+            await _cache.SetStringAsync(cacheKey, serialized, new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = _cacheExpiry
+            });
+            
+            _logger.LogDebug("Cached request {RequestId}", id);
+        }
+        
+        return request;
+    }
+    
+    public async Task Save(Request request)
+    {
+        await _repository.Save(request);
+        
+        // Invalidate cache
+        var cacheKey = $"request:{request.Id}";
+        await _cache.RemoveAsync(cacheKey);
+        
+        _logger.LogDebug("Invalidated cache for request {RequestId}", request.Id);
+    }
+}
+```
+
+## Migration Strategies
+
+### From Anemic to Rich Domain Model
+
+```csharp
+// Step 1: Current anemic model
+public class OldRequest
+{
+    public long Id { get; set; }
+    public string Purpose { get; set; }
+    public string Status { get; set; }
+    public decimal LoanAmount { get; set; }
+    // ... other properties
+}
+
+// Step 2: Add behavior incrementally
+public class Request
+{
+    public long Id { get; private set; }
+    public string Purpose { get; private set; }
+    public string Status { get; private set; }
+    public decimal LoanAmount { get; private set; }
+    
+    // Add business methods one by one
+    public void UpdatePurpose(string newPurpose)
+    {
+        if (string.IsNullOrEmpty(newPurpose))
+            throw new ArgumentException("Purpose cannot be empty");
+            
+        Purpose = newPurpose;
+    }
+    
+    // Migrate existing setters to business methods
+    [Obsolete("Use UpdateStatus method instead")]
+    public string StatusSetter
+    {
+        set => Status = value;
+    }
+    
+    public void UpdateStatus(string newStatus)
+    {
+        ValidateStatusTransition(newStatus);
+        Status = newStatus;
+    }
+    
+    private void ValidateStatusTransition(string newStatus)
+    {
+        var validTransitions = new Dictionary<string, string[]>
+        {
+            ["Draft"] = ["Submitted", "Cancelled"],
+            ["Submitted"] = ["InReview", "Cancelled"],
+            ["InReview"] = ["Approved", "Rejected"],
+            ["Approved"] = ["Completed"],
+            ["Rejected"] = [],
+            ["Cancelled"] = [],
+            ["Completed"] = []
+        };
+        
+        if (!validTransitions[Status].Contains(newStatus))
+            throw new InvalidOperationException($"Cannot transition from {Status} to {newStatus}");
+    }
+}
+
+// Step 3: Introduce value objects
+public record RequestPurpose
+{
+    public string Value { get; }
+    
+    private RequestPurpose(string value)
+    {
+        Value = value;
+    }
+    
+    public static RequestPurpose Of(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            throw new ArgumentException("Purpose cannot be empty");
+            
+        return new RequestPurpose(value);
+    }
+    
+    public static implicit operator string(RequestPurpose purpose) => purpose.Value;
+}
+
+// Step 4: Final rich domain model
+public class Request : Aggregate<long>
+{
+    public RequestPurpose Purpose { get; private set; }
+    public RequestStatus Status { get; private set; }
+    public MonetaryAmount LoanAmount { get; private set; }
+    
+    public void UpdatePurpose(RequestPurpose newPurpose)
+    {
+        Purpose = newPurpose;
+        AddDomainEvent(new RequestPurposeChangedEvent(Id, Purpose));
+    }
+}
+```
+
+## Team Collaboration Patterns
+
+### Domain Expert Collaboration
+
+```csharp
+// Domain concepts dictionary maintained with experts
+public static class LoanProcessingGlossary
+{
+    // Terms verified with business experts
+    public const string APPRAISAL = "Professional assessment of property value by licensed appraiser";
+    public const string LTV_RATIO = "Loan-to-Value ratio: loan amount divided by appraised value";
+    public const string DTI_RATIO = "Debt-to-Income ratio: monthly debt payments divided by gross monthly income";
+    
+    // Business rules as executable specifications
+    public static class BusinessRules
+    {
+        public static bool IsHighRiskLoan(decimal loanAmount, decimal propertyValue, decimal borrowerIncome)
+        {
+            var ltvRatio = loanAmount / propertyValue;
+            var incomeRatio = loanAmount / (borrowerIncome * 12); // Annual income
+            
+            return ltvRatio > 0.80m || incomeRatio > 4.0m;
+        }
+        
+        public static bool RequiresAdditionalDocumentation(RequestPurpose purpose, decimal amount)
+        {
+            return purpose == RequestPurpose.Investment || amount > 500000m;
+        }
+    }
+}
+
+// Ubiquitous language in tests readable by domain experts
+public class LoanProcessingBusinessRuleTests
+{
+    [Test]
+    public void HighValueInvestmentProperty_ShouldRequireAdditionalDocumentation()
+    {
+        // Arrange
+        var purpose = RequestPurpose.Investment;
+        var loanAmount = 750000m;
+        
+        // Act
+        var requiresAdditionalDocs = BusinessRules.RequiresAdditionalDocumentation(purpose, loanAmount);
+        
+        // Assert
+        requiresAdditionalDocs.Should().BeTrue("investment properties over $500k need extra documentation");
+    }
+}
+```
+
+### Event Storming Implementation
+
+```csharp
+// Events discovered during event storming sessions
+namespace LoanProcessing.Events
+{
+    // Customer journey events
+    public record ApplicationStartedEvent(Guid ApplicationId, string CustomerType);
+    public record DocumentsUploadedEvent(Guid ApplicationId, DocumentType[] Documents);
+    public record PropertyAppraisalRequestedEvent(Guid ApplicationId, string PropertyAddress);
+    public record AppraisalCompletedEvent(Guid ApplicationId, decimal AppraisedValue);
+    public record UnderwritingStartedEvent(Guid ApplicationId, string UnderwriterId);
+    public record LoanApprovedEvent(Guid ApplicationId, decimal ApprovedAmount, string[] Conditions);
+    public record LoanRejectedEvent(Guid ApplicationId, string ReasonCode, string ReasonDescription);
+    
+    // Business process events
+    public record RiskAssessmentCompletedEvent(Guid ApplicationId, RiskLevel Risk, decimal Score);
+    public record ComplianceCheckCompletedEvent(Guid ApplicationId, bool Passed, string[] Issues);
+    public record FraudCheckCompletedEvent(Guid ApplicationId, bool Flagged, string Reason);
+}
+
+// Aggregate designed from event storming
+public class LoanApplication : Aggregate<Guid>
+{
+    public ApplicationStatus Status { get; private set; }
+    public CustomerInfo Customer { get; private set; }
+    public PropertyInfo Property { get; private set; }
+    public LoanDetails Loan { get; private set; }
+    
+    // Commands derived from domain events
+    public void StartApplication(CustomerInfo customer, PropertyInfo property, LoanDetails loan)
+    {
+        Customer = customer;
+        Property = property;
+        Loan = loan;
+        Status = ApplicationStatus.Started;
+        
+        AddDomainEvent(new ApplicationStartedEvent(Id, customer.Type));
+    }
+    
+    public void RequestAppraisal()
+    {
+        if (Status != ApplicationStatus.DocumentsComplete)
+            throw new InvalidOperationException("Cannot request appraisal until documents are complete");
+            
+        Status = ApplicationStatus.AppraisalRequested;
+        AddDomainEvent(new PropertyAppraisalRequestedEvent(Id, Property.Address));
+    }
+}
+```
+
 # 📋 DDD Implementation Checklist
+
+## ✅ Strategic Patterns
+- [ ] Bounded contexts defined and documented
+- [ ] Context boundaries clearly identified  
+- [ ] Ubiquitous language established per context
+- [ ] Context map documented with relationships
+- [ ] Anti-corruption layers implemented
+- [ ] Integration events for cross-context communication
+- [ ] Domain model evolution strategies
+- [ ] Language translation between contexts
 
 ## ✅ Tactical Patterns
 - [ ] Entities with identity and lifecycle
-- [ ] Value objects with immutability
+- [ ] Value objects with immutability and validation
 - [ ] Aggregates with business invariants
 - [ ] Domain events for state changes
 - [ ] Repositories for persistence abstraction
 - [ ] Domain services for cross-entity logic
 - [ ] Specifications for complex business rules
+- [ ] Factory methods for complex object creation
 
-## ✅ Strategic Patterns
-- [ ] Bounded contexts defined
-- [ ] Ubiquitous language established
-- [ ] Context map documented
-- [ ] Anti-corruption layers implemented
-- [ ] Integration events for cross-context communication
+## ✅ Advanced Tactical Patterns  
+- [ ] Unit of Work pattern for transaction boundaries
+- [ ] Soft delete implementation with audit trail
+- [ ] Optimistic concurrency control
+- [ ] Domain model validation strategies
+- [ ] Aggregate lifecycle management
+- [ ] Event sourcing for audit requirements
+- [ ] Specification pattern for reusable business rules
 
 ## ✅ Infrastructure Patterns
-- [ ] Domain event dispatch
-- [ ] Audit trail implementation
-- [ ] Caching decorators
-- [ ] Validation pipeline
+- [ ] Domain event dispatch mechanism
+- [ ] Audit trail implementation  
+- [ ] Caching decorators for repositories
+- [ ] Validation pipeline with FluentValidation
 - [ ] Exception handling strategy
-- [ ] Unit of work pattern
+- [ ] Database schema design for DDD
+- [ ] EF Core interceptors for cross-cutting concerns
 
 ## ✅ CQRS Integration
-- [ ] Command/query separation
+- [ ] Command/query separation interfaces
 - [ ] Command handlers with validation
 - [ ] Query handlers optimized for reads
 - [ ] Domain logic in commands only
+- [ ] Pipeline behaviors for cross-cutting concerns
+- [ ] Command and query validation
+
+## ✅ Performance & Testing
+- [ ] N+1 query prevention strategies
+- [ ] Query optimization with specifications
+- [ ] Distributed caching implementation
+- [ ] Unit testing for aggregates
+- [ ] Integration testing with test containers
+- [ ] Performance monitoring and optimization
+
+## ✅ Team Collaboration
+- [ ] Domain expert collaboration patterns
+- [ ] Event storming implementation
+- [ ] Ubiquitous language in code and tests
+- [ ] Business rules as executable specifications
+- [ ] Migration strategies from anemic models
+- [ ] Code review guidelines for DDD
 
 ---
 ## 🔍 STEP 1: Identify Core DDD Building Blocks in Request Module

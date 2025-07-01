@@ -26,7 +26,6 @@ public class RequestDocument : Entity<long>
         FilePath = filePath;
     }
 
-    public long RequestId { get; } = default!;
     public string DocType { get; private set; } = default!;
     public string FileName { get; private set; } = default!;
     public DateTime? UploadDate { get; private set; } = default!;

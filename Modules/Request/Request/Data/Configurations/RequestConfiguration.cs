@@ -85,17 +85,7 @@ public class RequestConfiguration : IEntityTypeConfiguration<Requests.Models.Req
             customer.Property(p => p.ContactNumber).HasMaxLength(20).HasColumnName("ContactNumber");
         });
 
-        builder.OwnsMany(p => p.Properties, property =>
-        {
-            property.ToTable("RequestProperties");
-            property.WithOwner().HasForeignKey("RequestId");
-
-            property.Property<long>("Id");
-            property.HasKey("Id");
-
-            property.Property(p => p.PropertyType).UseCodeConfig().HasColumnName("PropertyType");
-            property.Property(p => p.BuildingType).UseCodeConfig().HasColumnName("BuildingType");
-            property.Property(p => p.SellingPrice).UseMoneyConfig().HasColumnName("SellingPrice");
-        });
+        builder.HasMany(p => p.Properties).WithOne().HasForeignKey("RequestId").OnDelete(DeleteBehavior.Cascade);
+        builder.HasMany(p => p.Comments).WithOne().HasForeignKey("RequestId").OnDelete(DeleteBehavior.Cascade);
     }
 }

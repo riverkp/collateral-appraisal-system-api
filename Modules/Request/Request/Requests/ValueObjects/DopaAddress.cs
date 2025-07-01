@@ -26,9 +26,9 @@ public record DopaAddress
     public string? DopaMoo { get; init; }
     public string? DopaSoi { get; init; }
     public string? DopaRoad { get; init; }
-    public string? DopaSubDistrict { get; init; } = default!;
-    public string? DopaDistrict { get; init; } = default!;
-    public string? DopaProvince { get; init; } = default!;
+    public string? DopaSubDistrict { get; init; }
+    public string? DopaDistrict { get; init; }
+    public string? DopaProvince { get; init; }
     public string? DopaPostcode { get; init; }
 
     public static DopaAddress Create(

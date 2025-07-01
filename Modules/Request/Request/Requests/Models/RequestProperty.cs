@@ -18,8 +18,8 @@ public class RequestProperty : Entity<long>
         BuildingType = buildingType;
         SellingPrice = sellingPrice;
     }
-    public string PropertyType { get; }
-    public string BuildingType { get; }
+    public string PropertyType { get; } = default!;
+    public string BuildingType { get; } = default!;
     public decimal? SellingPrice { get; }
 
     public IReadOnlyList<RequestTitle> Titles => _titles.AsReadOnly();

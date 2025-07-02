@@ -9,21 +9,26 @@ internal class UploadDocumentHandler(RequestDbContext dbContext) : ICommandHandl
     {
         var request = await dbContext.Requests.Include(r => r.Documents).FirstOrDefaultAsync(r => r.Id == command.Id, cancellationToken) ?? throw new RequestNotFoundException(command.Id);
 
-        Directory.CreateDirectory("Uploads");
+        if (!Directory.Exists("Uploads")) Directory.CreateDirectory("Uploads");
 
         foreach (var file in command.FormFiles)
         {
+            if (file is null)
+                throw new DocumentNotFoundException("Unknown file");
+            if (file.Length == 0)
+                throw new DocumentNotFoundException(file.FileName);
+
             var savePath = Path.Combine("Uploads", file.FileName);
             using var stream = new FileStream(savePath, FileMode.Create);
 
             await file.CopyToAsync(stream, cancellationToken);
             var document = RequestDocument.Of(
-                "", // file.ContentType is too long
+                "DocType", // Doctype
                 file.FileName,
                 DateTime.Now,
-                "",
-                1,
-                "",
+                "Prefix", // Prefix
+                1, // Set
+                "", // Comment
                 savePath);
             request.AddDocument(document);
         }

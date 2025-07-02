@@ -8,9 +8,9 @@ public class RequestPropertyConfiguration : IEntityTypeConfiguration<RequestProp
         builder.HasKey(p => p.Id);
         builder.Property(p => p.Id).HasColumnName("PropertyId").UseIdentityColumn();
 
-        builder.Property(p => p.PropertyType).UseCodeConfig().HasColumnName("PropertyType");
-        builder.Property(p => p.BuildingType).UseCodeConfig().HasColumnName("BuildingType");
-        builder.Property(p => p.SellingPrice).UseMoneyConfig().HasColumnName("SellingPrice");
+        builder.Property(p => p.PropertyType).UseCodeConfig();
+        builder.Property(p => p.BuildingType).UseCodeConfig();
+        builder.Property(p => p.SellingPrice).UseMoneyConfig();
 
         builder.OwnsMany(p => p.Titles, title =>
         {
@@ -29,7 +29,7 @@ public class RequestPropertyConfiguration : IEntityTypeConfiguration<RequestProp
                 collateral.Property(p => p.NoOfBuilding).HasColumnName("NoOfBuilding");
                 collateral.Property(p => p.TitleDetail).HasMaxLength(200).HasColumnName("TitleDetail");
             });
-            
+
             title.OwnsOne(p => p.Area, area =>
             {
                 area.Property(p => p.Rai).HasPrecision(3, 0).HasColumnName("Rai");
@@ -97,6 +97,24 @@ public class RequestPropertyConfiguration : IEntityTypeConfiguration<RequestProp
                 machine.Property(p => p.MachineInvoiceNo).HasMaxLength(20).HasColumnName("MachineInvoiceNo");
                 machine.Property(p => p.NoOfMachine).HasPrecision(5, 0).HasColumnName("NoOfMachine");
             });
+
+            title.OwnsMany(p => p.TitleDocuments, titleDocument =>
+            {
+                titleDocument.Property<long>("DocumentId");
+                titleDocument.HasKey("DocumentId");
+
+                titleDocument.ToTable("TitleDocuments");
+                titleDocument.WithOwner().HasForeignKey("TitleId");
+
+                titleDocument.Property(p => p.DocType).HasMaxLength(10).HasColumnName("DocType");
+                titleDocument.Property(p => p.FileName).HasMaxLength(255).HasColumnName("FileName");
+                titleDocument.Property(p => p.UploadDate).HasColumnName("UploadDate");
+                titleDocument.Property(p => p.Prefix).HasMaxLength(50).HasColumnName("Prefix");
+                titleDocument.Property(p => p.Set).HasColumnName("Set");
+                titleDocument.Property(p => p.Comment).HasMaxLength(3000).HasColumnName("Comment");
+                titleDocument.Property(p => p.FilePath).HasMaxLength(255).HasColumnName("FilePath");
+            });
         });
+        
     }
 }

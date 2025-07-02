@@ -2,6 +2,8 @@ namespace Request.Requests.ValueObjects;
 
 public record RequestTitle
 {
+
+    private readonly List<TitleDocument> _titleDocuments = [];
     public RequestTitle()
     {
     }
@@ -26,6 +28,8 @@ public record RequestTitle
         Vehicle = vehicle;
         Machine = machine;
     }
+
+    public IReadOnlyList<TitleDocument> TitleDocuments => _titleDocuments.AsReadOnly();
 
     public Collateral Collateral { get; } = default!;
     public Area Area { get; } = default!;

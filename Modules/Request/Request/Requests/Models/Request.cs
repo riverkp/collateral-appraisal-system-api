@@ -197,4 +197,11 @@ public class Request : Aggregate<long>
     {
         _properties.Clear();
     }
+
+    public void AddDocument(RequestDocument document)
+    {
+        ArgumentNullException.ThrowIfNull(document);
+
+        _documents.Add(document);
+    }
 }

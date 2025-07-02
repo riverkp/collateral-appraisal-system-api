@@ -15,8 +15,8 @@ public record RequestCustomer
         ContactNumber = contactNumber;
     }
 
-    public string Name { get; }
-    public string ContactNumber { get; }
+    public string Name { get; } = default!;
+    public string ContactNumber { get; } = default!;
 
     public static RequestCustomer Create(
         string name,

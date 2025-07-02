@@ -31,14 +31,14 @@ public record RequestTitle
 
     public IReadOnlyList<TitleDocument> TitleDocuments => _titleDocuments.AsReadOnly();
 
-    public Collateral Collateral { get; }
-    public Area Area { get; }
-    public Condo Condo { get; }
-    public TitleAddress TitleAddress { get; }
-    public DopaAddress DopaAddress { get; }
-    public Building Building { get; }
-    public Vehicle Vehicle { get; }
-    public Machine Machine { get; }
+    public Collateral Collateral { get; } = default!;
+    public Area Area { get; } = default!;
+    public Condo Condo { get; } = default!;
+    public TitleAddress TitleAddress { get; } = default!;
+    public DopaAddress DopaAddress { get; } = default!;
+    public Building Building { get; } = default!;
+    public Vehicle Vehicle { get; } = default!;
+    public Machine Machine { get; } = default!;
 
     public static RequestTitle Of(Collateral collateral, Area area, Condo condo, TitleAddress titleAddress,
         DopaAddress dopaAddress, Building building, Vehicle vehicle, Machine machine)

@@ -8,9 +8,9 @@ public class RequestPropertyConfiguration : IEntityTypeConfiguration<RequestProp
         builder.HasKey(p => p.Id);
         builder.Property(p => p.Id).HasColumnName("PropertyId").UseIdentityColumn();
 
-        builder.Property(p => p.PropertyType).UseCodeConfig().HasColumnName("PropertyType");
-        builder.Property(p => p.BuildingType).UseCodeConfig().HasColumnName("BuildingType");
-        builder.Property(p => p.SellingPrice).UseMoneyConfig().HasColumnName("SellingPrice");
+        builder.Property(p => p.PropertyType).UseCodeConfig();
+        builder.Property(p => p.BuildingType).UseCodeConfig();
+        builder.Property(p => p.SellingPrice).UseMoneyConfig();
 
         builder.OwnsMany(p => p.Titles, title =>
         {

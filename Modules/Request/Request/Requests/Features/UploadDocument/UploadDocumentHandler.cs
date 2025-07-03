@@ -8,7 +8,7 @@ internal class UploadDocumentHandler(RequestDbContext dbContext) : ICommandHandl
 {
     private readonly string[] permittedExtensions = [".pdf"];
     private const int maxUploadAttempts = 5;
-    private const int maxFileSizeBytes = 5242880; // 5 MB
+    private const int maxFileSizeBytes = 5 * 1024 * 1024; // 5 MB
 
     public async Task<UploadDocumentResult> Handle(UploadDocumentCommand command, CancellationToken cancellationToken)
     {

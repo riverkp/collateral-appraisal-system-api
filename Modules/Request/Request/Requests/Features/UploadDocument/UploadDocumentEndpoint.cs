@@ -1,6 +1,8 @@
 namespace Request.Requests.Features.UploadDocument;
 
-public record UploadDocumentResponse(List<UploadResultDto> IsSuccess);
+
+public record UploadDocumentResponse(bool IsSuccess, List<UploadDocumentStatus> Details);
+
 
 public class UploadDocumentEndpoint : ICarterModule
 {

@@ -1,6 +1,9 @@
+using System.Security.Cryptography;
+
 namespace Request.Requests.Features.UploadDocument;
 
 public record UploadDocumentCommand(long Id, List<IFormFile> FormFiles) : ICommand<UploadDocumentResult>;
+
 public record UploadDocumentResult(bool IsSuccess, List<UploadDocumentStatus> Details);
 public record UploadDocumentStatus(bool IsSuccess, string Comment = "");
 
@@ -10,16 +13,24 @@ internal class UploadDocumentHandler(RequestDbContext dbContext) : ICommandHandl
     private const int maxUploadAttempts = 5;
     private const int maxFileSizeBytes = 5 * 1024 * 1024; // 5 MB
 
+
     public async Task<UploadDocumentResult> Handle(UploadDocumentCommand command, CancellationToken cancellationToken)
     {
-        var request = await dbContext.Requests.Include(r => r.Documents).FirstOrDefaultAsync(r => r.Id == command.Id, cancellationToken) ?? throw new RequestNotFoundException(command.Id);
+        var request = await dbContext.Requests
+            .Include(r => r.Documents)
+            .FirstOrDefaultAsync(r => r.Id == command.Id, cancellationToken)
+            ?? throw new RequestNotFoundException(command.Id);
 
-        Directory.CreateDirectory("Uploads");
-        List<UploadDocumentStatus> response = [];
-        bool isSuccess = true;
+
+        if (!Directory.Exists(UploadsFolder))
+            Directory.CreateDirectory(UploadsFolder);
+
+        var results = new List<UploadResultDto>();
+
 
         for (var i = 0; i < command.FormFiles.Count; i++)
         {
+
             var file = command.FormFiles[i];
             try
             {
@@ -96,5 +107,6 @@ internal class UploadDocumentHandler(RequestDbContext dbContext) : ICommandHandl
             }
         }
         throw new UploadDocumentException($"Cannot find suitable file name for storage after {attempts} attempts");
+
     }
 }

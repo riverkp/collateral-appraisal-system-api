@@ -1,6 +1,8 @@
 namespace Request.Requests.Features.UploadDocument;
 
+
 public record UploadDocumentResponse(bool IsSuccess, List<UploadDocumentStatus> Details);
+
 
 public class UploadDocumentEndpoint : ICarterModule
 {
@@ -11,7 +13,7 @@ public class UploadDocumentEndpoint : ICarterModule
             var form = await request.ReadFormAsync();
             var command = new UploadDocumentCommand(id, [.. form.Files]);
             var result = await sender.Send(command);
-            var response = result.Adapt<UploadDocumentResponse>();
+            var response = result.Adapt<UploadDocumentResponse>() with { IsSuccess = result.Results};
             return Results.Ok(response);
         }).DisableAntiforgery();
     }

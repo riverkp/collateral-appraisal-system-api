@@ -1,7 +1,9 @@
-namespace Request.Requests.ValueObjects;
+namespace Request.Requests.Models;
 
-public record RequestProperty
+public class RequestProperty : Entity<long>
 {
+    private readonly List<RequestTitle> _titles = [];
+
     public RequestProperty()
     {
     }
@@ -16,9 +18,11 @@ public record RequestProperty
         BuildingType = buildingType;
         SellingPrice = sellingPrice;
     }
-    public string PropertyType { get; }
-    public string BuildingType { get; }
+    public string PropertyType { get; } = default!;
+    public string BuildingType { get; } = default!;
     public decimal? SellingPrice { get; }
+
+    public IReadOnlyList<RequestTitle> Titles => _titles.AsReadOnly();
 
     public static RequestProperty Of(
         string propertyType,

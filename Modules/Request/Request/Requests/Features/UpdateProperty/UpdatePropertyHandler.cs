@@ -8,7 +8,7 @@ internal class UpdatePropertyHandler(RequestDbContext dbContext)
 {
     public async Task<UpdatePropertyResult> Handle(UpdatePropertyCommand command, CancellationToken cancellationToken)
     {
-        var request = await dbContext.Requests.FindAsync(command.Id, cancellationToken);
+        var request = await dbContext.Requests.FindAsync([command.Id], cancellationToken);
         if (request is null) throw new RequestNotFoundException(command.Id);
         request.UpdateProperty();
 

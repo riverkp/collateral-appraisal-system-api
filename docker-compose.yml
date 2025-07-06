@@ -47,27 +47,9 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     restart: unless-stopped
-    
-  keycloak:
-    image: quay.io/keycloak/keycloak:24.0
-    container_name: keycloak
-    depends_on:
-      - sqlserver
-    command:
-      start-dev
-    environment:
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: P@ssword
-      KC_DB: mssql
-      KC_DB_USERNAME: sa
-      KC_DB_PASSWORD: P@ssw0rd
-      KC_DB_URL: jdbc:sqlserver://sqlserver:1433;databaseName=CollateralAppraisal;encrypt=false
-      KC_TRANSACTION_XA_ENABLED: false
-    ports:
-      - "8080:8080"
-    restart: unless-stopped
 
 volumes:
   sql_data:
   seq_data:
   rabbitmq_data:
+

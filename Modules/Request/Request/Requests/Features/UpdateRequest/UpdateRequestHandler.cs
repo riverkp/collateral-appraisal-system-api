@@ -1,19 +1,30 @@
 namespace Request.Requests.Features.UpdateRequest;
 
-public record UpdateRequestCommand(RequestDto Request) : ICommand<UpdateRequestResult>;
-public record UpdateRequestResult(bool IsSuccess);
-internal class UpdateRequestHandler(RequestDbContext dbContext) : ICommandHandler<UpdateRequestCommand, UpdateRequestResult>
+internal class UpdateRequestHandler(RequestDbContext dbContext)
+    : ICommandHandler<UpdateRequestCommand, UpdateRequestResult>
 {
     public async Task<UpdateRequestResult> Handle(UpdateRequestCommand command, CancellationToken cancellationToken)
     {
-        // Handle the request and return a result
-        var request = await dbContext.Requests.FindAsync([command.Request.Id], cancellationToken);
-        if (request is null)
-        {
-            throw new RequestNotFoundException(command.Request.Id);
-        }
+        var request = await dbContext.Requests.FindAsync([command.Id], cancellationToken);
+        if (request is null) throw new RequestNotFoundException(command.Id);
 
-        request.Update(command.Request.Purpose, command.Request.Channel);
+        request.UpdateDetail(
+            command.Purpose,
+            command.HasAppraisalBook,
+            command.Priority,
+            command.Channel,
+            command.OccurConstInspec,
+            command.Reference.Adapt<Reference>(),
+            command.LoanDetail.Adapt<LoanDetail>(),
+            command.Address.Adapt<Address>(),
+            command.Contact.Adapt<Contact>(),
+            command.Fee.Adapt<Fee>(),
+            command.Requestor.Adapt<Requestor>()
+        );
+
+        request.UpdateCustomers(command.Customers.Adapt<List<RequestCustomer>>());
+        request.UpdateProperties(command.Properties.Adapt<List<RequestProperty>>());
+
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return new UpdateRequestResult(true);

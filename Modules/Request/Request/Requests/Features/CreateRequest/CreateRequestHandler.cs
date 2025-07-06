@@ -1,29 +1,44 @@
 namespace Request.Requests.Features.CreateRequest;
 
-public record CreateRequestCommand(RequestDto Request) : ICommand<CreateRequestResult>;
-public record CreateRequestResult(Guid Id);
-public class CreateRequestCommandValidator : AbstractValidator<CreateRequestCommand>
-{
-    public CreateRequestCommandValidator()
-    {
-        RuleFor(x => x.Request.Purpose).NotEmpty().WithMessage("Purpose is required.");
-        RuleFor(x => x.Request.Channel).NotEmpty().WithMessage("Channel is required.");
-    }
-}
-internal class CreateRequestHandler(RequestDbContext dbContext) : ICommandHandler<CreateRequestCommand, CreateRequestResult>
+internal class CreateRequestHandler(
+    IRequestRepository requestRepository,
+    IAppraisalNumberGenerator appraisalNumberGenerator)
+    : ICommandHandler<CreateRequestCommand, CreateRequestResult>
 {
     public async Task<CreateRequestResult> Handle(CreateRequestCommand command, CancellationToken cancellationToken)
     {
-        // Handle the request and return a result
-        var request = CreateNewRequest(command.Request);
-        dbContext.Requests.Add(request);
-        await dbContext.SaveChangesAsync(cancellationToken);
+        var appraisalNumber = await appraisalNumberGenerator.GenerateAsync(cancellationToken);
+
+        var request = CreateNewRequest(appraisalNumber, command);
+
+        await requestRepository.CreateRequest(request, cancellationToken);
 
         return new CreateRequestResult(request.Id);
     }
 
-    private Models.Request CreateNewRequest(RequestDto request)
+    private static Models.Request CreateNewRequest(AppraisalNumber appraisalNumber, CreateRequestCommand command)
     {
-        return new Models.Request(Guid.NewGuid(), request.Purpose, request.Channel);
+        var request = Models.Request.Create(
+            appraisalNumber,
+            command.Purpose,
+            command.HasAppraisalBook,
+            command.Priority,
+            command.Channel,
+            command.OccurConstInspec,
+            command.Reference.Adapt<Reference>(),
+            command.LoanDetail.Adapt<LoanDetail>(),
+            command.Address.Adapt<Address>(),
+            command.Contact.Adapt<Contact>(),
+            command.Fee.Adapt<Fee>(),
+            command.Requestor.Adapt<Requestor>()
+        );
+
+        command.Customers.ForEach(c => request.AddCustomer(c.Name, c.ContactNumber));
+
+        command.Properties.ForEach(p => request.AddProperty(p.PropertyType, p.BuildingType, p.SellingPrice));
+
+        command.Comments.ForEach(c => request.AddComment(c.Comment));
+
+        return request;
     }
 }

@@ -1,6 +1,6 @@
 namespace Request.Data.Seed;
 
-public class RequestDataSeed(RequestDbContext context) : IDataSeeder
+public class RequestDataSeed(RequestDbContext context) : IDataSeeder<RequestDbContext>
 {
     public async Task SeedAllAsync()
     {

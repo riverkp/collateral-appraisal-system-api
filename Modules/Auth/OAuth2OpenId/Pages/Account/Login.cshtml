@@ -1,0 +1,64 @@
+@page
+@model OAuth2OpenId.Pages.Account.Login
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+
+    <link rel="stylesheet" href="/Assets/index.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"/>
+
+    <title>Login</title>
+</head>
+
+<body>
+<div class="login">
+    <div class="login-container">
+        <div class="left-bg-container">
+            <img class="left-bg" alt="Background" src="/Assets/login-bg.png">
+        </div>
+        <div class="form-container">
+            <form method="post">
+                <input type="hidden" asp-for="ReturnUrl" value="@Model.ReturnUrl"/>
+                <img class="logo-icon" alt="LH Bank logo" src="@Url.Content("/Assets/logo-lh-bank.svg")">
+                <div class="collateral-appraisal-system-container">
+                    <h1 class="collateral-appraisal">COLLATERAL APPRAISAL SYSTEM</h1>
+                </div>
+                <div class="input-container">
+                    <label class="input-label" for="name">
+                        Username
+                    </label>
+                    <input class="text-input" type="text" id="name" name="Username" value="@Model.Username"
+                           autocomplete="username" required>
+                </div>
+                <div class="input-container">
+                    <label class="input-label" for="password">
+                        Password
+                    </label>
+                    <input class="text-input" type="password" id="password" name="Password" value="@Model.Password"
+                           autocomplete="current-password" required>
+                </div>
+                <div class="remember-me-container">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember-me">
+                        <label for="remember-me" class="circle-label"><span>Circle label</span></label>
+                        <label for="remember-me" class="remember-me-text">Remember me</label>
+                    </div>
+                </div>
+                <div class="login-button-container">
+                    <button type="submit" class="login-button">Login</button>
+                </div>
+                <div class="secure-access-unauthorized">* Secure access. Unauthorized use is prohibited and
+                    monitored.
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

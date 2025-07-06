@@ -1,7 +1,10 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Request.Configurations;
 using Request.Data.Repository;
+using Request.Requests.Services;
+using Shared.Data.Extensions;
 using Shared.Data.Interceptors;
 
 namespace Request;
@@ -10,13 +13,12 @@ public static class RequestModule
 {
     public static IServiceCollection AddRequestModule(this IServiceCollection services, IConfiguration configuration)
     {
-        // Add your module's services here
-        // For example:
-        // services.AddScoped<IYourService, YourService>();
+        // Configure Mapster mappings
+        MappingConfiguration.ConfigureMappings();
 
         // Application User Case services
         services.AddScoped<IRequestRepository, RequestRepository>();
-        services.Decorate<IRequestRepository, CachedRequestRepository>();
+        services.AddTransient<IAppraisalNumberGenerator, AppraisalNumberGenerator>();
 
         // Infrastructure services
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
@@ -28,17 +30,13 @@ public static class RequestModule
             options.UseSqlServer(configuration.GetConnectionString("Database"));
         });
 
-        services.AddScoped<IDataSeeder, RequestDataSeed>();
+        services.AddScoped<IDataSeeder<RequestDbContext>, RequestDataSeed>();
 
         return services;
     }
 
     public static IApplicationBuilder UseRequestModule(this IApplicationBuilder app)
     {
-        // Configure your module's middleware here
-        // For example:
-        // app.UseMiddleware<YourMiddleware>();
-
         app.UseMigration<RequestDbContext>();
 
         return app;

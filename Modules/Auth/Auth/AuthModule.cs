@@ -8,18 +8,11 @@ public static class AuthModule
 {
     public static IServiceCollection AddAuthModule(this IServiceCollection services, IConfiguration configuration)
     {
-        //services.AddOpenIddictModule(configuration);
         return services;
     }
 
     public static IApplicationBuilder UseAuthModule(this IApplicationBuilder app)
     {
-        // Configure your module's middleware here
-        // For example:
-
-        //app.UseMigration<AuthDbContext>();
-        //app.UseOpenIddictModule();
-
         return app;
     }
 }

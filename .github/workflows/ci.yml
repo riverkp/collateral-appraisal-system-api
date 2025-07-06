@@ -18,12 +18,6 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.x'
-          
-#      - name: Install SonarScanner for .NET
-#        run: dotnet tool install --global dotnet-sonarscanner
-        
-#      - name: Begin SonarCloud analysis
-#        run: dotnet sonarscanner begin /k:"immortalgky_collateral-appraisal-system-api" /o:"immortalgky" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
 
       - name: Restore
         run: dotnet restore collateral-appraisal-system-api.sln
@@ -37,6 +31,3 @@ jobs:
 
       - name: Test
         run: dotnet test collateral-appraisal-system-api.sln --no-restore --verbosity normal
-
-#      - name: End SonarCloud analysis
-#        run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"

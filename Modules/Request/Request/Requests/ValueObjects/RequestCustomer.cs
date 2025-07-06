@@ -2,9 +2,15 @@ namespace Request.Requests.ValueObjects;
 
 public record RequestCustomer
 {
+    public string Name { get; }
+    public string ContactNumber { get; }
+
+#pragma warning disable CS8618
     public RequestCustomer()
     {
+        // For EF Core
     }
+#pragma warning restore CS8618
 
     private RequestCustomer(
         string name,
@@ -15,16 +21,13 @@ public record RequestCustomer
         ContactNumber = contactNumber;
     }
 
-    public string Name { get; } = default!;
-    public string ContactNumber { get; } = default!;
-
     public static RequestCustomer Create(
         string name,
         string contactNumber
     )
     {
-        ArgumentException.ThrowIfNullOrEmpty(name);
-        ArgumentException.ThrowIfNullOrEmpty(contactNumber);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(contactNumber);
 
         return new RequestCustomer(
             name,

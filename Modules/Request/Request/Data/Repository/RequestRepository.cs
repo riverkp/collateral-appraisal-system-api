@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace Request.Data.Repository;
 
 public class RequestRepository(RequestDbContext dbContext) : IRequestRepository
@@ -20,6 +22,7 @@ public class RequestRepository(RequestDbContext dbContext) : IRequestRepository
     {
         dbContext.Requests.Add(request);
         await dbContext.SaveChangesAsync(cancellationToken);
+
         return request;
     }
 
@@ -31,6 +34,12 @@ public class RequestRepository(RequestDbContext dbContext) : IRequestRepository
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return true;
+    }
+
+    public async Task<int> GetNextAppraisalNumber(CancellationToken cancellationToken = default)
+    {
+        return (await dbContext.Database
+            .SqlQuery<int>($"EXEC request.GetNextAppraisalNumber").ToListAsync(cancellationToken)).FirstOrDefault();
     }
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

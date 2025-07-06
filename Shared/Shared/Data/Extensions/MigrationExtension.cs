@@ -25,7 +25,7 @@ public static class MigrationExtension
     private static async Task SeedDatabaseAsync<TContext>(IServiceProvider serviceProvider) where TContext : DbContext
     {
         using var scope = serviceProvider.CreateScope();
-        var seeders = scope.ServiceProvider.GetServices<IDataSeeder>();
+        var seeders = scope.ServiceProvider.GetServices<IDataSeeder<TContext>>();
         foreach (var seeder in seeders) await seeder.SeedAllAsync();
     }
 }

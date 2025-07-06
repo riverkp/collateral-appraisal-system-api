@@ -1,71 +1,44 @@
 namespace Request.Requests.Features.CreateRequest;
 
-internal class CreateRequestHandler(RequestDbContext dbContext)
+internal class CreateRequestHandler(
+    IRequestRepository requestRepository,
+    IAppraisalNumberGenerator appraisalNumberGenerator)
     : ICommandHandler<CreateRequestCommand, CreateRequestResult>
 {
     public async Task<CreateRequestResult> Handle(CreateRequestCommand command, CancellationToken cancellationToken)
     {
-        var request = CreateNewRequest(command);
+        var appraisalNumber = await appraisalNumberGenerator.GenerateAsync(cancellationToken);
 
-        dbContext.Requests.Add(request);
+        var request = CreateNewRequest(appraisalNumber, command);
 
-        await dbContext.SaveChangesAsync(cancellationToken);
+        await requestRepository.CreateRequest(request, cancellationToken);
 
         return new CreateRequestResult(request.Id);
     }
 
-    private static Models.Request CreateNewRequest(CreateRequestCommand command)
+    private static Models.Request CreateNewRequest(AppraisalNumber appraisalNumber, CreateRequestCommand command)
     {
-        return Models.Request.From(
+        var request = Models.Request.Create(
+            appraisalNumber,
             command.Purpose,
             command.HasAppraisalBook,
             command.Priority,
             command.Channel,
             command.OccurConstInspec,
-            new Reference(
-                command.Reference.PrevAppraisalNo,
-                command.Reference.PrevAppraisalValue,
-                command.Reference.PrevAppraisalDate
-            ),
-            new LoanDetail(
-                command.LoanDetail.LoanApplicationNo,
-                command.LoanDetail.LimitAmt,
-                command.LoanDetail.TotalSellingPrice
-            ),
-            Address.Create(
-                command.Address.HouseNo,
-                command.Address.RoomNo,
-                command.Address.FloorNo,
-                command.Address.LocationIdentifier,
-                command.Address.Moo,
-                command.Address.Soi,
-                command.Address.Road,
-                command.Address.SubDistrict,
-                command.Address.District,
-                command.Address.Province,
-                command.Address.Postcode
-            ),
-            new Contact(
-                command.Contact.ContactPersonName,
-                command.Contact.ContactPersonContactNo,
-                command.Contact.ProjectCode
-            ),
-            new Fee(
-                command.Fee.FeeType,
-                command.Fee.FeeRemark
-            ),
-            Requestor.Create(
-                command.Requestor.RequestorEmpId,
-                command.Requestor.RequestorName,
-                command.Requestor.RequestorEmail,
-                command.Requestor.RequestorContactNo,
-                command.Requestor.RequestorAo,
-                command.Requestor.RequestorBranch,
-                command.Requestor.RequestorBusinessUnit,
-                command.Requestor.RequestorDepartment,
-                command.Requestor.RequestorSection,
-                command.Requestor.RequestorCostCenter
-            )
+            command.Reference.Adapt<Reference>(),
+            command.LoanDetail.Adapt<LoanDetail>(),
+            command.Address.Adapt<Address>(),
+            command.Contact.Adapt<Contact>(),
+            command.Fee.Adapt<Fee>(),
+            command.Requestor.Adapt<Requestor>()
         );
+
+        command.Customers.ForEach(c => request.AddCustomer(c.Name, c.ContactNumber));
+
+        command.Properties.ForEach(p => request.AddProperty(p.PropertyType, p.BuildingType, p.SellingPrice));
+
+        command.Comments.ForEach(c => request.AddComment(c.Comment));
+
+        return request;
     }
 }

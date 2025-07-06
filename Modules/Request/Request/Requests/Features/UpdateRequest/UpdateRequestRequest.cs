@@ -11,5 +11,8 @@ public record UpdateRequestRequest(
     AddressDto Address,
     ContactDto Contact,
     FeeDto Fee,
-    RequestorDto Requestor
+    RequestorDto Requestor,
+    List<RequestCustomerDto> Customers,
+    List<RequestPropertyDto> Properties,
+    List<RequestCommentDto> Comments
 );

@@ -7,7 +7,7 @@ public static class PropertyBuilderExtension
     // Username
     public static PropertyBuilder<string> UseUserNameConfig(this PropertyBuilder<string> builder)
     {
-        return builder.HasMaxLength(10).IsRequired(); // customize as needed
+        return builder.HasMaxLength(10).IsRequired();
     }
 
     // Code

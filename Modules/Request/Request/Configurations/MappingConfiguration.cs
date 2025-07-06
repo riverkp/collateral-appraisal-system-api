@@ -4,6 +4,22 @@ public static class MappingConfiguration
 {
     public static void ConfigureMappings()
     {
+        TypeAdapterConfig<LoanDetailDto, LoanDetail>
+            .NewConfig()
+            .ConstructUsing(src => LoanDetail.Create(
+                src.LoanApplicationNo,
+                src.LimitAmt,
+                src.TotalSellingPrice
+            ));
+
+        TypeAdapterConfig<ReferenceDto, Reference>
+            .NewConfig()
+            .ConstructUsing(src => Reference.Create(
+                src.PrevAppraisalNo,
+                src.PrevAppraisalValue,
+                src.PrevAppraisalDate
+            ));
+
         TypeAdapterConfig<AddressDto, Address>
             .NewConfig()
             .ConstructUsing(src => Address.Create(
@@ -20,6 +36,21 @@ public static class MappingConfiguration
                 src.Postcode
             ));
 
+        TypeAdapterConfig<ContactDto, Contact>
+            .NewConfig()
+            .ConstructUsing(src => Contact.Create(
+                src.ContactPersonName,
+                src.ContactPersonContactNo,
+                src.ProjectCode
+            ));
+
+        TypeAdapterConfig<FeeDto, Fee>
+            .NewConfig()
+            .ConstructUsing(src => Fee.Create(
+                src.FeeType,
+                src.FeeRemark
+            ));
+
         TypeAdapterConfig<RequestorDto, Requestor>
             .NewConfig()
             .ConstructUsing(src => Requestor.Create(
@@ -33,6 +64,27 @@ public static class MappingConfiguration
                 src.RequestorDepartment,
                 src.RequestorSection,
                 src.RequestorCostCenter
+            ));
+
+        TypeAdapterConfig<RequestCustomerDto, RequestCustomer>
+            .NewConfig()
+            .ConstructUsing(src => RequestCustomer.Create(
+                src.Name,
+                src.ContactNumber
+            ));
+
+        TypeAdapterConfig<RequestPropertyDto, RequestProperty>
+            .NewConfig()
+            .ConstructUsing(src => RequestProperty.Of(
+                src.PropertyType,
+                src.BuildingType,
+                src.SellingPrice
+            ));
+
+        TypeAdapterConfig<RequestCommentDto, RequestComment>
+            .NewConfig()
+            .ConstructUsing(src => RequestComment.Create(
+                src.Comment
             ));
     }
 }

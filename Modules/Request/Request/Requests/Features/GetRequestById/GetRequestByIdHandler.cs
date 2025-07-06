@@ -6,10 +6,11 @@ internal class GetRequestByIdHandler(RequestDbContext dbContext)
     public async Task<GetRequestByIdResult> Handle(GetRequestByIdQuery query, CancellationToken cancellationToken)
     {
         var request = await dbContext.Requests.FindAsync([query.Id], cancellationToken);
+
         if (request is null) throw new RequestNotFoundException(query.Id);
 
-        var response = request.Adapt<RequestDto>();
+        var result = request.Adapt<GetRequestByIdResult>();
 
-        return new GetRequestByIdResult(response);
+        return result;
     }
 }

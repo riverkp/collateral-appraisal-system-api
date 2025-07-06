@@ -26,6 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="../../Modules/Notification/Notification/Notification.csproj"/>
         <ProjectReference Include="../../Modules/Request/Request/Request.csproj"/>
         <ProjectReference Include="../../Shared/Shared/Shared.csproj"/>
         <ProjectReference Include="..\..\Modules\Auth\Auth\Auth.csproj"/>

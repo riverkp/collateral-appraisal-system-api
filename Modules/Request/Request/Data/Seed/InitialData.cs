@@ -4,18 +4,19 @@ public static class InitialData
 {
     public static IEnumerable<Requests.Models.Request> Requests => new List<Requests.Models.Request>
     {
-        Request.Requests.Models.Request.From(
+        Request.Requests.Models.Request.Create(
+            AppraisalNumber.Create("SEED-00001"),
             "Appraisal",
             true,
             "High",
             "Online",
-            1,
-            new Reference(
+            null,
+            Reference.Create(
                 "PA-12345",
                 1000000,
                 DateTime.Now.AddMonths(-6)
             ),
-            new LoanDetail(
+            LoanDetail.Create(
                 "LA-67890",
                 500000,
                 1200000
@@ -33,12 +34,12 @@ public static class InitialData
                 "10",
                 "12345"
             ),
-            new Contact(
+            Contact.Create(
                 "John Doe",
                 "0123456789",
-                "Project-001"
+                "Project-1"
             ),
-            new Fee(
+            Fee.Create(
                 "01",
                 "No additional fees"
             ),

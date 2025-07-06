@@ -1,15 +1,15 @@
 namespace Request.Requests.Features.DeleteRequest;
 
-public record DeleteRequestResponse(bool IsSuccess);
-
 public class DeleteRequestEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapDelete("/request/{id}", async (long id, ISender sender) =>
+        app.MapDelete("/requests/{id:long}", async (long id, ISender sender, CancellationToken cancellationToken) =>
             {
-                var result = await sender.Send(new DeleteRequestCommand(id));
+                var result = await sender.Send(new DeleteRequestCommand(id), cancellationToken);
+
                 var response = result.Adapt<DeleteRequestResponse>();
+
                 return Results.Ok(response);
             })
             .WithName("DeleteRequest")

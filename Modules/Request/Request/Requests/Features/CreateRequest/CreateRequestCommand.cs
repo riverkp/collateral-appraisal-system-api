@@ -6,10 +6,13 @@ public record CreateRequestCommand(
     string Priority,
     string Channel,
     int? OccurConstInspec,
-    Reference Reference,
-    LoanDetail LoanDetail,
-    Address Address,
-    Contact Contact,
-    Fee Fee,
-    Requestor Requestor
+    ReferenceDto Reference,
+    LoanDetailDto LoanDetail,
+    AddressDto Address,
+    ContactDto Contact,
+    FeeDto Fee,
+    RequestorDto Requestor,
+    List<RequestCustomerDto> Customers,
+    List<RequestPropertyDto> Properties,
+    List<RequestCommentDto> Comments
 ) : ICommand<CreateRequestResult>;

@@ -4,9 +4,10 @@ public class GetRequestEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/requests", async (ISender sender) =>
+        app.MapGet("/requests", async (ISender sender, CancellationToken cancellationToken) =>
             {
-                var result = await sender.Send(new GetRequestQuery());
+                var result = await sender.Send(new GetRequestQuery(), cancellationToken);
+
                 return Results.Ok(result.Requests);
             })
             .WithName("GetRequest")

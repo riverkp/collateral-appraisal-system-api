@@ -9,5 +9,6 @@ public interface IRequestRepository
         CancellationToken cancellationToken = default);
 
     Task<bool> DeleteRequest(long requestId, CancellationToken cancellationToken = default);
+    Task<int> GetNextAppraisalNumber(CancellationToken cancellationToken = default);
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

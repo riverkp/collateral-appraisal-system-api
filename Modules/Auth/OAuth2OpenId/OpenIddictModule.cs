@@ -66,14 +66,13 @@ public static class OpenIddictModule
                 options.UseAspNetCore();
             });
 
-        services.AddScoped<IDataSeeder, AuthDataSeed>();
+        services.AddScoped<IDataSeeder<OpenIddictDbContext>, AuthDataSeed>();
 
         return services;
     }
 
     public static IApplicationBuilder UseOpenIddictModule(this IApplicationBuilder app)
     {
-        // Configure your module's middleware here,
         app.UseMigration<OpenIddictDbContext>();
 
         return app;

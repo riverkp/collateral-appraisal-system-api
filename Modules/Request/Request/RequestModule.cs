@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Request.Configurations;
 using Request.Data.Repository;
+using Request.Requests.Services;
 using Shared.Data.Extensions;
 using Shared.Data.Interceptors;
 
@@ -17,6 +18,7 @@ public static class RequestModule
 
         // Application User Case services
         services.AddScoped<IRequestRepository, RequestRepository>();
+        services.AddTransient<IAppraisalNumberGenerator, AppraisalNumberGenerator>();
 
         // Infrastructure services
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
@@ -28,7 +30,7 @@ public static class RequestModule
             options.UseSqlServer(configuration.GetConnectionString("Database"));
         });
 
-        services.AddScoped<IDataSeeder, RequestDataSeed>();
+        services.AddScoped<IDataSeeder<RequestDbContext>, RequestDataSeed>();
 
         return services;
     }

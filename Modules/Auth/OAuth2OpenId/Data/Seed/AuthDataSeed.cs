@@ -1,6 +1,7 @@
 namespace OAuth2OpenId.Data.Seed;
 
-public class AuthDataSeed(UserManager<ApplicationUser> userManager, IOpenIddictApplicationManager manager) : IDataSeeder
+public class AuthDataSeed(UserManager<ApplicationUser> userManager, IOpenIddictApplicationManager manager)
+    : IDataSeeder<OpenIddictDbContext>
 {
     public async Task SeedAllAsync()
     {

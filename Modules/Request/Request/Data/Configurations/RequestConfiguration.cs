@@ -7,14 +7,20 @@ public class RequestConfiguration : IEntityTypeConfiguration<Requests.Models.Req
         builder.HasKey(p => p.Id);
         builder.Property(p => p.Id).HasColumnName("RequestId").UseIdentityColumn();
 
-        builder.Property(p => p.AppraisalNo).HasMaxLength(10);
-        builder.Property(p => p.Status).UseCodeConfig();
+        builder.OwnsOne(p => p.AppraisalNo, appraisalNo =>
+        {
+            appraisalNo.Property(p => p.Value).HasMaxLength(10).HasColumnName("AppraisalNo");
+            appraisalNo.HasIndex(p => p.Value).IsUnique();
+        });
+
+        builder.OwnsOne(p => p.Status,
+            status => { status.Property(p => p.Code).UseCodeConfig().HasColumnName("Status"); });
 
         builder.OwnsOne(p => p.Detail, detail =>
         {
             detail.ToTable("RequestDetails");
             detail.WithOwner().HasForeignKey("RequestId");
-            detail.HasKey("RequestId"); // PK = RequestId
+            detail.HasKey("RequestId");
 
             detail.Property(p => p.Purpose).UseCodeConfig().HasColumnName("Purpose");
             detail.Property(p => p.HasAppraisalBook).HasColumnName("HasAppraisalBook");
@@ -52,6 +58,14 @@ public class RequestConfiguration : IEntityTypeConfiguration<Requests.Models.Req
                 address.Property(p => p.Postcode).UseCodeConfig().HasColumnName("Postcode");
             });
 
+            detail.OwnsOne(p => p.Contact, contact =>
+            {
+                contact.Property(p => p.ContactPersonName).HasMaxLength(80).HasColumnName("ContactPersonName");
+                contact.Property(p => p.ContactPersonContactNo).HasMaxLength(20)
+                    .HasColumnName("ContactPersonContactNo");
+                contact.Property(p => p.ProjectCode).HasMaxLength(10).HasColumnName("ProjectCode");
+            });
+
             detail.OwnsOne(p => p.Requestor, requestor =>
             {
                 requestor.Property(p => p.RequestorEmpId).UseCodeConfig().HasColumnName("RequestorEmpId");
@@ -85,8 +99,28 @@ public class RequestConfiguration : IEntityTypeConfiguration<Requests.Models.Req
             customer.Property(p => p.ContactNumber).HasMaxLength(20).HasColumnName("ContactNumber");
         });
 
-        builder.HasMany(p => p.Properties).WithOne().HasForeignKey("RequestId").OnDelete(DeleteBehavior.Cascade);
-        builder.HasMany(p => p.Comments).WithOne().HasForeignKey("RequestId").OnDelete(DeleteBehavior.Cascade);
-        builder.HasMany(p => p.Documents).WithOne().HasForeignKey("RequestId").OnDelete(DeleteBehavior.Cascade);
+        builder.OwnsMany(p => p.Properties, property =>
+        {
+            property.ToTable("RequestProperties");
+            property.WithOwner().HasForeignKey("RequestId");
+
+            property.Property<long>("Id");
+            property.HasKey("Id");
+
+            property.Property(p => p.PropertyType).UseCodeConfig().HasColumnName("PropertyType");
+            property.Property(p => p.BuildingType).UseCodeConfig().HasColumnName("BuildingType");
+            property.Property(p => p.SellingPrice).UseMoneyConfig().HasColumnName("SellingPrice");
+        });
+
+        builder.OwnsMany(p => p.Comments, comment =>
+        {
+            comment.ToTable("RequestComments");
+            comment.WithOwner().HasForeignKey("RequestId");
+
+            comment.Property<long>("Id");
+            comment.HasKey("Id");
+
+            comment.Property(p => p.Comment).HasMaxLength(250).HasColumnName("Comment");
+        });
     }
 }

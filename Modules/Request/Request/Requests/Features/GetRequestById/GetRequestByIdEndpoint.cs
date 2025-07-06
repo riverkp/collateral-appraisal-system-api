@@ -1,18 +1,16 @@
-using RequestDto = Request.Contracts.Requests.Dtos.RequestDto;
-
 namespace Request.Requests.Features.GetRequestById;
-
-public record GetRequestByIdResponse(RequestDto Request);
 
 public class GetRequestByIdEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/request/{id}", async (long id, ISender sender) =>
+        app.MapGet("/requests/{id:long}", async (long id, ISender sender, CancellationToken cancellationToken) =>
             {
-                var result = await sender.Send(new GetRequestByIdQuery(id));
+                var result = await sender.Send(new GetRequestByIdQuery(id), cancellationToken);
 
-                return Results.Ok(result.Request);
+                var response = result.Adapt<GetRequestByIdResponse>();
+
+                return Results.Ok(response);
             })
             .WithName("GetRequestById")
             .Produces<GetRequestByIdResponse>()

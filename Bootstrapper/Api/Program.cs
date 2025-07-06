@@ -1,6 +1,4 @@
-using Auth;
-using Microsoft.Extensions.FileProviders;
-using OAuth2OpenId;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,21 +11,18 @@ builder.Host.UseSerilog((context, config) => config.ReadFrom.Configuration(conte
 // Common services: carter, mediatR, fluentvalidators, etc.
 var requestAssembly = typeof(RequestModule).Assembly;
 var authAssembly = typeof(AuthModule).Assembly;
+var notificationAssembly = typeof(NotificationModule).Assembly;
 
-builder.Services.AddCarterWithAssemblies(requestAssembly, authAssembly);
-builder.Services.AddMediatRWithAssemblies(requestAssembly, authAssembly);
-
-//builder.Services.AddControllers();
-// builder.Services.AddRazorPages()
-//     .AddApplicationPart(typeof(Login).Assembly);
-
+builder.Services.AddCarterWithAssemblies(requestAssembly, authAssembly, notificationAssembly);
+builder.Services.AddMediatRWithAssemblies(requestAssembly, authAssembly, notificationAssembly);
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
 });
 
-builder.Services.AddMassTransitWithAssemblies(builder.Configuration, requestAssembly, authAssembly);
+builder.Services.AddMassTransitWithAssemblies(builder.Configuration, requestAssembly, authAssembly,
+    notificationAssembly);
 
 builder.Services.AddHttpClient("CAS", client => { client.BaseAddress = new Uri("https://localhost:7111"); });
 
@@ -37,7 +32,16 @@ builder.Services.AddAuthorization();
 builder.Services
     .AddRequestModule(builder.Configuration)
     .AddAuthModule(builder.Configuration)
+    .AddNotificationModule(builder.Configuration)
     .AddOpenIddictModule(builder.Configuration);
+
+// Configure JSON serialization
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.DefaultIgnoreCondition =
+        System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+    options.SerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+});
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
@@ -60,7 +64,6 @@ if (app.Environment.IsDevelopment()) app.MapOpenApi();
 if (app.Environment.IsDevelopment()) app.UseDeveloperExceptionPage();
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
@@ -83,6 +86,10 @@ app.UseExceptionHandler(options => { });
 app
     .UseRequestModule()
     .UseAuthModule()
+    .UseNotificationModule()
     .UseOpenIddictModule();
 
-app.Run();
+CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
+
+await app.RunAsync();

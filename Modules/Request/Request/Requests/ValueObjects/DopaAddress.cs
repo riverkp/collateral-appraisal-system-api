@@ -1,6 +1,6 @@
 namespace Request.Requests.ValueObjects;
 
-public record DopaAddress
+public class DopaAddress : ValueObject
 {
     private DopaAddress(string? dopaHouseNo, string? dopaRoomNo, string? dopaFloorNo, string? dopaBuildingNo, string? dopaMoo,
         string? dopaSoi, string? dopaRoad, string? dopaSubDistrict, string? dopaDistrict, string? dopaProvince,
@@ -19,17 +19,17 @@ public record DopaAddress
         DopaPostcode = dopaPostcode;
     }
 
-    public string? DopaHouseNo { get; init; }
-    public string? DopaRoomNo { get; init; }
-    public string? DopaFloorNo { get; init; }
-    public string? DopaBuildingNo { get; init; }
-    public string? DopaMoo { get; init; }
-    public string? DopaSoi { get; init; }
-    public string? DopaRoad { get; init; }
-    public string? DopaSubDistrict { get; init; }
-    public string? DopaDistrict { get; init; }
-    public string? DopaProvince { get; init; }
-    public string? DopaPostcode { get; init; }
+    public string? DopaHouseNo { get; }
+    public string? DopaRoomNo { get; }
+    public string? DopaFloorNo { get; }
+    public string? DopaBuildingNo { get; }
+    public string? DopaMoo { get; }
+    public string? DopaSoi { get; }
+    public string? DopaRoad { get; }
+    public string? DopaSubDistrict { get; }
+    public string? DopaDistrict { get; }
+    public string? DopaProvince { get; }
+    public string? DopaPostcode { get; }
 
     public static DopaAddress Create(
         string? dopaHouseNo, string? dopaRoomNo, string? dopaFloorNo, string? dopaBuildingNo, string? dopaMoo,

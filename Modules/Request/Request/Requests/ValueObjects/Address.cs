@@ -1,6 +1,6 @@
 namespace Request.Requests.ValueObjects;
 
-public record Address
+public class Address : ValueObject
 {
     public string? HouseNo { get; }
     public string? RoomNo { get; }

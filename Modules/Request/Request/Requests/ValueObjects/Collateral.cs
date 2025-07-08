@@ -1,6 +1,6 @@
 namespace Request.Requests.ValueObjects;
 
-public record Collateral
+public class Collateral : ValueObject
 {
     private Collateral(
         string? collateralType,

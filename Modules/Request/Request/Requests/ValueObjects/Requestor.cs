@@ -1,6 +1,6 @@
 namespace Request.Requests.ValueObjects;
 
-public record Requestor
+public class Requestor : ValueObject
 {
     private Requestor(
         string requestorEmpId,

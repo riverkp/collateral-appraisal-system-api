@@ -1,6 +1,6 @@
 namespace Request.Requests.ValueObjects;
 
-public record Contact
+public class Contact : ValueObject
 {
     public string ContactPersonName { get; }
     public string ContactPersonContactNo { get; }

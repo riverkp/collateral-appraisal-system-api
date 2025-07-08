@@ -1,6 +1,6 @@
 namespace Request.Requests.ValueObjects;
 
-public record RequestDetail
+public class RequestDetail : ValueObject
 {
     public string Purpose { get; } = default!;
     public bool HasAppraisalBook { get; }
@@ -82,40 +82,5 @@ public record RequestDetail
             contact,
             fee,
             requestor);
-    }
-
-    public virtual bool Equals(RequestDetail? other)
-    {
-        if (ReferenceEquals(null, other)) return false;
-        if (ReferenceEquals(this, other)) return true;
-
-        return Purpose == other.Purpose &&
-               HasAppraisalBook == other.HasAppraisalBook &&
-               Priority == other.Priority &&
-               Channel == other.Channel &&
-               OccurConstInspec == other.OccurConstInspec &&
-               LoanDetail.Equals(other.LoanDetail) &&
-               Reference.Equals(other.Reference) &&
-               Address.Equals(other.Address) &&
-               Contact.Equals(other.Contact) &&
-               Fee.Equals(other.Fee) &&
-               Requestor.Equals(other.Requestor);
-    }
-
-    public override int GetHashCode()
-    {
-        var hash = new HashCode();
-        hash.Add(Purpose);
-        hash.Add(HasAppraisalBook);
-        hash.Add(Priority);
-        hash.Add(Channel);
-        hash.Add(OccurConstInspec);
-        hash.Add(Reference);
-        hash.Add(LoanDetail);
-        hash.Add(Address);
-        hash.Add(Contact);
-        hash.Add(Fee);
-        hash.Add(Requestor);
-        return hash.ToHashCode();
     }
 }

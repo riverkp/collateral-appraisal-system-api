@@ -1,6 +1,6 @@
 namespace Request.Requests.ValueObjects;
 
-public record RequestTitle
+public class RequestTitle : ValueObject
 {
 
     private readonly List<TitleDocument> _titleDocuments = [];

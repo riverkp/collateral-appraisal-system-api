@@ -1,6 +1,6 @@
 namespace Request.Requests.ValueObjects;
 
-public record Area
+public class Area : ValueObject
 {
     private Area(
         decimal? rai,

@@ -1,6 +1,6 @@
 namespace Request.Requests.ValueObjects;
 
-public record Vehicle
+public class Vehicle : ValueObject
 {
     private Vehicle(string? vehicleType, string? vehicleRegistrationNo, string? vehAppointmentLocation)
     {

@@ -1,6 +1,6 @@
 namespace Request.Requests.ValueObjects;
 
-public record Machine
+public class Machine : ValueObject
 {
     private Machine(string? machineStatus, string? machineType, string? machineRegistrationStatus,
         string? machineRegistrationNo, string? machineInvoiceNo, decimal? noOfMachine)

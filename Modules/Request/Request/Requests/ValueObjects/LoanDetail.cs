@@ -1,6 +1,6 @@
 namespace Request.Requests.ValueObjects;
 
-public record LoanDetail
+public class LoanDetail : ValueObject
 {
     public string? LoanApplicationNo { get; }
     public decimal? LimitAmt { get; }
@@ -17,27 +17,4 @@ public record LoanDetail
     {
         return new LoanDetail(loanApplicationNo, limitAmt, totalSellingPrice);
     }
-
-    public virtual bool Equals(LoanDetail? other)
-    {
-        if (ReferenceEquals(null, other)) return IsEmpty();
-        if (ReferenceEquals(this, other)) return true;
-
-        // Both empty = equal
-        if (IsEmpty() && other.IsEmpty()) return true;
-
-        return LoanApplicationNo == other.LoanApplicationNo &&
-               LimitAmt == other.LimitAmt &&
-               TotalSellingPrice == other.TotalSellingPrice;
-    }
-
-    public override int GetHashCode()
-    {
-        return IsEmpty() ? 0 : HashCode.Combine(LoanApplicationNo, LimitAmt, TotalSellingPrice);
-    }
-
-    private bool IsEmpty() =>
-        LoanApplicationNo is null &&
-        LimitAmt is null &&
-        TotalSellingPrice is null;
 }

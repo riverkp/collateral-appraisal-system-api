@@ -1,6 +1,6 @@
 namespace Request.Requests.ValueObjects;
 
-public record TitleDocument
+public class TitleDocument : ValueObject
 {
     public TitleDocument()
     {

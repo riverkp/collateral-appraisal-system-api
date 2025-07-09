@@ -6,10 +6,10 @@ public class DeleteDocumentEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapDelete("/documents/{id:long}/{rerateRequest:alpha}",
-            async ([FromRoute]long id, [FromRoute]string rerateRequest ,[FromServices]ISender sender) =>
+        app.MapDelete("/documents/{id:long}",
+            async ([FromRoute]long id,[FromServices]ISender sender) =>
         {
-            var command = new DeleteDocumentCommand(id, rerateRequest);
+            var command = new DeleteDocumentCommand(id);
 
             var result = await sender.Send(command);
 

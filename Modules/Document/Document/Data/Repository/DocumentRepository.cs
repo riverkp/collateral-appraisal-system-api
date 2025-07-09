@@ -17,12 +17,11 @@ public class DocumentRepository(DocumentDbContext dbContext) : IDocumentReposito
         return true;
     }
 
-    public async Task<Documents.Models.Document> GetDocumentById(long documentId,
-        string rerateRequest, bool asNoTracking = true,
+    public async Task<Documents.Models.Document> GetDocumentById(long documentId, bool asNoTracking = true,
         CancellationToken cancellationToken = default)
     {
         var query = dbContext.Documents
-            .Where(r => r.Id == documentId && r.RerateRequest == rerateRequest);
+            .Where(r => r.Id == documentId);
 
         if (asNoTracking) query = query.AsNoTracking();
         var document = await query.SingleOrDefaultAsync(cancellationToken);
@@ -30,10 +29,10 @@ public class DocumentRepository(DocumentDbContext dbContext) : IDocumentReposito
         return document ?? throw new DocumentNotFoundException(documentId);
     }
 
-    public async Task<bool> DeleteDocument(long id, string rerateRequest,
+    public async Task<bool> DeleteDocument(long id,
         CancellationToken cancellationToken = default)
     {
-        var document = await GetDocumentById(id, rerateRequest, false, cancellationToken);
+        var document = await GetDocumentById(id, false, cancellationToken);
 
         dbContext.Documents.Remove(document);
         await dbContext.SaveChangesAsync(cancellationToken);

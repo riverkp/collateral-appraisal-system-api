@@ -23,7 +23,7 @@ public class Document : Aggregate<long>
         string docType,
         string filename,
         DateTime uploadTime,
-        string prefix,  
+        string prefix,
         short set,
         string comment,
         string filePath
@@ -53,7 +53,7 @@ public class Document : Aggregate<long>
         string filePath
     )
     {
-        
+
         ArgumentNullException.ThrowIfNull(rerateRequest);
         ArgumentNullException.ThrowIfNull(docType);
         ArgumentNullException.ThrowIfNull(filename);
@@ -72,4 +72,12 @@ public class Document : Aggregate<long>
             comment,
             filePath);
     }
+
+    public void UpdateComment(string newComment)
+    {
+        ArgumentNullException.ThrowIfNull(newComment);
+
+        Comment = newComment;
+    }
+
 }

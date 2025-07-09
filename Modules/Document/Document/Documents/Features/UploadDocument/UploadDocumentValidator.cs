@@ -12,7 +12,7 @@ public class UploadDocumentCommandValidator : AbstractValidator<UploadDocumentCo
 
         RuleFor(x => x.RerateRequest)
             .NotNull()
-            .WithMessage("RerateResult is required.");
+            .WithMessage("RerateRequest is required.");
 
         RuleFor(x => x.RerateId)
             .NotNull()

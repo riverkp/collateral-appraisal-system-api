@@ -39,8 +39,7 @@ internal class UploadDocumentHandler(IDocumentRepository documentRepository) : I
         var filenameValid = await HashFileContentAsync(file, cancellationToken) + fileExtention; // for valid content file when try to upload same file with this diff name
         var savePath = Path.Combine(uploadFolder, filenameValid);
 
-        if (file is null) throw new UploadDocumentException("File is null");
-        else if (file.Length <= 0) throw new UploadDocumentException("File is Empty");
+        if (file.Length <= 0) throw new UploadDocumentException("File is Empty");
         else if (file.Length > maxSize) throw new UploadDocumentException($"File size exceeded {maxSize} bytes");
         else if (File.Exists(savePath)) throw new UploadDocumentException("Duplicate file detected. This PDF has already been uploaded.");
         else if (string.IsNullOrEmpty(fileExtention) || !permittedExtensions.Contains(fileExtention)) throw new UploadDocumentException("File extension not recognized");

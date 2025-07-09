@@ -18,3 +18,4 @@ global using Microsoft.AspNetCore.Routing;
 global using System.Security.Cryptography;
 global using Document.Documents.Exceptions;
 global using Shared.Exceptions;
+global using FluentValidation;

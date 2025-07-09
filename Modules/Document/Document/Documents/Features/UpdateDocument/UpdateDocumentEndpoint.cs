@@ -4,9 +4,9 @@ public class UpdateDocumentEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPut("/documents/{id:long}", async (UpdateDocumentRequest requet, long id, ISender sender) =>
+        app.MapPut("/documents/{id:long}", async (UpdateDocumentRequest request, long id, ISender sender) =>
         {
-            var command = requet.Adapt<UpdateDocumentCommand>();
+            var command = request.Adapt<UpdateDocumentCommand>() with {Id = id};
 
             var result = await sender.Send(command);
 

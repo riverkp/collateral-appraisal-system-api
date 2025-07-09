@@ -2,11 +2,18 @@ namespace Document.Data.Repository;
 
 public class DocumentRepository(DocumentDbContext dbContext) : IDocumentRepository
 {
+    public async Task<List<Documents.Models.Document>> GetDocuments (CancellationToken cancellationToken = default)
+    {
+        var documents = await dbContext.Documents.ToListAsync(cancellationToken);
+
+        return documents;
+    }
     public async Task<bool> UploadDocument(Documents.Models.Document document,
         CancellationToken cancellationToken = default)
     {
         dbContext.Documents.Add(document);
         await dbContext.SaveChangesAsync(cancellationToken);
+
         return true;
     }
 

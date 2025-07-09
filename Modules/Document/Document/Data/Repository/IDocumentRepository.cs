@@ -2,6 +2,7 @@ namespace Document.Data.Repository;
 
 public interface IDocumentRepository
 {
+    Task<List<Documents.Models.Document>> GetDocuments(CancellationToken cancellationToken = default);
     Task<bool> UploadDocument(Documents.Models.Document document,
         CancellationToken cancellationToken = default);
 

@@ -1,6 +1,7 @@
 namespace Document.Contracts.Documents.Dtos;
 
 public record DocumentDto(
+    long Id,
     string RerateRequest,
     long RerateId,
     string DocType,

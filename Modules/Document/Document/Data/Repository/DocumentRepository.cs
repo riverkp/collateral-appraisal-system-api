@@ -1,5 +1,3 @@
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-
 namespace Document.Data.Repository;
 
 public class DocumentRepository(DocumentDbContext dbContext) : IDocumentRepository
@@ -26,7 +24,7 @@ public class DocumentRepository(DocumentDbContext dbContext) : IDocumentReposito
     }
 
     public async Task<bool> DeleteDocument(long id, string rerateRequest,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         var document = await GetDocumentById(id, rerateRequest, false, cancellationToken);
 

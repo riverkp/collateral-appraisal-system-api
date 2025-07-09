@@ -10,7 +10,7 @@ public interface IDocumentRepository
         CancellationToken cancellationToken = default);
 
     Task<bool> DeleteDocument(long id, string rerateRequest,
-        CancellationToken cancellationToken);
+        CancellationToken cancellationToken = default);
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

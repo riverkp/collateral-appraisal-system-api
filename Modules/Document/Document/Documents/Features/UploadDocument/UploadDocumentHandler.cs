@@ -1,10 +1,4 @@
-using System.Security.Cryptography;
-using Document.Documents.Exceptions;
-
 namespace Document.Documents.Features.UploadDocument;
-
-public record UploadDocumentCommand(List<IFormFile> Documents, string RerateRequest, long RerateId) : ICommand<UploadDocumentResult>;
-public record UploadDocumentResult(List<UploadResultDto> Result);
 
 internal class UploadDocumentHandler(IDocumentRepository documentRepository) : ICommandHandler<UploadDocumentCommand, UploadDocumentResult>
 {

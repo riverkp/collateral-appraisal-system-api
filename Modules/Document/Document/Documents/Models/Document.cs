@@ -18,8 +18,8 @@ public class Document : Aggregate<long>
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     private Document(
-        string RelateRequest,
-        long RelateId,
+        string relateRequest,
+        long relateId,
         string docType,
         string filename,
         DateTime uploadTime,
@@ -29,8 +29,8 @@ public class Document : Aggregate<long>
         string filePath
         )
     {
-        RelateRequest = RelateRequest;
-        RelateId = RelateId;
+        RelateRequest = relateRequest;
+        RelateId = relateId;
         DocType = docType;
         Filename = filename;
         UploadTime = uploadTime;

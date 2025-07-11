@@ -1,6 +1,6 @@
 namespace Document.Documents.Features.GetDocuments;
 
-public class GetDocumentEndpoint : ICarterModule
+public class GstDocumentEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {

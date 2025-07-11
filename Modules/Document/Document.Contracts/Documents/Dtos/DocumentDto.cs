@@ -2,8 +2,8 @@ namespace Document.Contracts.Documents.Dtos;
 
 public record DocumentDto(
     long Id,
-    string RelateRequest,
-    long RelateId,
+    string RerateRequest,
+    long RerateId,
     string DocType,
     string Filename,
     DateTime UploadTime,

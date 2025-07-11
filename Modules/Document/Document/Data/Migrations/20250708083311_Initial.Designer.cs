@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Document.Data.Migrations
 {
     [DbContext(typeof(DocumentDbContext))]
-    [Migration("20250711082717_Initil")]
-    partial class Initil
+    [Migration("20250708083311_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,10 +67,10 @@ namespace Document.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<long>("RelateId")
+                    b.Property<long>("RerateId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("RelateRequest")
+                    b.Property<string>("RerateRequest")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

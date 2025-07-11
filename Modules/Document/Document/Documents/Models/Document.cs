@@ -2,8 +2,8 @@ namespace Document.Documents.Models;
 
 public class Document : Aggregate<long>
 {
-    public string RelateRequest { get; private set; } = default!;
-    public long RelateId { get; private set; } = default!;
+    public string RerateRequest { get; private set; } = default!;
+    public long RerateId { get; private set; } = default!;
     public string DocType { get; private set; } = default!;
     public string Filename { get; private set; } = default!;
     public DateTime UploadTime { get; private set; } = default!;
@@ -18,8 +18,8 @@ public class Document : Aggregate<long>
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     private Document(
-        string relateRequest,
-        long relateId,
+        string rerateRequest,
+        long rerateId,
         string docType,
         string filename,
         DateTime uploadTime,
@@ -29,8 +29,8 @@ public class Document : Aggregate<long>
         string filePath
         )
     {
-        RelateRequest = relateRequest;
-        RelateId = relateId;
+        RerateRequest = rerateRequest;
+        RerateId = rerateId;
         DocType = docType;
         Filename = filename;
         UploadTime = uploadTime;
@@ -42,8 +42,8 @@ public class Document : Aggregate<long>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
 
     public static Document Create(
-        string relateRequest,
-        long relateId,
+        string rerateRequest,
+        long rerateId,
         string docType,
         string filename,
         DateTime uploadTime,
@@ -54,7 +54,7 @@ public class Document : Aggregate<long>
     )
     {
 
-        ArgumentNullException.ThrowIfNull(relateRequest);
+        ArgumentNullException.ThrowIfNull(rerateRequest);
         ArgumentNullException.ThrowIfNull(docType);
         ArgumentNullException.ThrowIfNull(filename);
         ArgumentNullException.ThrowIfNull(prefix);
@@ -62,8 +62,8 @@ public class Document : Aggregate<long>
         ArgumentNullException.ThrowIfNull(filePath);
 
         return new Document(
-            relateRequest,
-            relateId,
+            rerateRequest,
+            rerateId,
             docType,
             filename,
             uploadTime,

@@ -3,12 +3,12 @@ public class UploadDocumentEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/documents/{relateRequest}/{relateId:long}",
-            async (string relateRequest, long relateId, HttpRequest request, ISender sender) =>
+        app.MapPost("/documents/{rerateRequest}/{rerateId:long}",
+            async (string rerateRequest, long rerateId, HttpRequest request, ISender sender) =>
         {
             var form = await request.ReadFormAsync();
 
-            var command = new UploadDocumentCommand([.. form.Files], relateRequest, relateId);
+            var command = new UploadDocumentCommand([.. form.Files], rerateRequest, rerateId);
 
             var result = await sender.Send(command);
 

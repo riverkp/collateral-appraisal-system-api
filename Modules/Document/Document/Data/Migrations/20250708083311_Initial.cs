@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Document.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Initil : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,8 +21,8 @@ namespace Document.Data.Migrations
                 {
                     DocumentId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RelateRequest = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RelateId = table.Column<long>(type: "bigint", nullable: false),
+                    RerateRequest = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RerateId = table.Column<long>(type: "bigint", nullable: false),
                     DocType = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Filename = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     UploadTime = table.Column<DateTime>(type: "datetime2", nullable: false),

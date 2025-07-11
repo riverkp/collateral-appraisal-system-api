@@ -8,6 +8,7 @@ public class DocumentConfiguration : IEntityTypeConfiguration<Documents.Models.D
         builder.Property(p => p.Id).HasColumnName("DocumentId").UseIdentityColumn();
 
         builder.ToTable("Documents");
+        //TODO :: Add Property of RerateRequest
         builder.Property(p => p.DocType).HasMaxLength(10);
         builder.Property(p => p.Filename).HasMaxLength(255);
         builder.Property(p => p.Prefix).HasMaxLength(50);

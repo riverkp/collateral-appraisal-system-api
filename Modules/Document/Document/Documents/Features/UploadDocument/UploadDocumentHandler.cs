@@ -18,7 +18,7 @@ internal class UploadDocumentHandler(IDocumentRepository documentRepository) : I
         {
             try
             {
-                var (recordDocument, recordResult) = await ProcessFile(file, command.RerateRequest, command.RerateId, cancellationToken);
+                var (recordDocument, recordResult) = await ProcessFile(file, command.RelateRequest, command.RelateId, cancellationToken);
                 await documentRepository.UploadDocument(recordDocument, cancellationToken);
                 result.Add(recordResult);
             }
@@ -32,33 +32,33 @@ internal class UploadDocumentHandler(IDocumentRepository documentRepository) : I
         return new UploadDocumentResult(result);
     }
 
-    private async Task<(Models.Document, UploadResultDto)> ProcessFile(IFormFile file, string rerateRequest, long rerateId, CancellationToken cancellationToken)
+    private async Task<(Models.Document, UploadResultDto)> ProcessFile(IFormFile file, string RelateRequest, long RelateId, CancellationToken cancellationToken)
     {
         var filename = Path.GetFileName(file.FileName);
-        var fileExtention = Path.GetExtension(file.FileName);
-        var filenameValid = await HashFileContentAsync(file, cancellationToken) + fileExtention; // for valid content file when try to upload same file with this diff name
+        var fileExtension = Path.GetExtension(file.FileName);
+        var filenameValid = await HashFileContentAsync(file, cancellationToken) + fileExtension; // for valid content file when try to upload same file with this diff name
         var savePath = Path.Combine(uploadFolder, filenameValid);
 
         if (file.Length <= 0) throw new UploadDocumentException("File is Empty");
         else if (file.Length > maxSize) throw new UploadDocumentException($"File size exceeded {maxSize} bytes");
         else if (File.Exists(savePath)) throw new UploadDocumentException("Duplicate file detected. This PDF has already been uploaded.");
-        else if (string.IsNullOrEmpty(fileExtention) || !permittedExtensions.Contains(fileExtention)) throw new UploadDocumentException("File extension not recognized");
+        else if (string.IsNullOrEmpty(fileExtension) || !permittedExtensions.Contains(fileExtension)) throw new UploadDocumentException("File extension not recognized");
         
         
         using var stream = new FileStream(savePath, FileMode.CreateNew);
 
         await file.CopyToAsync(stream, cancellationToken);
 
-        var recordDocument = UploadNewDocument(rerateRequest, rerateId, filename, savePath);
+        var recordDocument = UploadNewDocument(RelateRequest, RelateId, filename, savePath);
 
         return (recordDocument, new UploadResultDto(true, "Success"));
     }
 
-    private static Models.Document UploadNewDocument(string rerateRequest, long rerateId, string filename, string savePath)
+    private static Models.Document UploadNewDocument(string RelateRequest, long RelateId, string filename, string savePath)
     {
         var recordDocument = Models.Document.Create(
-            rerateRequest,
-            rerateId, //rerateId
+            RelateRequest,
+            RelateId, //RelateId
             "DocType", // Doctype 
             filename,
             DateTime.Now,

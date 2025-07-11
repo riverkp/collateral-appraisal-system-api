@@ -7,8 +7,8 @@ public static class MappingConfiguration
         TypeAdapterConfig<DocumentDto, Documents.Models.Document>
             .NewConfig()
             .ConstructUsing(src => Documents.Models.Document.Create(
-                src.RerateRequest,
-                src.RerateId,
+                src.RelateRequest,
+                src.RelateId,
                 src.DocType,
                 src.Filename,
                 src.UploadTime,

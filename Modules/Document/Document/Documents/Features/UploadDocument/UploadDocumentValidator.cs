@@ -10,14 +10,14 @@ public class UploadDocumentCommandValidator : AbstractValidator<UploadDocumentCo
             .Must(document => document.Count > 0)
             .WithMessage("At least one document is required.");
 
-        RuleFor(x => x.RerateRequest)
+        RuleFor(x => x.RelateRequest)
             .NotNull()
-            .WithMessage("RerateRequest is required.");
+            .WithMessage("RelateRequest is required.");
 
-        RuleFor(x => x.RerateId)
+        RuleFor(x => x.RelateId)
             .NotNull()
-            .WithMessage("RerateId is required.")
+            .WithMessage("RelateId is required.")
             .GreaterThan(0)
-            .WithMessage("RerateId must be greater than 0.");
+            .WithMessage("RelateId must be greater than 0.");
     }
 }

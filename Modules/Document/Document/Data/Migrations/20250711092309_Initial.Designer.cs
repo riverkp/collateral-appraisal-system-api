@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Document.Data.Migrations
 {
     [DbContext(typeof(DocumentDbContext))]
-    [Migration("20250708083311_Initial")]
+    [Migration("20250711092309_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -67,10 +67,10 @@ namespace Document.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<long>("RerateId")
+                    b.Property<long>("RelateId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("RerateRequest")
+                    b.Property<string>("RelateRequest")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

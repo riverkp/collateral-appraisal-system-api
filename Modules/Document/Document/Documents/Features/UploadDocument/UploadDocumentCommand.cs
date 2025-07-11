@@ -1,6 +1,6 @@
 namespace Document.Documents.Features.UploadDocument;
 public record UploadDocumentCommand(
     List<IFormFile> Documents,
-    string RerateRequest,
-    long RerateId
+    string RelateRequest,
+    long RelateId
 ) : ICommand<UploadDocumentResult>;

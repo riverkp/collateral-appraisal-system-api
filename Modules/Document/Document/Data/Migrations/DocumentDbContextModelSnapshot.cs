@@ -64,10 +64,10 @@ namespace Document.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<long>("RerateId")
+                    b.Property<long>("RelateId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("RerateRequest")
+                    b.Property<string>("RelateRequest")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

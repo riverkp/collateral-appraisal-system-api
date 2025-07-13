@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Shared\Shared.Messaging\Shared.Messaging.csproj"/>
+        <ProjectReference Include="..\..\..\Shared\Shared\Shared.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Elsa" Version="3.4.2"/>
+        <PackageReference Include="Elsa.EntityFrameworkCore.SqlServer" Version="3.4.2"/>
+        <PackageReference Include="Elsa.JavaScript" Version="3.4.2"/>
+        <PackageReference Include="Elsa.CSharp" Version="3.4.2"/>
+        <PackageReference Include="Elsa.Liquid" Version="3.4.2"/>
+        <PackageReference Include="Elsa.Http" Version="3.4.2"/>
+        <PackageReference Include="Elsa.Api.Common" Version="3.4.2"/>
+        <PackageReference Include="Elsa.MassTransit" Version="3.4.2"/>
+        <PackageReference Include="Elsa.MassTransit.RabbitMq" Version="3.4.2"/>
+        <PackageReference Include="Elsa.Workflows.Api" Version="3.4.2"/>
+        <PackageReference Include="Elsa.Workflows.Runtime" Version="3.4.2"/>
+    </ItemGroup>
+
+</Project>

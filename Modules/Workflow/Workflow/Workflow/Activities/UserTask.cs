@@ -5,6 +5,8 @@ using Elsa.Workflows.Memory;
 using Elsa.Workflows.Models;
 using Elsa.Workflows.Runtime.Options;
 using Microsoft.Extensions.Logging;
+using Task.Data.Repository;
+using Task.Tasks.Models;
 
 namespace Workflow.Workflow.Activities;
 
@@ -21,16 +23,29 @@ public class UserTask : Activity
     {
         var logger = context.GetRequiredService<ILogger<UserTask>>();
 
+        var taskRepository = context.GetRequiredService<ITaskRepository>();
+
         context.CreateBookmark(new UserTaskBookmark
         {
             TaskName = TaskName.Get(context),
         }, OnResume, false);
+
+        var task = CreateNewTask(TaskName.Get(context), AssignedTo.Get(context), AssignedType.Get(context));
+
+        await taskRepository.AddTask(task, context.CancellationToken);
     }
 
     private async ValueTask OnResume(ActivityExecutionContext context)
     {
         ActionTaken.Set(context, context.GetWorkflowInput<string>("ActionTaken"));
         await context.CompleteActivityAsync();
+    }
+
+    private static Task.Tasks.Models.Task CreateNewTask(string taskName, string assignedTo, string assignedType)
+    {
+        var task = Task.Tasks.Models.Task.Create(taskName, assignedTo, assignedType);
+
+        return task;
     }
 }
 

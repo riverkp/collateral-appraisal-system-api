@@ -12,7 +12,7 @@ using Task.Data;
 namespace Task.Migrations
 {
     [DbContext(typeof(TaskDbContext))]
-    [Migration("20250714102946_Initial")]
+    [Migration("20250715025931_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -39,6 +39,10 @@ namespace Task.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AssignedType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CorrelationId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

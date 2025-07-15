@@ -24,6 +24,7 @@ namespace Task.Migrations
                     TaskName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AssignedTo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AssignedType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CorrelationId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),

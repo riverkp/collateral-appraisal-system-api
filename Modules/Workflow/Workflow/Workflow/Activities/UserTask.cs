@@ -30,7 +30,9 @@ public class UserTask : Activity
             TaskName = TaskName.Get(context),
         }, OnResume, false);
 
-        var task = CreateNewTask(TaskName.Get(context), AssignedTo.Get(context), AssignedType.Get(context));
+        var correlationId = context.WorkflowExecutionContext.CorrelationId;
+
+        var task = CreateNewTask(TaskName.Get(context), AssignedTo.Get(context), AssignedType.Get(context), correlationId);
 
         await taskRepository.AddTask(task, context.CancellationToken);
     }
@@ -41,9 +43,9 @@ public class UserTask : Activity
         await context.CompleteActivityAsync();
     }
 
-    private static Task.Tasks.Models.Task CreateNewTask(string taskName, string assignedTo, string assignedType)
+    private static Task.Tasks.Models.Task CreateNewTask(string taskName, string assignedTo, string assignedType, string correlationId)
     {
-        var task = Task.Tasks.Models.Task.Create(taskName, assignedTo, assignedType);
+        var task = Task.Tasks.Models.Task.Create(taskName, assignedTo, assignedType, correlationId);
 
         return task;
     }

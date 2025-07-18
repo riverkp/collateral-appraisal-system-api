@@ -34,7 +34,7 @@ public class UserTask : Activity
 
         var task = CreateNewTask(TaskName.Get(context), AssignedTo.Get(context), AssignedType.Get(context), correlationId);
 
-        await taskRepository.AddTask(task, context.CancellationToken);
+        await taskRepository.AddTaskAsync(task, context.CancellationToken);
     }
 
     private async ValueTask OnResume(ActivityExecutionContext context)

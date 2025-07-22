@@ -31,8 +31,7 @@
         <ProjectReference Include="../../Shared/Shared/Shared.csproj"/>
         <ProjectReference Include="..\..\Modules\Auth\Auth\Auth.csproj"/>
         <ProjectReference Include="..\..\Modules\Auth\OAuth2OpenId\OAuth2OpenId.csproj"/>
-        <ProjectReference Include="..\..\Modules\Workflow\Workflow\Workflow.csproj"/>
-        <ProjectReference Include="..\..\Modules\Workflow\Task\Task.csproj" />
+        <ProjectReference Include="..\..\Modules\Assignment\Assignment\Assignment.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -1,12 +1,6 @@
-using Elsa.Extensions;
-using FastEndpoints;
 using MassTransit;
 using MassTransit.EntityFrameworkCoreIntegration;
 using Microsoft.EntityFrameworkCore;
-using Task;
-using Workflow.Data;
-
-//using Workflow.Workflow.AppraisalSagaState;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,15 +10,19 @@ builder.Services.AddOpenApi();
 
 builder.Host.UseSerilog((context, config) => config.ReadFrom.Configuration(context.Configuration));
 
+// Add shared services (time abstraction, security, etc.)
+builder.Services.AddSharedServices(builder.Configuration);
+
 // Common services: carter, mediatR, fluentvalidators, etc.
 var requestAssembly = typeof(RequestModule).Assembly;
 var authAssembly = typeof(AuthModule).Assembly;
 var notificationAssembly = typeof(NotificationModule).Assembly;
-var workflowAssembly = typeof(WorkflowModule).Assembly;
-var taskAssembly = typeof(TaskModule).Assembly;
+var assignmentAssemblyAssembly = typeof(AssignmentModule).Assembly;
 
-builder.Services.AddCarterWithAssemblies(requestAssembly, authAssembly, notificationAssembly, workflowAssembly, taskAssembly);
-builder.Services.AddMediatRWithAssemblies(requestAssembly, authAssembly, notificationAssembly, workflowAssembly, taskAssembly);
+builder.Services.AddCarterWithAssemblies(requestAssembly, authAssembly, notificationAssembly,
+    assignmentAssemblyAssembly);
+builder.Services.AddMediatRWithAssemblies(requestAssembly, authAssembly, notificationAssembly,
+    assignmentAssemblyAssembly);
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
@@ -34,32 +32,32 @@ builder.Services.AddStackExchangeRedisCache(options =>
 // builder.Services.AddMassTransitWithAssemblies(builder.Configuration, requestAssembly, authAssembly,
 //     notificationAssembly);
 
-// builder.Services.AddDbContext<AppraisalSagaDbContext>((sp, options) =>
-// {
-//     options.UseSqlServer(builder.Configuration.GetConnectionString("Database"), sqlOptions =>
-//     {
-//         sqlOptions.MigrationsAssembly(typeof(AppraisalSagaDbContext).Assembly.GetName().Name);
-//         sqlOptions.MigrationsHistoryTable("__EFMigrationsHistory", "saga");
-//         sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
-//     });
-// });
+builder.Services.AddDbContext<AppraisalSagaDbContext>((sp, options) =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Database"), sqlOptions =>
+    {
+        sqlOptions.MigrationsAssembly(typeof(AppraisalSagaDbContext).Assembly.GetName().Name);
+        sqlOptions.MigrationsHistoryTable("__EFMigrationsHistory", "saga");
+        sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+    });
+});
 
 builder.Services.AddMassTransit(config =>
 {
     config.SetKebabCaseEndpointNameFormatter();
 
-    // config.AddSagaStateMachine<AppraisalStateMachine, AppraisalSagaState>()
-    //     .EntityFrameworkRepository(r =>
-    //     {
-    //         r.ConcurrencyMode = ConcurrencyMode.Pessimistic; // Safer for SQL Server
-    //         r.ExistingDbContext<AppraisalSagaDbContext>();
-    //         r.LockStatementProvider = new SqlServerLockStatementProvider();
-    //     });
+    config.AddSagaStateMachine<AppraisalStateMachine, AppraisalSagaState>()
+        .EntityFrameworkRepository(r =>
+        {
+            r.ConcurrencyMode = ConcurrencyMode.Pessimistic; // Safer for SQL Server
+            r.ExistingDbContext<AppraisalSagaDbContext>();
+            r.LockStatementProvider = new SqlServerLockStatementProvider();
+        });
 
-    config.AddConsumers(requestAssembly, authAssembly, notificationAssembly, workflowAssembly, taskAssembly);
-    config.AddSagaStateMachines(requestAssembly, authAssembly, notificationAssembly, workflowAssembly, taskAssembly);
-    config.AddSagas(requestAssembly, authAssembly, notificationAssembly, workflowAssembly, taskAssembly);
-    config.AddActivities(requestAssembly, authAssembly, notificationAssembly, workflowAssembly, taskAssembly);
+    config.AddConsumers(requestAssembly, authAssembly, notificationAssembly, assignmentAssemblyAssembly);
+    config.AddSagaStateMachines(requestAssembly, authAssembly, notificationAssembly, assignmentAssemblyAssembly);
+    config.AddSagas(requestAssembly, authAssembly, notificationAssembly, assignmentAssemblyAssembly);
+    config.AddActivities(requestAssembly, authAssembly, notificationAssembly, assignmentAssemblyAssembly);
 
     config.UsingRabbitMq((context, configurator) =>
     {
@@ -67,12 +65,19 @@ builder.Services.AddMassTransit(config =>
         {
             host.Username(builder.Configuration["RabbitMQ:Username"]!);
             host.Password(builder.Configuration["RabbitMQ:Password"]!);
-
-            configurator.ConfigureEndpoints(context);
         });
+
+        configurator.ConfigureEndpoints(context);
+
+        configurator.PrefetchCount = 16;
+        configurator.UseMessageRetry(r => r.Exponential(5,
+            TimeSpan.FromSeconds(1),
+            TimeSpan.FromSeconds(30),
+            TimeSpan.FromSeconds(5)));
+
+        configurator.UseInMemoryOutbox(context);
     });
 });
-
 
 builder.Services.AddHttpClient("CAS", client => { client.BaseAddress = new Uri("https://localhost:7111"); });
 
@@ -83,8 +88,7 @@ builder.Services
     .AddRequestModule(builder.Configuration)
     .AddAuthModule(builder.Configuration)
     .AddNotificationModule(builder.Configuration)
-    .AddWorkflowModule(builder.Configuration)
-    .AddTaskModule(builder.Configuration)
+    .AddAssignmentModule(builder.Configuration)
     .AddOpenIddictModule(builder.Configuration);
 
 // Configure JSON serialization
@@ -106,15 +110,6 @@ builder.Services.AddCors(options =>
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials(); // Optional if you need cookies/auth headers
-        });
-
-    // Add CORS policy for Elsa Studio
-    options.AddPolicy("ElsaPolicy",
-        policy =>
-        {
-            policy.AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod();
         });
 });
 
@@ -145,14 +140,13 @@ app
     .UseRequestModule()
     .UseAuthModule()
     .UseNotificationModule()
-    .UseWorkflowModule()
-    .UseTaskModule()
+    .UseAssignmentModule()
     .UseOpenIddictModule();
 
 app.UseSerilogRequestLogging();
 app.UseExceptionHandler(options => { });
 
-CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
-CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
+// CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+// CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
 
 await app.RunAsync();

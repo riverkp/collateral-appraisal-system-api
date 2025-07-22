@@ -27,7 +27,11 @@ public static class RequestModule
         services.AddDbContext<RequestDbContext>((sp, options) =>
         {
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
-            options.UseSqlServer(configuration.GetConnectionString("Database"));
+            options.UseSqlServer(configuration.GetConnectionString("Database"), sqlOptions =>
+            {
+                sqlOptions.MigrationsAssembly("Request");
+                sqlOptions.MigrationsHistoryTable("__EFMigrationsHistory", "request");
+            });
         });
 
         services.AddScoped<IDataSeeder<RequestDbContext>, RequestDataSeed>();

@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 namespace Assignment.AssigneeSelection.Strategies;
 
 /// <summary>
@@ -6,12 +8,10 @@ namespace Assignment.AssigneeSelection.Strategies;
 public class RandomAssigneeSelector : IAssigneeSelector
 {
     private readonly ILogger<RandomAssigneeSelector> _logger;
-    private readonly Random _random;
 
     public RandomAssigneeSelector(ILogger<RandomAssigneeSelector> logger)
     {
         _logger = logger;
-        _random = new Random();
     }
 
     public async Task<AssigneeSelectionResult> SelectAssigneeAsync(
@@ -36,7 +36,7 @@ public class RandomAssigneeSelector : IAssigneeSelector
             {
                 ["SelectionStrategy"] = "Random",
                 ["EligibleUserCount"] = eligibleUsers.Count,
-                ["Seed"] = _random.Next() // For debugging/audit purposes
+                ["SelectionTimestamp"] = DateTime.UtcNow // For debugging/audit purposes
             });
         }
         catch (Exception ex)
@@ -56,7 +56,7 @@ public class RandomAssigneeSelector : IAssigneeSelector
 
     private string SelectRandomUser(List<string> eligibleUsers)
     {
-        var randomIndex = _random.Next(eligibleUsers.Count);
+        var randomIndex = RandomNumberGenerator.GetInt32(0, eligibleUsers.Count);
         return eligibleUsers[randomIndex];
     }
 }

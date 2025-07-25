@@ -2,9 +2,6 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Request.Configurations;
-using Request.Data.Repository;
-using Request.Requests.Services;
-using Shared.Data.Extensions;
 using Shared.Data.Interceptors;
 
 namespace Request;
@@ -30,7 +27,7 @@ public static class RequestModule
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
             options.UseSqlServer(configuration.GetConnectionString("Database"), sqlOptions =>
             {
-                sqlOptions.MigrationsAssembly("Request");
+                sqlOptions.MigrationsAssembly(typeof(RequestDbContext).Assembly.GetName().Name);
                 sqlOptions.MigrationsHistoryTable("__EFMigrationsHistory", "request");
             });
         });

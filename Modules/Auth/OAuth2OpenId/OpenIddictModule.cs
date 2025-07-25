@@ -29,7 +29,7 @@ public static class OpenIddictModule
         {
             options.UseSqlServer(configuration.GetConnectionString("Database"), sqlOptions =>
             {
-                sqlOptions.MigrationsAssembly("OAuth2OpenId");
+                sqlOptions.MigrationsAssembly(typeof(OpenIddictDbContext).Assembly.GetName().Name);
                 sqlOptions.MigrationsHistoryTable("__EFMigrationsHistory", "auth");
             });
             options.UseOpenIddict();

@@ -25,7 +25,8 @@ public static class AssignmentModule
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
             options.UseSqlServer(configuration.GetConnectionString("Database"), sqlOptions =>
             {
-                sqlOptions.MigrationsAssembly("Assignment"); // Assignment assembly
+                sqlOptions.MigrationsAssembly(typeof(AssignmentDbContext).Assembly.GetName()
+                    .Name); // Assignment assembly
                 sqlOptions.MigrationsHistoryTable("__EFMigrationsHistory", "assignment");
             });
         });
@@ -35,7 +36,8 @@ public static class AssignmentModule
         {
             options.UseSqlServer(configuration.GetConnectionString("Database"), sqlOptions =>
             {
-                sqlOptions.MigrationsAssembly("Assignment"); // Separate saga assembly
+                sqlOptions.MigrationsAssembly(typeof(AppraisalSagaDbContext).Assembly.GetName()
+                    .Name); // Separate saga assembly
                 sqlOptions.MigrationsHistoryTable("__EFMigrationsHistory", "saga");
             });
         });

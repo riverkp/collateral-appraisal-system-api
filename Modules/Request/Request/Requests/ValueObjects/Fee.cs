@@ -1,6 +1,6 @@
 namespace Request.Requests.ValueObjects;
 
-public record Fee
+public class Fee : ValueObject
 {
     public string FeeType { get; }
     public string? FeeRemark { get; }

@@ -1,6 +1,6 @@
 namespace Request.Requests.ValueObjects;
 
-public record AppraisalNumber
+public class AppraisalNumber : ValueObject
 {
     public string Value { get; }
 

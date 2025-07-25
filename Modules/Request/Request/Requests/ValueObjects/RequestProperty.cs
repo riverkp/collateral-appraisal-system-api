@@ -1,6 +1,6 @@
 namespace Request.Requests.ValueObjects;
 
-public record RequestProperty
+public class RequestProperty : ValueObject
 {
     public string PropertyType { get; }
     public string BuildingType { get; }

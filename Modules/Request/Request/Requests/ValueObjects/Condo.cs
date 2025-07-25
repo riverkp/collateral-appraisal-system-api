@@ -1,6 +1,6 @@
 namespace Request.Requests.ValueObjects;
 
-public record Condo
+public class Condo : ValueObject
 {
     private Condo(string? condoName, string? condoBuildingNo, string? condoRoomNo, string? condoFloorNo)
     {

@@ -1,6 +1,6 @@
 namespace Request.Requests.ValueObjects;
 
-public record RequestStatus
+public class RequestStatus : ValueObject
 {
     public string Code { get; }
     public static RequestStatus Draft => new(nameof(Draft).ToUpper());

@@ -1,6 +1,6 @@
 namespace Request.Requests.ValueObjects;
 
-public record TitleAddress
+public class TitleAddress : ValueObject
 {
     private TitleAddress(string? houseNo, string? roomNo, string? floorNo, string? buildingNo,
         string? moo, string? soi, string? road, string subDistrict, string district,
@@ -19,17 +19,17 @@ public record TitleAddress
         Postcode = postcode;
     }
 
-    public string? HouseNo { get; init; }
-    public string? RoomNo { get; init; }
-    public string? FloorNo { get; init; }
-    public string? BuildingNo { get; init; }
-    public string? Moo { get; init; }
-    public string? Soi { get; init; }
-    public string? Road { get; init; }
-    public string SubDistrict { get; init; } = default!;
-    public string District { get; init; } = default!;
-    public string Province { get; init; } = default!;
-    public string? Postcode { get; init; }
+    public string? HouseNo { get; }
+    public string? RoomNo { get; }
+    public string? FloorNo { get; }
+    public string? BuildingNo { get; }
+    public string? Moo { get; }
+    public string? Soi { get; }
+    public string? Road { get; }
+    public string SubDistrict { get; }
+    public string District { get; }
+    public string Province { get; }
+    public string? Postcode { get; }
 
     public static TitleAddress Create(
         string? houseNo, string? roomNo, string? floorNo, string? buildingNo,

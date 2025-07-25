@@ -1,4 +1,4 @@
-namespace Assignment.Events;
+namespace Shared.Messaging.Events;
 
 public record TaskAssigned
 {

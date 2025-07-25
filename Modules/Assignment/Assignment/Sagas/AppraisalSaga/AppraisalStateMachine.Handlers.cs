@@ -1,3 +1,5 @@
+using Shared.Messaging.Events;
+
 namespace Assignment.Sagas.AppraisalSaga;
 
 /// <summary>
@@ -69,6 +71,7 @@ public partial class AppraisalStateMachine
                 CorrelationId = context.Saga.CorrelationId,
                 RequestId = context.Saga.RequestId,
                 TaskName = context.Saga.CurrentState,
+                CurrentState = context.Saga.CurrentState,
                 AssignedTo = context.Saga.Assignee,
                 AssignedType = context.Saga.AssignType
             },

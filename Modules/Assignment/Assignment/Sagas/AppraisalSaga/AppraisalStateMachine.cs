@@ -1,3 +1,5 @@
+using Shared.Messaging.Events;
+
 namespace Assignment.Sagas.AppraisalSaga;
 
 public partial class AppraisalStateMachine : MassTransitStateMachine<AppraisalSagaState>

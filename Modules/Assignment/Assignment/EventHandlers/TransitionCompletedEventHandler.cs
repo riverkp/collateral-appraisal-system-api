@@ -1,3 +1,5 @@
+using Shared.Messaging.Events;
+
 namespace Assignment.EventHandlers;
 
 public class TransitionCompletedEventHandler(

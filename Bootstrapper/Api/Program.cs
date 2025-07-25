@@ -106,10 +106,11 @@ builder.Services.AddCors(options =>
     options.AddPolicy("SPAPolicy",
         policy =>
         {
-            policy.WithOrigins("https://localhost:3000", "https://localhost:7111")
+            policy
+                .WithOrigins("https://localhost:3000", "https://localhost:7111", "null")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
-                .AllowCredentials(); // Optional if you need cookies/auth headers
+                .AllowCredentials(); // Required for SignalR
         });
 });
 
@@ -120,6 +121,7 @@ if (app.Environment.IsDevelopment()) app.MapOpenApi();
 if (app.Environment.IsDevelopment()) app.UseDeveloperExceptionPage();
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(

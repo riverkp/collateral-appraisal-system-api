@@ -1,3 +1,5 @@
+using Shared.Messaging.Events;
+
 namespace Assignment.Services;
 
 public class AssignmentService(

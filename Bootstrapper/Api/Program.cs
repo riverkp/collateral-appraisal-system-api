@@ -17,12 +17,11 @@ builder.Services.AddSharedServices(builder.Configuration);
 var requestAssembly = typeof(RequestModule).Assembly;
 var authAssembly = typeof(AuthModule).Assembly;
 var notificationAssembly = typeof(NotificationModule).Assembly;
+var documentAssembly = typeof(DocumentModule).Assembly;
 var assignmentAssemblyAssembly = typeof(AssignmentModule).Assembly;
 
-builder.Services.AddCarterWithAssemblies(requestAssembly, authAssembly, notificationAssembly,
-    assignmentAssemblyAssembly);
-builder.Services.AddMediatRWithAssemblies(requestAssembly, authAssembly, notificationAssembly,
-    assignmentAssemblyAssembly);
+builder.Services.AddCarterWithAssemblies(requestAssembly, authAssembly, notificationAssembly, documentAssembly, assignmentAssemblyAssembly);
+builder.Services.AddMediatRWithAssemblies(requestAssembly, authAssembly, notificationAssembly, documentAssembly, assignmentAssemblyAssembly);
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
@@ -88,6 +87,7 @@ builder.Services
     .AddRequestModule(builder.Configuration)
     .AddAuthModule(builder.Configuration)
     .AddNotificationModule(builder.Configuration)
+    .AddDocumentModule(builder.Configuration)
     .AddAssignmentModule(builder.Configuration)
     .AddOpenIddictModule(builder.Configuration);
 
@@ -142,6 +142,7 @@ app
     .UseRequestModule()
     .UseAuthModule()
     .UseNotificationModule()
+    .UseDocumentModule()
     .UseAssignmentModule()
     .UseOpenIddictModule();
 

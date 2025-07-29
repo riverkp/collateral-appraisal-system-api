@@ -33,18 +33,18 @@ public class TaskAssignedNotificationEventHandler : IConsumer<TaskAssigned>
                 taskAssigned.AssignedType,
                 // We need to get request ID from saga state or context
                 GetRequestIdFromContext(context),
-                taskAssigned.TaskName, // Using TaskName as current state for now
+                taskAssigned.TaskName.ToString(), // Using TaskName as current state for now
                 DateTime.UtcNow
             );
 
             await _notificationService.SendTaskAssignedNotificationAsync(notification);
-            
-            _logger.LogInformation("Successfully sent TaskAssigned notification for user {AssignedTo}", 
+
+            _logger.LogInformation("Successfully sent TaskAssigned notification for user {AssignedTo}",
                 taskAssigned.AssignedTo);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error processing TaskAssigned notification for user {AssignedTo} and task {TaskName}", 
+            _logger.LogError(ex, "Error processing TaskAssigned notification for user {AssignedTo} and task {TaskName}",
                 taskAssigned.AssignedTo, taskAssigned.TaskName);
             throw;
         }

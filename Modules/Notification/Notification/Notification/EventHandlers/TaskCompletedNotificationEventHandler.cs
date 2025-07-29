@@ -32,8 +32,8 @@ public class TaskCompletedNotificationEventHandler : IConsumer<TaskCompleted>
                 GetCompletedBy(context), // We need to get this from context or user claims
                 taskCompleted.ActionTaken,
                 GetRequestIdFromContext(context),
-                GetPreviousState(taskCompleted.TaskName),
-                GetNextState(taskCompleted.TaskName, taskCompleted.ActionTaken),
+                GetPreviousState(taskCompleted.TaskName.ToString()),
+                GetNextState(taskCompleted.TaskName.ToString(), taskCompleted.ActionTaken),
                 DateTime.UtcNow
             );
 

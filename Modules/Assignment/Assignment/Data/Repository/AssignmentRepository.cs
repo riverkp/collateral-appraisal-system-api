@@ -48,6 +48,15 @@ public class AssignmentRepository(AssignmentDbContext dbContext) : IAssignmentRe
             .FirstOrDefaultAsync(cancellationToken);
     }
 
+    public async Task<CompletedTask?> GetLastCompletedTaskForIdAndActivityAsync(Guid correlationId, string activityName,
+        CancellationToken cancellationToken = default)
+    {
+        return await dbContext.CompletedTasks
+            .Where(x => x.CorrelationId == correlationId && x.TaskName == activityName)
+            .OrderByDescending(x => x.CompletedAt)
+            .FirstOrDefaultAsync(cancellationToken);
+    }
+
     public async Task<int> GetActiveTaskCountForUserAsync(string userId, CancellationToken cancellationToken = default)
     {
         return await dbContext.PendingTasks

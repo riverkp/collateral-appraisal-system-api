@@ -1,8 +1,10 @@
+using Shared.Messaging.Values;
+
 namespace Notification.Notification.Dtos;
 
 public record TaskAssignedNotificationDto(
     Guid CorrelationId,
-    string TaskName,
+    TaskName TaskName,
     string AssignedTo,
     string AssignedType,
     long RequestId,

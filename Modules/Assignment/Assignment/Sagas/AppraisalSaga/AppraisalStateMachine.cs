@@ -1,6 +1,5 @@
-using Microsoft.VisualBasic;
 using Shared.Messaging.Events;
-using StackExchange.Redis;
+using Shared.Messaging.Values;
 
 namespace Assignment.Sagas.AppraisalSaga;
 
@@ -28,144 +27,98 @@ public partial class AppraisalStateMachine : MassTransitStateMachine<AppraisalSa
     public Event<RequestSubmitted> RequestSubmitted { get; private set; } = default!;
     public Event<TaskCompleted> TaskCompleted { get; private set; } = default!;
     public Event<TaskAssigned> TaskAssigned { get; private set; } = default!;
+
+    public Dictionary<State, TaskName> StateTaskNames { get; private set; } = default!;
     public AppraisalStateMachine(IDateTimeProvider dateTimeProvider)
     {
         _dateTimeProvider = dateTimeProvider;
+        StateTaskNames = new()
+        {
+            [RequestMakerAwaitingAssignment] = TaskName.RequestMaker,
+            [RequestMaker] = TaskName.RequestMaker,
+            [AdminAwaitingAssignment] = TaskName.Admin,
+            [Admin] = TaskName.Admin,
+            [AppraisalStaffAwaitingAssignment] = TaskName.AppraisalStaff,
+            [AppraisalStaff] = TaskName.AppraisalStaff,
+            [AppraisalCheckerAwaitingAssignment] = TaskName.AppraisalChecker,
+            [AppraisalChecker] = TaskName.AppraisalChecker,
+            [AppraisalVerifierAwaitingAssignment] = TaskName.AppraisalVerifier,
+            [AppraisalVerifier] = TaskName.AppraisalVerifier,
+        };
 
         InstanceState(x => x.CurrentState);
 
-        // Event(() => RequestSubmitted, x => x.CorrelateById(m => m.Message.CorrelationId));
-        // Event(() => TaskCompleted, x => x.CorrelateById(m => m.Message.CorrelationId));
+        Event(() => RequestSubmitted, x => x.CorrelateById(m => m.Message.CorrelationId));
+        Event(() => TaskCompleted, x => x.CorrelateById(m => m.Message.CorrelationId));
         Event(() => TaskAssigned, x => x.CorrelateById(m => m.Message.CorrelationId));
 
         Initially(
             When(RequestSubmitted)
                 .Then(Initialize)
                 .TransitionTo(AdminAwaitingAssignment)
-                .Then(AssignmentRequest)
+                .Then(context => AssignmentRequest(context, TaskName.Admin))
         );
 
-        AwaitingAssignment(AdminAwaitingAssignment, "Admin");
-        DuringProcess(Admin, AppraisalStaff, RequestMaker, "Admin");
+        DuringAwaitingAssignment(AdminAwaitingAssignment, Admin);
+        DuringProcess(Admin, AppraisalStaffAwaitingAssignment, RequestMakerAwaitingAssignment);
 
+        DuringAwaitingAssignment(RequestMakerAwaitingAssignment, RequestMaker);
+        DuringProcess(RequestMaker, AdminAwaitingAssignment);
 
-        // During(AdminAwaitingAssignment,
-        //     When(TaskAssigned)
-        //         .TransitionTo(Admin)
-        //         .Then(TransitionCompleted)
-        // );
+        DuringAwaitingAssignment(AppraisalStaffAwaitingAssignment, AppraisalStaff);
+        DuringProcess(AppraisalStaff, AppraisalCheckerAwaitingAssignment, AdminAwaitingAssignment);
 
-        // During(AppraisalStaffAwaitingAssignment,
-        //     When(TaskAssigned)
-        //         .TransitionTo(Admin)
-        //         .Then(TransitionCompleted)
-        // );
+        DuringAwaitingAssignment(AppraisalCheckerAwaitingAssignment, AppraisalChecker);
+        DuringProcess(AppraisalChecker, AppraisalVerifierAwaitingAssignment, AppraisalStaffAwaitingAssignment);
 
-
-        // // Admin
-        // During(Admin,
-        //     When(TaskAssigned)
-        //         .If(context => context.Message.TaskName == "Admin", then => then
-        //             .Then(TransitionCompleted)
-        //         ),
-        //     When(TaskCompleted)
-        //         .If(context => context.Message.TaskName == "Admin", then => then
-        //             .Then(CompleteActivity)
-        //             .If(context => context.Message.ActionTaken == "P", proceed => proceed
-        //                 .TransitionTo(AppraisalStaff)
-        //                 .Then(AssignmentRequest)
-        //             )
-        //             .If(context => context.Message.ActionTaken == "R", routeBack => routeBack
-        //                 .TransitionTo(RequestMaker)
-        //                 .Then(AssignmentRequest)
-        //             )
-        //         )
-        // );
-
-        // // Appraisal Staff
-        // During(AppraisalStaff,
-        //     When(TaskAssigned)
-        //         .If(context => context.Message.TaskName == "AppraisalStaff", then => then
-        //             .Then(TransitionCompleted)
-        //         ),
-        //     When(TaskCompleted)
-        //         .If(context => context.Message.TaskName == "AppraisalStaff", then => then
-        //             .Then(CompleteActivity)
-        //             .If(context => context.Message.ActionTaken == "P", proceed => proceed
-        //                 .TransitionTo(AppraisalChecker)
-        //                 .Then(AssignmentRequest)
-        //             )
-        //             .If(context => context.Message.ActionTaken == "R", routeBack => routeBack
-        //                 .TransitionTo(Admin)
-        //                 .Then(AssignmentRequest)
-        //             )
-        //         )
-        // );
-
-        // // Appraisal Checker
-        // During(AppraisalChecker,
-        //     When(TaskAssigned)
-        //         .If(context => context.Message.TaskName == "AppraisalChecker", then => then
-        //             .Then(TransitionCompleted)
-        //         ),
-        //     When(TaskCompleted)
-        //         .If(context => context.Message.TaskName == "AppraisalChecker", then => then
-        //             .Then(CompleteActivity)
-        //             .If(context => context.Message.ActionTaken == "P", proceed => proceed
-        //                 .TransitionTo(AppraisalVerifier)
-        //                 .Then(AssignmentRequest)
-        //             )
-        //             .If(context => context.Message.ActionTaken == "R", routeBack => routeBack
-        //                 .TransitionTo(AppraisalStaff)
-        //                 .Then(AssignmentRequest)
-        //             )
-        //         )
-        // );
-
-        // // Appraisal Verifier
-        // During(AppraisalVerifier,
-        //     When(TaskAssigned)
-        //         .If(context => context.Message.TaskName == "AppraisalVerifier", then => then
-        //             .Then(TransitionCompleted)
-        //         ),
-        //     When(TaskCompleted)
-        //         .If(context => context.Message.TaskName == "AppraisalVerifier", then => then
-        //             .Then(CompleteActivity)
-        //             .If(context => context.Message.ActionTaken == "P", proceed => proceed
-        //                 .Finalize()
-        //             )
-        //             .If(context => context.Message.ActionTaken == "R", routeBack => routeBack
-        //                 .TransitionTo(AppraisalChecker)
-        //                 .Then(AssignmentRequest)
-        //             )
-        //         )
-        // );
+        DuringAwaitingAssignment(AppraisalVerifierAwaitingAssignment, AppraisalVerifier);
+        DuringProcess(AppraisalVerifier, routeBackState: AppraisalCheckerAwaitingAssignment);
 
         SetCompletedWhenFinalized();
     }
-    private void AwaitingAssignment(State state, string taskName)
+    private void DuringAwaitingAssignment(State currState, State nextState)
     {
-        During(state,
+        During(currState,
             When(TaskAssigned)
-                .If(context => context.Message.TaskName == taskName, then => then
+                .If(context => context.Message.TaskName == StateTaskNames[currState], then => then
+                    .TransitionTo(nextState)
                     .Then(TransitionCompleted))
         );
     }
 
-    private void DuringProcess(State currState, State nextState, State routeBackState,string taskName)
+    private void DuringProcess(State currState, State? nextState = null, State? routeBackState = null)
     {
         During(currState,
             When(TaskCompleted)
-                .If(context => context.Message.TaskName == taskName, then => then
+                .If(context => context.Message.TaskName == StateTaskNames[currState], then => then
                     .Then(CompleteActivity)
-                    .If(context => context.Message.ActionTaken == "P", proceed => proceed
-                        .TransitionTo(nextState)
-                        .Then(AssignmentRequest)
-                    )
-                    .If(context => context.Message.ActionTaken == "R", routeBack => routeBack
-                        .TransitionTo(routeBackState)
-                        .Then(AssignmentRequest)
-                    ))
+                    .If(context => context.Message.ActionTaken == "P", proceed =>
+                    {
+                        if (nextState != null)
+                        {
+                            return proceed
+                            .TransitionTo(nextState)
+                            .Then(context => AssignmentRequest(context, StateTaskNames[nextState]));
+                        }
+                        else
+                        {
+                            return proceed.Finalize();
+                        }
+                    })
+                    .If(context => context.Message.ActionTaken == "R", routeBack =>
+                    {
+                        if (routeBackState != null)
+                        {
+                            return routeBack
+                                .TransitionTo(routeBackState)
+                                .Then(context => AssignmentRequest(context, StateTaskNames[routeBackState]));
+                        }
+                        else
+                        {
+                            return routeBack;
+                        }
+                    })
+                )
         );
     }
 }

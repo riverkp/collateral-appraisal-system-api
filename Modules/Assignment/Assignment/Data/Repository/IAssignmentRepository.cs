@@ -14,6 +14,9 @@ public interface IAssignmentRepository
     Task<CompletedTask?> GetLastCompletedTaskForActivityAsync(string activityName,
         CancellationToken cancellationToken = default);
 
+    Task<CompletedTask?> GetLastCompletedTaskForIdAndActivityAsync(Guid correlationId, string activityName,
+        CancellationToken cancellationToken = default);
+
     Task<int> GetActiveTaskCountForUserAsync(string userId, CancellationToken cancellationToken = default);
 
     Task SyncUsersForGroupCombinationAsync(string activityName, string groupsHash, string groupsList,

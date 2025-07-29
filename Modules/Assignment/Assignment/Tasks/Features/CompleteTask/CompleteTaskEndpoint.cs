@@ -1,3 +1,5 @@
+using Shared.Messaging.Values;
+
 namespace Assignment.Tasks.Features.CompleteTask;
 
 public record CompleteActivityRequest(Guid CorrelationId, string ActivityName, string ActionTaken);
@@ -13,7 +15,7 @@ public class CompleteTaskEndpoint : ICarterModule
                 CancellationToken cancellationToken) =>
             {
                 var result = await sender.Send(new CompleteActivityCommand(
-                    request.CorrelationId, request.ActivityName, request.ActionTaken), cancellationToken);
+                    request.CorrelationId, Enum.Parse<TaskName>(request.ActivityName), request.ActionTaken), cancellationToken);
 
                 var response = new CompleteActivityResponse(result.IsSuccess);
 

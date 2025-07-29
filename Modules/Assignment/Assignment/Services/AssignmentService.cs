@@ -1,4 +1,5 @@
 using Shared.Messaging.Events;
+using Shared.Messaging.Values;
 
 namespace Assignment.Services;
 
@@ -14,20 +15,20 @@ public class AssignmentService(
         var correlationId = NewId.NextGuid();
 
         await publishEndpoint.Publish(new RequestSubmitted
-            {
-                CorrelationId = correlationId,
-                RequestId = requestId
-            },
+        {
+            CorrelationId = correlationId,
+            RequestId = requestId
+        },
             cancellationToken);
 
         return correlationId;
     }
 
-    public async Task CompleteTaskAsync(Guid correlationId, string taskName, string actionTaken,
+    public async Task CompleteTaskAsync(Guid correlationId, TaskName taskName, string actionTaken,
         CancellationToken cancellationToken = default)
     {
         var pendingTask =
-            await assignmentRepository.GetPendingTaskAsync(correlationId, taskName, cancellationToken);
+            await assignmentRepository.GetPendingTaskAsync(correlationId, taskName.ToString(), cancellationToken);
         if (pendingTask is null)
         {
             throw new NotFoundException(
@@ -41,23 +42,43 @@ public class AssignmentService(
         await assignmentRepository.AddCompletedTaskAsync(completedTask, cancellationToken);
 
         await publishEndpoint.Publish(new TaskCompleted
-            {
-                CorrelationId = correlationId,
-                TaskName = taskName,
-                ActionTaken = actionTaken
-            },
+        {
+            CorrelationId = correlationId,
+            TaskName = taskName,
+            ActionTaken = actionTaken
+        },
             cancellationToken);
     }
 
-    public async Task AssignTaskAsync(Guid correlationId, string taskName,
+    public async Task AssignTaskAsync(Guid correlationId, TaskName taskName,
         CancellationToken cancellationToken = default)
     {
+        var prevCompletedTask = await assignmentRepository
+            .GetLastCompletedTaskForIdAndActivityAsync(
+                correlationId,
+                taskName.ToString(),
+                cancellationToken
+            );
+
+        if (prevCompletedTask != null)
+        {
+            await publishEndpoint.Publish(new TaskAssigned
+            {
+                CorrelationId = correlationId,
+                TaskName = taskName,
+                AssignedTo = prevCompletedTask.AssignedTo,
+                AssignedType = "U"
+            },
+            cancellationToken);
+            return;
+        }
+
         var assigneeSelector = selectorFactory.GetSelector(AssigneeSelectionStrategy.RoundRobin);
 
         // TODO: Change user groups to be dynamic based on the parameter
         var assignmentContext = new AssignmentContext
         {
-            ActivityName = taskName,
+            ActivityName = taskName.ToString(),
             UserGroups = ["Juniors", "Seniors"]
         };
 
@@ -68,12 +89,12 @@ public class AssignmentService(
         }
 
         await publishEndpoint.Publish(new TaskAssigned
-            {
-                CorrelationId = correlationId,
-                TaskName = taskName,
-                AssignedTo = result.AssigneeId!,
-                AssignedType = "U" // Assuming "U" stands for a User type, adjust as necessary
-            },
+        {
+            CorrelationId = correlationId,
+            TaskName = taskName,
+            AssignedTo = result.AssigneeId!,
+            AssignedType = "U" // Assuming "U" stands for a User type, adjust as necessary
+        },
             cancellationToken);
     }
 }

@@ -33,7 +33,8 @@ public class TransitionCompletedEventHandler(
         if (task != null)
         {
             var notifiedTo = task.AssignedTo;
-            await context.Publish(new NotifyAssignment
+            var endpoint = await context.GetSendEndpoint(new Uri("queue:notify-assignment-command-handler"));
+            await endpoint.Send(new NotifyAssignment
             {
                 CorrelationId = context.Message.CorrelationId,
                 TaskName = context.Message.TaskName,

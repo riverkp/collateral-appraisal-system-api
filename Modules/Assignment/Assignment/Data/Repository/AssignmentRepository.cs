@@ -39,6 +39,15 @@ public class AssignmentRepository(AssignmentDbContext dbContext) : IAssignmentRe
         await dbContext.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task<CompletedTask?> GetLastCompletedTaskForIdAsync(Guid correlationId,
+        CancellationToken cancellationToken = default)
+    {
+        return await dbContext.CompletedTasks
+            .Where(x => x.CorrelationId == correlationId)
+            .OrderByDescending(x => x.CompletedAt)
+            .FirstOrDefaultAsync(cancellationToken);
+    }
+
     public async Task<CompletedTask?> GetLastCompletedTaskForActivityAsync(string activityName,
         CancellationToken cancellationToken = default)
     {

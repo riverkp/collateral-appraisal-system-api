@@ -11,6 +11,9 @@ public interface IAssignmentRepository
     Task AddCompletedTaskAsync(CompletedTask completedTask, CancellationToken cancellationToken = default);
     Task RemovePendingTaskAsync(PendingTask pendingTask, CancellationToken cancellationToken = default);
 
+    Task<CompletedTask?> GetLastCompletedTaskForIdAsync(Guid correlationId,
+        CancellationToken cancellationToken = default);
+
     Task<CompletedTask?> GetLastCompletedTaskForActivityAsync(string activityName,
         CancellationToken cancellationToken = default);
 

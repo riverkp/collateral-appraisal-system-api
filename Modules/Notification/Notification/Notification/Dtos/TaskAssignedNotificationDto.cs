@@ -9,5 +9,6 @@ public record TaskAssignedNotificationDto(
     string AssignedType,
     long RequestId,
     string CurrentState,
-    DateTime AssignedAt
+    DateTime AssignedAt,
+    string? NotifiedTo = default!
 );

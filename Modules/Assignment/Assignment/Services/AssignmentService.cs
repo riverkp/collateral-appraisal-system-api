@@ -28,7 +28,7 @@ public class AssignmentService(
         CancellationToken cancellationToken = default)
     {
         var pendingTask =
-            await assignmentRepository.GetPendingTaskAsync(correlationId, taskName.ToString(), cancellationToken);
+            await assignmentRepository.GetPendingTaskAsync(correlationId, taskName, cancellationToken);
         if (pendingTask is null)
         {
             throw new NotFoundException(
@@ -56,7 +56,7 @@ public class AssignmentService(
         var prevCompletedTask = await assignmentRepository
             .GetLastCompletedTaskForIdAndActivityAsync(
                 correlationId,
-                taskName.ToString(),
+                taskName,
                 cancellationToken
             );
 

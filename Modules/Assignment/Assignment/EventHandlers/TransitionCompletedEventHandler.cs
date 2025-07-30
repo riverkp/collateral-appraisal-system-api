@@ -15,7 +15,7 @@ public class TransitionCompletedEventHandler(
         var pendingTask = PendingTask.Create(
             context.Message.CorrelationId,
             context.Message.RequestId,
-            context.Message.TaskName.ToString(),
+            context.Message.TaskName,
             context.Message.AssignedTo,
             "U", // Assuming "U" stands for a User type, adjust as necessary
             dateTimeProvider.Now

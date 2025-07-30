@@ -1,3 +1,5 @@
+using Shared.Messaging.Values;
+
 namespace Assignment.Data.Repository;
 
 public class AssignmentRepository(AssignmentDbContext dbContext) : IAssignmentRepository
@@ -7,7 +9,7 @@ public class AssignmentRepository(AssignmentDbContext dbContext) : IAssignmentRe
         throw new NotImplementedException();
     }
 
-    public async Task<PendingTask?> GetPendingTaskAsync(Guid correlationId, string taskName,
+    public async Task<PendingTask?> GetPendingTaskAsync(Guid correlationId, TaskName taskName,
         CancellationToken cancellationToken = default)
     {
         return await dbContext.PendingTasks
@@ -48,7 +50,7 @@ public class AssignmentRepository(AssignmentDbContext dbContext) : IAssignmentRe
             .FirstOrDefaultAsync(cancellationToken);
     }
 
-    public async Task<CompletedTask?> GetLastCompletedTaskForActivityAsync(string activityName,
+    public async Task<CompletedTask?> GetLastCompletedTaskForActivityAsync(TaskName activityName,
         CancellationToken cancellationToken = default)
     {
         return await dbContext.CompletedTasks
@@ -57,7 +59,7 @@ public class AssignmentRepository(AssignmentDbContext dbContext) : IAssignmentRe
             .FirstOrDefaultAsync(cancellationToken);
     }
 
-    public async Task<CompletedTask?> GetLastCompletedTaskForIdAndActivityAsync(Guid correlationId, string activityName,
+    public async Task<CompletedTask?> GetLastCompletedTaskForIdAndActivityAsync(Guid correlationId, TaskName activityName,
         CancellationToken cancellationToken = default)
     {
         return await dbContext.CompletedTasks

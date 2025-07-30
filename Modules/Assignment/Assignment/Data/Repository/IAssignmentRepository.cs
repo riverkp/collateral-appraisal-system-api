@@ -1,10 +1,12 @@
+using Shared.Messaging.Values;
+
 namespace Assignment.Data.Repository;
 
 public interface IAssignmentRepository
 {
     Task<List<PendingTask>> GetPendingTaskAsync(string userCode, CancellationToken cancellationToken = default);
 
-    Task<PendingTask?> GetPendingTaskAsync(Guid correlationId, string taskName,
+    Task<PendingTask?> GetPendingTaskAsync(Guid correlationId, TaskName taskName,
         CancellationToken cancellationToken = default);
 
     Task AddTaskAsync(PendingTask pendingTask, CancellationToken cancellationToken = default);
@@ -14,10 +16,10 @@ public interface IAssignmentRepository
     Task<CompletedTask?> GetLastCompletedTaskForIdAsync(Guid correlationId,
         CancellationToken cancellationToken = default);
 
-    Task<CompletedTask?> GetLastCompletedTaskForActivityAsync(string activityName,
+    Task<CompletedTask?> GetLastCompletedTaskForActivityAsync(TaskName activityName,
         CancellationToken cancellationToken = default);
 
-    Task<CompletedTask?> GetLastCompletedTaskForIdAndActivityAsync(Guid correlationId, string activityName,
+    Task<CompletedTask?> GetLastCompletedTaskForIdAndActivityAsync(Guid correlationId, TaskName activityName,
         CancellationToken cancellationToken = default);
 
     Task<int> GetActiveTaskCountForUserAsync(string userId, CancellationToken cancellationToken = default);

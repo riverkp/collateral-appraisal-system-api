@@ -19,7 +19,7 @@ public class NotifyAssignmentCommandHandler(INotificationService notificationSer
             DateTime.UtcNow,
             context.Message.NotifiedTo
         );
-        await notificationService.SendTaskAssignedNotificationAsync(notification);
+        await notificationService.SendTaskAssignedToOtherNotificationAsync(notification);
     }
 
     private static long GetRequestIdFromContext(ConsumeContext<NotifyAssignment> context)

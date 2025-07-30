@@ -30,9 +30,31 @@ public class NotificationService : INotificationService
     public async Task SendTaskAssignedNotificationAsync(TaskAssignedNotificationDto notification)
     {
         var title = $"New Task Assigned: {notification.TaskName}";
-        var message = notification.NotifiedTo == notification.AssignedTo
-            ? $"You have been assigned a new task for Request #{notification.RequestId} in the {notification.CurrentState} stage."
-            : $"#{notification.AssignedTo} has been assigned a new task for Request #{notification.RequestId} in the {notification.CurrentState} stage.";
+        var message = $"You have been assigned a new task for Request #{notification.RequestId} in the {notification.CurrentState} stage.";
+
+        await SendNotificationToUserAsync(
+            notification.AssignedTo,
+            title,
+            message,
+            NotificationType.TaskAssigned,
+            $"/requests/{notification.RequestId}/tasks",
+            new Dictionary<string, object>
+            {
+                { "correlationId", notification.CorrelationId },
+                { "taskName", notification.TaskName },
+                { "requestId", notification.RequestId },
+                { "currentState", notification.CurrentState },
+                { "assignedType", notification.AssignedType }
+            });
+
+        _logger.LogInformation("Sent task assigned notification to user {NotifiedUserId} for task {TaskName}",
+            notification.AssignedTo, notification.TaskName);
+    }
+
+    public async Task SendTaskAssignedToOtherNotificationAsync(TaskAssignedNotificationDto notification)
+    {
+        var title = $"Task Assigned: {notification.TaskName}";
+        var message = $"#{notification.AssignedTo} has been assigned a new task for Request #{notification.RequestId} in the {notification.CurrentState} stage.";
 
         await SendNotificationToUserAsync(
             notification.NotifiedTo ?? notification.AssignedTo,

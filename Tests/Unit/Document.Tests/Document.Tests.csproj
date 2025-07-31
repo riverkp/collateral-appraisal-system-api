@@ -35,5 +35,4 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Modules\Document\Document\Document.csproj" />
   </ItemGroup>
-
 </Project>

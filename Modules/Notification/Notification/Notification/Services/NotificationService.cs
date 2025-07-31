@@ -47,8 +47,32 @@ public class NotificationService : INotificationService
                 { "assignedType", notification.AssignedType }
             });
 
-        _logger.LogInformation("Sent task assigned notification to user {UserId} for task {TaskName}", 
+        _logger.LogInformation("Sent task assigned notification to user {NotifiedUserId} for task {TaskName}",
             notification.AssignedTo, notification.TaskName);
+    }
+
+    public async Task SendTaskAssignedToOtherNotificationAsync(TaskAssignedNotificationDto notification)
+    {
+        var title = $"Task Assigned: {notification.TaskName}";
+        var message = $"#{notification.AssignedTo} has been assigned a new task for Request #{notification.RequestId} in the {notification.CurrentState} stage.";
+
+        await SendNotificationToUserAsync(
+            notification.NotifiedTo ?? notification.AssignedTo,
+            title,
+            message,
+            NotificationType.TaskAssigned,
+            $"/requests/{notification.RequestId}/tasks",
+            new Dictionary<string, object>
+            {
+                { "correlationId", notification.CorrelationId },
+                { "taskName", notification.TaskName },
+                { "requestId", notification.RequestId },
+                { "currentState", notification.CurrentState },
+                { "assignedType", notification.AssignedType }
+            });
+
+        _logger.LogInformation("Sent task assigned notification to user {NotifiedUserId} for task {TaskName} assigned to {AssignedUserId}",
+            notification.NotifiedTo ?? notification.AssignedTo, notification.TaskName, notification.AssignedTo);
     }
 
     public async Task SendTaskCompletedNotificationAsync(TaskCompletedNotificationDto notification)
@@ -75,7 +99,7 @@ public class NotificationService : INotificationService
                 { "nextState", notification.NextState }
             });
 
-        _logger.LogInformation("Sent task completed notification for task {TaskName} completed by {CompletedBy}", 
+        _logger.LogInformation("Sent task completed notification for task {TaskName} completed by {CompletedBy}",
             notification.TaskName, notification.CompletedBy);
     }
 
@@ -83,7 +107,7 @@ public class NotificationService : INotificationService
     {
         var title = $"Workflow Update: Request #{notification.RequestId}";
         var message = $"Workflow is now in {notification.CurrentState} stage.";
-        
+
         if (!string.IsNullOrEmpty(notification.NextAssignee))
         {
             message += $" Next assigned to: {notification.NextAssignee}";
@@ -105,7 +129,7 @@ public class NotificationService : INotificationService
                 { "workflowSteps", notification.WorkflowSteps }
             });
 
-        _logger.LogInformation("Sent workflow progress notification for request {RequestId} in state {CurrentState}", 
+        _logger.LogInformation("Sent workflow progress notification for request {RequestId} in state {CurrentState}",
             notification.RequestId, notification.CurrentState);
     }
 
@@ -161,7 +185,7 @@ public class NotificationService : INotificationService
     public async Task<List<NotificationDto>> GetUserNotificationsAsync(string userId, bool unreadOnly = false)
     {
         var notifications = await _notificationRepository.GetUserNotificationsAsync(userId, unreadOnly);
-        
+
         return notifications.Select(n => new NotificationDto(
             n.Id,
             n.Title,

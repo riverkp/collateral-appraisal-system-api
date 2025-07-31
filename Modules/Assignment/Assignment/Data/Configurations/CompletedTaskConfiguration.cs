@@ -9,6 +9,7 @@ public class CompletedTaskConfiguration : IEntityTypeConfiguration<CompletedTask
         builder.HasKey(p => p.Id);
 
         builder.Property(p => p.TaskName)
+            .HasConversion<string>()
             .HasMaxLength(100);
 
         builder.Property(p => p.AssignedTo)

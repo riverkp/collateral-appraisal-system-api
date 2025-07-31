@@ -1,4 +1,5 @@
 using Shared.Messaging.Events;
+using Shared.Messaging.Values;
 
 namespace Assignment.Sagas.AppraisalSaga;
 
@@ -34,7 +35,7 @@ public partial class AppraisalStateMachine
     /// </summary>
     /// <typeparam name="T">The type of the message associated with the behavior context.</typeparam>
     /// <param name="context">The behavior context containing the saga state and message details.</param>
-    private void AssignmentRequest<T>(BehaviorContext<AppraisalSagaState, T> context) where T : class
+    private void AssignmentRequest<T>(BehaviorContext<AppraisalSagaState, T> context, TaskName taskName) where T : class
     {
         context.Saga.Assignee = "*System";
         context.Saga.AssignType = "S";
@@ -42,7 +43,7 @@ public partial class AppraisalStateMachine
         context.Publish(new AssignmentRequested
             {
                 CorrelationId = context.Saga.CorrelationId,
-                TaskName = context.Saga.CurrentState,
+                TaskName = taskName,
             }
             , context.CancellationToken);
     }
@@ -67,14 +68,14 @@ public partial class AppraisalStateMachine
         context.Saga.AssignType = context.Message.AssignedType;
 
         context.Publish(new TransitionCompleted
-            {
-                CorrelationId = context.Saga.CorrelationId,
-                RequestId = context.Saga.RequestId,
-                TaskName = context.Saga.CurrentState,
-                CurrentState = context.Saga.CurrentState,
-                AssignedTo = context.Saga.Assignee,
-                AssignedType = context.Saga.AssignType
-            },
+        {
+            CorrelationId = context.Saga.CorrelationId,
+            RequestId = context.Saga.RequestId,
+            TaskName = Enum.Parse<TaskName>(context.Saga.CurrentState),
+            CurrentState = context.Saga.CurrentState,
+            AssignedTo = context.Saga.Assignee,
+            AssignedType = context.Saga.AssignType
+        },
             context.CancellationToken);
     }
 }

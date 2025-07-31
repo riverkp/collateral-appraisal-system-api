@@ -6,6 +6,7 @@ namespace Notification.Notification.Services;
 public interface INotificationService
 {
     Task SendTaskAssignedNotificationAsync(TaskAssignedNotificationDto notification);
+    Task SendTaskAssignedToOtherNotificationAsync(TaskAssignedNotificationDto notification);
     Task SendTaskCompletedNotificationAsync(TaskCompletedNotificationDto notification);
     Task SendWorkflowProgressNotificationAsync(WorkflowProgressNotificationDto notification);
     Task SendNotificationToUserAsync(string userId, string title, string message, NotificationType type, string? actionUrl = null, Dictionary<string, object>? metadata = null);

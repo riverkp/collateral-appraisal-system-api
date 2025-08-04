@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 
 namespace Integration.Helpers;
 
@@ -11,4 +12,6 @@ internal static class JsonHelper
         var content = new StringContent(json, Encoding.UTF8, "application/json");
         return content;
     }
+
+    internal static JsonSerializerOptions Options { get; } = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
 }

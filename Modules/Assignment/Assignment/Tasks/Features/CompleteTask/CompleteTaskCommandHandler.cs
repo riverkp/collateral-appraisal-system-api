@@ -1,6 +1,8 @@
+using Shared.Messaging.Values;
+
 namespace Assignment.Tasks.Features.CompleteTask;
 
-public record CompleteActivityCommand(Guid CorrelationId, string ActivityName, string ActionTaken)
+public record CompleteActivityCommand(Guid CorrelationId, TaskName ActivityName, string ActionTaken)
     : ICommand<CompleteActivityResult>;
 
 public record CompleteActivityResult(bool IsSuccess);

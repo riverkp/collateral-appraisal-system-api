@@ -1,8 +1,10 @@
+using Shared.Messaging.Values;
+
 namespace Notification.Notification.Dtos;
 
 public record TaskCompletedNotificationDto(
     Guid CorrelationId,
-    string TaskName,
+    TaskName TaskName,
     string CompletedBy,
     string ActionTaken,
     long RequestId,

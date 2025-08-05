@@ -1,6 +1,7 @@
 using Carter;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Messaging.Values;
 
 namespace Notification.Notification.Features.TestNotifications;
 
@@ -31,18 +32,20 @@ public class TestNotificationEndpoint : ICarterModule
         [FromBody] SimulateTaskCompletionRequest request,
         [FromServices] IBus bus)
     {
+        var taskName = Enum.TryParse<TaskName>(request.TaskName, true, out var temp) ? temp : TaskName.Admin;
         var taskCompleted = new TaskCompleted
         {
             CorrelationId = request.CorrelationId ?? Guid.NewGuid(),
-            TaskName = request.TaskName ?? "Admin",
+
+            TaskName = taskName,
             ActionTaken = request.ActionTaken ?? "P"
         };
 
         await bus.Publish(taskCompleted);
-        
-        return Results.Ok(new { 
-            Message = "TaskCompleted event published", 
-            Event = taskCompleted 
+
+        return Results.Ok(new {
+            Message = "TaskCompleted event published",
+            Event = taskCompleted
         });
     }
 
@@ -50,19 +53,20 @@ public class TestNotificationEndpoint : ICarterModule
         [FromBody] SimulateTaskAssignmentRequest request,
         [FromServices] IBus bus)
     {
+        var taskName = Enum.TryParse<TaskName>(request.TaskName, true, out var temp) ? temp : TaskName.AppraisalStaff;
         var taskAssigned = new TaskAssigned
         {
             CorrelationId = request.CorrelationId ?? Guid.NewGuid(),
-            TaskName = request.TaskName ?? "AppraisalStaff",
+            TaskName = taskName,
             AssignedTo = request.AssignedTo ?? "testuser",
             AssignedType = request.AssignedType ?? "U"
         };
 
         await bus.Publish(taskAssigned);
-        
+
         return Results.Ok(new { 
-            Message = "TaskAssigned event published", 
-            Event = taskAssigned 
+            Message = "TaskAssigned event published",
+            Event = taskAssigned
         });
     }
 
@@ -70,21 +74,22 @@ public class TestNotificationEndpoint : ICarterModule
         [FromBody] SimulateTransitionCompletedRequest request,
         [FromServices] IBus bus)
     {
+        var taskName = Enum.TryParse<TaskName>(request.TaskName, true, out var temp) ? temp : TaskName.Admin;
         var transitionCompleted = new TransitionCompleted
         {
             CorrelationId = request.CorrelationId ?? Guid.NewGuid(),
             RequestId = request.RequestId ?? 1,
-            TaskName = request.TaskName ?? "Admin",
+            TaskName = taskName,
             CurrentState = request.CurrentState ?? "Admin",
             AssignedTo = request.AssignedTo ?? "testuser",
             AssignedType = request.AssignedType ?? "U"
         };
 
         await bus.Publish(transitionCompleted);
-        
+
         return Results.Ok(new { 
-            Message = "TransitionCompleted event published", 
-            Event = transitionCompleted 
+            Message = "TransitionCompleted event published",
+            Event = transitionCompleted
         });
     }
 }

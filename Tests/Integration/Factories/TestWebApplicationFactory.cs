@@ -1,3 +1,4 @@
+using Assignment.Data;
 using Document.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -5,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Notification.Data;
+using OAuth2OpenId.Data;
 using Request.Data;
 using Testcontainers.MsSql;
 using Testcontainers.RabbitMq;
@@ -25,7 +28,7 @@ public sealed class TestWebApplicationFactory(MsSqlContainer mssql, RabbitMqCont
             configBuilder.AddInMemoryCollection(new Dictionary<string, string?>
             {
                 ["ConnectionStrings:DefaultConnection"] = _mssql.GetConnectionString(),
-                ["RabbitMq:Host"] = $"amqp://{_rabbitMq.Hostname}:{_rabbitMq.GetMappedPublicPort(5672)}/",
+                ["RabbitMq:Host"] = _rabbitMq.GetConnectionString(),
                 ["RabbitMq:Username"] = "testuser",
                 ["RabbitMq:Password"] = "testpw"
             });
@@ -33,8 +36,12 @@ public sealed class TestWebApplicationFactory(MsSqlContainer mssql, RabbitMqCont
 
         builder.ConfigureServices(services =>
         {
-            ReplaceDbContextConnection<RequestDbContext>(services);
+            ReplaceDbContextConnection<AppraisalSagaDbContext>(services);
+            ReplaceDbContextConnection<AssignmentDbContext>(services);
             ReplaceDbContextConnection<DocumentDbContext>(services);
+            ReplaceDbContextConnection<NotificationDbContext>(services);
+            ReplaceDbContextConnection<OpenIddictDbContext>(services);
+            ReplaceDbContextConnection<RequestDbContext>(services);
         });
     }
 

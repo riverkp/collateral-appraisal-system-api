@@ -18,14 +18,14 @@ public static class VersionExtractor
             return "1.0.0";
 
         // Pattern 1: v1.2.3 or V1.2.3 prefix
-        var versionMatch = Regex.Match(scriptName, @"[vV](\d+\.\d+\.\d+)", RegexOptions.IgnoreCase);
+        var versionMatch = Regex.Match(scriptName, @"[vV](\d+\.\d+\.\d+)", RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(100));
         if (versionMatch.Success)
         {
             return versionMatch.Groups[1].Value;
         }
 
         // Pattern 2: 001_, 002_, etc. prefix - convert to semantic version
-        var numberMatch = Regex.Match(scriptName, @"^(\d{3,})_");
+        var numberMatch = Regex.Match(scriptName, @"^(\d{3,})_", RegexOptions.None, TimeSpan.FromMilliseconds(100));
         if (numberMatch.Success)
         {
             var number = int.Parse(numberMatch.Groups[1].Value);
@@ -36,7 +36,7 @@ public static class VersionExtractor
         }
 
         // Pattern 3: Extract from date-based migration names (yyyyMMddHHmmss)
-        var dateMatch = Regex.Match(scriptName, @"(\d{14})");
+        var dateMatch = Regex.Match(scriptName, @"(\d{14})", RegexOptions.None, TimeSpan.FromMilliseconds(100));
         if (dateMatch.Success)
         {
             var dateStr = dateMatch.Groups[1].Value;

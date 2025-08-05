@@ -36,4 +36,8 @@
         <Content Remove="wwwroot\*"/>
         <None Include="wwwroot\*" CopyToOutputDirectory="Always" CopyToPublishDirectory="PreserveNewest"/>
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\" />
+    </ItemGroup>
 </Project>

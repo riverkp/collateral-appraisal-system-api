@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="DbUp" Version="5.0.40"/>
+        <PackageReference Include="DbUp-SqlServer" Version="5.0.40"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.5"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.5"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.5"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.5"/>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.5"/>
+        <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="Migration\Scripts\**\*.sql"/>
+        <EmbeddedResource Include="Scripts\**\*.sql"/>
+        <None Include="Scripts\**\*.sql" CopyToOutputDirectory="Always"/>
+        <None Include="Configuration\*.json" CopyToOutputDirectory="Always"/>
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <Folder Include="Scripts\Views\Document\"/>
+        <Folder Include="Scripts\Views\Assignment\"/>
+        <Folder Include="Scripts\Views\Auth\"/>
+        <Folder Include="Scripts\Views\Notification\"/>
+        <Folder Include="Scripts\Views\Shared\"/>
+        <Folder Include="Scripts\StoredProcedures\Document\"/>
+        <Folder Include="Scripts\StoredProcedures\Assignment\"/>
+        <Folder Include="Scripts\StoredProcedures\Auth\"/>
+        <Folder Include="Scripts\StoredProcedures\Notification\"/>
+        <Folder Include="Scripts\StoredProcedures\Shared\"/>
+        <Folder Include="Scripts\Functions\Request\"/>
+        <Folder Include="Scripts\Functions\Document\"/>
+        <Folder Include="Scripts\Functions\Assignment\"/>
+        <Folder Include="Scripts\Functions\Auth\"/>
+        <Folder Include="Scripts\Functions\Notification\"/>
+        <Folder Include="Scripts\Functions\Shared\"/>
+    </ItemGroup>
+
+</Project>

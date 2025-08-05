@@ -20,9 +20,6 @@
     <ItemGroup>
         <!-- Hide the content files that come from the Microsoft.CodeAnalysis.Workspaces.Common package. -->
         <Content Update="$(NuGetPackageRoot)\microsoft.codeanalysis.workspaces.msbuild\**\**" Visible="false"/>
-        <Content Include="..\..\.dockerignore">
-            <Link>.dockerignore</Link>
-        </Content>
     </ItemGroup>
 
     <ItemGroup>

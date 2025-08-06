@@ -1,4 +1,3 @@
-using Integration.Factories;
 using Integration.Fixtures;
 
 namespace Integration;

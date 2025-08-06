@@ -37,6 +37,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Bootstrapper\Api\Api.csproj" />
+    <ProjectReference Include="..\..\Database\Database.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -28,9 +28,10 @@ public sealed class TestWebApplicationFactory(MsSqlContainer mssql, RabbitMqCont
             configBuilder.AddInMemoryCollection(new Dictionary<string, string?>
             {
                 ["ConnectionStrings:DefaultConnection"] = _mssql.GetConnectionString(),
+                ["ConnectionStrings:Database"] = _mssql.GetConnectionString(),
                 ["RabbitMq:Host"] = _rabbitMq.GetConnectionString(),
                 ["RabbitMq:Username"] = "testuser",
-                ["RabbitMq:Password"] = "testpw"
+                ["RabbitMq:Password"] = "testpw",
             });
         });
 
@@ -53,10 +54,5 @@ public sealed class TestWebApplicationFactory(MsSqlContainer mssql, RabbitMqCont
             services.Remove(descriptor);
         }
         services.AddDbContext<T>(options => options.UseSqlServer(_mssql.GetConnectionString()));
-
-        var sp = services.BuildServiceProvider();
-        using var scope = sp.CreateScope();
-        var db = scope.ServiceProvider.GetRequiredService<T>();
-        db.Database.Migrate();
     }
 }

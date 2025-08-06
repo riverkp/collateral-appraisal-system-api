@@ -4,13 +4,7 @@ using Integration.Fixtures;
 namespace Integration;
 
 [Collection("Integration")]
-public class IntegrationTestBase
+public class IntegrationTestBase(IntegrationTestFixture fixture)
 {
-    protected readonly HttpClient _client;
-
-    public IntegrationTestBase(IntegrationTestFixture fixture)
-    {
-        var factory = new TestWebApplicationFactory(fixture.Mssql, fixture.RabbitMq);
-        _client = factory.CreateClient();
-    }
+    protected readonly HttpClient _client = fixture.CreateClient();
 }

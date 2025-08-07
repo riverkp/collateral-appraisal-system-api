@@ -12,7 +12,7 @@ public static class DocumentModule
     public static IServiceCollection AddDocumentModule(this IServiceCollection services, IConfiguration configuration)
     {
         MappingConfiguration.ConfigureMappings();
-        
+
         services.AddScoped<IDocumentRepository, DocumentRepository>();
 
         services.AddScoped<IDocumentService, DocumentService>();
@@ -23,12 +23,17 @@ public static class DocumentModule
         services.AddDbContext<DocumentDbContext>((sp, options) =>
         {
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
-            options.UseSqlServer(configuration.GetConnectionString("Database"));
+            options.UseSqlServer(configuration.GetConnectionString("Database"), sqlOptions =>
+            {
+                sqlOptions.MigrationsAssembly(typeof(DocumentDbContext).Assembly.GetName().Name);
+                sqlOptions.MigrationsHistoryTable("__EFMigrationsHistory", "document");
+            });
         });
 
 
         return services;
     }
+
     public static IApplicationBuilder UseDocumentModule(this IApplicationBuilder app)
     {
         app.UseMigration<DocumentDbContext>();

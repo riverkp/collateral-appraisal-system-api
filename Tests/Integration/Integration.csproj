@@ -46,4 +46,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Document.Integrations.Tests\" />
+  </ItemGroup>
+
 </Project>

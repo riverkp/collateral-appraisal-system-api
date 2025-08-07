@@ -41,13 +41,14 @@ public class UploadDocumentByIdTests(IntegrationTestFixture fixture) : Integrati
         var deletesResult = new List<DeleteDocumentResult>();
         foreach (var file in getsResult)
         {
-            var deleteResponse = await _client.DeleteAsync($"/documents/{TestFileHelpers.CurrId++}", TestContext.Current.CancellationToken);
+            var deleteResponse = await _client.DeleteAsync($"/documents/{file.Id}", TestContext.Current.CancellationToken);
             deleteResponse.EnsureSuccessStatusCode();
             var deleteResponseBody = await deleteResponse.Content.ReadAsStringAsync(TestContext.Current.CancellationToken);
             var deleteResult = JsonSerializer.Deserialize<DeleteDocumentResult>(deleteResponseBody, JsonHelper.Options);
             Assert.NotNull(deleteResult);
 
             deletesResult.Add(deleteResult);
+            TestFileHelpers.CurrId++;
         }
         Assert.NotNull(deletesResult);
         Assert.True(deletesResult.All(r => r.IsSuccess));

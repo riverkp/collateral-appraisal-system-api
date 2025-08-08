@@ -15,6 +15,7 @@
     <ItemGroup>
         <Folder Include="Data\Migrations\"/>
         <Folder Include="Requests\Dtos\"/>
+        <Folder Include="RequestTitles\Dtos\"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -22,4 +22,8 @@
         <EditorConfigFiles Remove=".editorconfig"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="Request.Tests" />
+    </ItemGroup>
+
 </Project>

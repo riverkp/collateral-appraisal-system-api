@@ -20,9 +20,10 @@ var authAssembly = typeof(AuthModule).Assembly;
 var notificationAssembly = typeof(NotificationModule).Assembly;
 var documentAssembly = typeof(DocumentModule).Assembly;
 var assignmentAssembly = typeof(AssignmentModule).Assembly;
+var collateralAssembly = typeof(CollateralModule).Assembly;
 
-builder.Services.AddCarterWithAssemblies(requestAssembly, authAssembly, notificationAssembly, documentAssembly, assignmentAssembly);
-builder.Services.AddMediatRWithAssemblies(requestAssembly, authAssembly, notificationAssembly, documentAssembly, assignmentAssembly);
+builder.Services.AddCarterWithAssemblies(requestAssembly, authAssembly, notificationAssembly, documentAssembly, assignmentAssembly, collateralAssembly);
+builder.Services.AddMediatRWithAssemblies(requestAssembly, authAssembly, notificationAssembly, documentAssembly, assignmentAssembly, collateralAssembly);
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
@@ -93,7 +94,8 @@ builder.Services
     .AddNotificationModule(builder.Configuration)
     .AddDocumentModule(builder.Configuration)
     .AddAssignmentModule(builder.Configuration)
-    .AddOpenIddictModule(builder.Configuration);
+    .AddOpenIddictModule(builder.Configuration)
+    .AddCollateralModule(builder.Configuration);
 
 // Configure JSON serialization
 builder.Services.ConfigureHttpJsonOptions(options =>
@@ -150,7 +152,8 @@ app
     .UseNotificationModule()
     .UseDocumentModule()
     .UseAssignmentModule()
-    .UseOpenIddictModule();
+    .UseOpenIddictModule()
+    .UseCollateralModule();
 
 await app.RunAsync();
 

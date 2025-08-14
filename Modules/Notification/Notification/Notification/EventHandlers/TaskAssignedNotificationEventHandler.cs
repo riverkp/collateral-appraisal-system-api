@@ -21,7 +21,7 @@ public class TaskAssignedNotificationEventHandler : IConsumer<TaskAssigned>
     {
         var taskAssigned = context.Message;
 
-        _logger.LogInformation("Processing TaskAssigned notification for user {AssignedTo} and task {TaskName}", 
+        _logger.LogInformation("Processing TaskAssigned notification for user {AssignedTo} and task {TaskName}",
             taskAssigned.AssignedTo, taskAssigned.TaskName);
 
         try
@@ -34,7 +34,7 @@ public class TaskAssignedNotificationEventHandler : IConsumer<TaskAssigned>
                 // We need to get request ID from saga state or context
                 GetRequestIdFromContext(context),
                 taskAssigned.TaskName.ToString(), // Using TaskName as current state for now
-                DateTime.UtcNow
+                DateTime.Now
             );
 
             await _notificationService.SendTaskAssignedNotificationAsync(notification);
@@ -53,7 +53,7 @@ public class TaskAssignedNotificationEventHandler : IConsumer<TaskAssigned>
     private static long GetRequestIdFromContext(ConsumeContext<TaskAssigned> context)
     {
         // Try to get request ID from message headers or correlation ID
-        if (context.Headers.TryGetHeader("RequestId", out var requestIdObj) && 
+        if (context.Headers.TryGetHeader("RequestId", out var requestIdObj) &&
             long.TryParse(requestIdObj?.ToString(), out var requestId))
         {
             return requestId;

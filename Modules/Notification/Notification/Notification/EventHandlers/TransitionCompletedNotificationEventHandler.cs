@@ -21,7 +21,8 @@ public class TransitionCompletedNotificationEventHandler : IConsumer<TransitionC
     {
         var transitionCompleted = context.Message;
 
-        _logger.LogInformation("Processing TransitionCompleted notification for request {RequestId} to state {CurrentState}", 
+        _logger.LogInformation(
+            "Processing TransitionCompleted notification for request {RequestId} to state {CurrentState}",
             transitionCompleted.RequestId, transitionCompleted.CurrentState);
 
         try
@@ -35,17 +36,17 @@ public class TransitionCompletedNotificationEventHandler : IConsumer<TransitionC
                 transitionCompleted.AssignedTo,
                 transitionCompleted.AssignedType,
                 workflowSteps,
-                DateTime.UtcNow
+                DateTime.Now
             );
 
             await _notificationService.SendWorkflowProgressNotificationAsync(notification);
-            
-            _logger.LogInformation("Successfully sent TransitionCompleted notification for request {RequestId}", 
+
+            _logger.LogInformation("Successfully sent TransitionCompleted notification for request {RequestId}",
                 transitionCompleted.RequestId);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error processing TransitionCompleted notification for request {RequestId}", 
+            _logger.LogError(ex, "Error processing TransitionCompleted notification for request {RequestId}",
                 transitionCompleted.RequestId);
             throw;
         }
@@ -57,19 +58,19 @@ public class TransitionCompletedNotificationEventHandler : IConsumer<TransitionC
         {
             "AwaitingAssignment",
             "Admin",
-            "AppraisalStaff", 
+            "AppraisalStaff",
             "AppraisalChecker",
             "AppraisalVerifier"
         };
 
         var currentIndex = Array.IndexOf(allStates, currentState);
-        
+
         return allStates.Select((state, index) => new WorkflowStepDto(
             state,
             IsCompleted: index < currentIndex,
             IsCurrent: index == currentIndex,
             AssignedTo: index == currentIndex ? "Current User" : null,
-            CompletedAt: index < currentIndex ? DateTime.UtcNow.AddHours(-index) : null
+            CompletedAt: index < currentIndex ? DateTime.Now.AddHours(-index) : null
         )).ToList();
     }
 }

@@ -16,7 +16,7 @@ public class NotifyAssignmentCommandHandler(INotificationService notificationSer
             context.Message.AssignedType,
             GetRequestIdFromContext(context),
             context.Message.TaskName.ToString(),
-            DateTime.UtcNow,
+            DateTime.Now,
             context.Message.NotifiedTo
         );
         await notificationService.SendTaskAssignedToOtherNotificationAsync(notification);
@@ -24,7 +24,7 @@ public class NotifyAssignmentCommandHandler(INotificationService notificationSer
 
     private static long GetRequestIdFromContext(ConsumeContext<NotifyAssignment> context)
     {
-        if (context.Headers.TryGetHeader("RequestId", out var requestIdObj) && 
+        if (context.Headers.TryGetHeader("RequestId", out var requestIdObj) &&
             long.TryParse(requestIdObj?.ToString(), out var requestId))
         {
             return requestId;

@@ -21,7 +21,7 @@ public class TaskCompletedNotificationEventHandler : IConsumer<TaskCompleted>
     {
         var taskCompleted = context.Message;
 
-        _logger.LogInformation("Processing TaskCompleted notification for task {TaskName} with action {ActionTaken}", 
+        _logger.LogInformation("Processing TaskCompleted notification for task {TaskName} with action {ActionTaken}",
             taskCompleted.TaskName, taskCompleted.ActionTaken);
 
         try
@@ -34,17 +34,17 @@ public class TaskCompletedNotificationEventHandler : IConsumer<TaskCompleted>
                 GetRequestIdFromContext(context),
                 GetPreviousState(taskCompleted.TaskName.ToString()),
                 GetNextState(taskCompleted.TaskName.ToString(), taskCompleted.ActionTaken),
-                DateTime.UtcNow
+                DateTime.Now
             );
 
             await _notificationService.SendTaskCompletedNotificationAsync(notification);
-            
-            _logger.LogInformation("Successfully sent TaskCompleted notification for task {TaskName}", 
+
+            _logger.LogInformation("Successfully sent TaskCompleted notification for task {TaskName}",
                 taskCompleted.TaskName);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error processing TaskCompleted notification for task {TaskName}", 
+            _logger.LogError(ex, "Error processing TaskCompleted notification for task {TaskName}",
                 taskCompleted.TaskName);
             throw;
         }
@@ -52,7 +52,7 @@ public class TaskCompletedNotificationEventHandler : IConsumer<TaskCompleted>
 
     private static long GetRequestIdFromContext(ConsumeContext<TaskCompleted> context)
     {
-        if (context.Headers.TryGetHeader("RequestId", out var requestIdObj) && 
+        if (context.Headers.TryGetHeader("RequestId", out var requestIdObj) &&
             long.TryParse(requestIdObj?.ToString(), out var requestId))
         {
             return requestId;

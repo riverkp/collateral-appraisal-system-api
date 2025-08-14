@@ -31,7 +31,7 @@ public class NotificationDataSeed : IDataSeeder<NotificationDbContext>
                 Title = "Welcome to Notification System",
                 Message = "Real-time notifications are now active for your collateral appraisal workflow.",
                 Type = NotificationType.SystemNotification,
-                CreatedAt = DateTime.UtcNow.AddHours(-1),
+                CreatedAt = DateTime.Now.AddHours(-1),
                 IsRead = false,
                 ActionUrl = "/dashboard",
                 Metadata = new Dictionary<string, object>
@@ -47,7 +47,7 @@ public class NotificationDataSeed : IDataSeeder<NotificationDbContext>
                 Title = "New Task Assigned: Admin Review",
                 Message = "You have been assigned a new task for Request #1 in the Admin stage.",
                 Type = NotificationType.TaskAssigned,
-                CreatedAt = DateTime.UtcNow.AddMinutes(-30),
+                CreatedAt = DateTime.Now.AddMinutes(-30),
                 IsRead = false,
                 ActionUrl = "/requests/1/tasks",
                 Metadata = new Dictionary<string, object>
@@ -64,9 +64,10 @@ public class NotificationDataSeed : IDataSeeder<NotificationDbContext>
                 Id = Guid.NewGuid(),
                 UserId = "testuser",
                 Title = "Task Completed: Appraisal Review",
-                Message = "Task AppraisalStaff has been approved by appraiser1. Request #2 moved from AppraisalStaff to AppraisalChecker.",
+                Message =
+                    "Task AppraisalStaff has been approved by appraiser1. Request #2 moved from AppraisalStaff to AppraisalChecker.",
                 Type = NotificationType.TaskCompleted,
-                CreatedAt = DateTime.UtcNow.AddMinutes(-15),
+                CreatedAt = DateTime.Now.AddMinutes(-15),
                 IsRead = true,
                 ActionUrl = "/requests/2",
                 Metadata = new Dictionary<string, object>

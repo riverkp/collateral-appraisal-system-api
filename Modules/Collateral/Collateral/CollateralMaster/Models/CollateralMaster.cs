@@ -2,22 +2,28 @@ namespace Collateral.CollateralMaster.Models;
 
 public class CollateralMaster : Aggregate<long>
 {
-    public string CollateralType { get; private set; } = default!;
-    public string Description { get; private set; } = default!;
+    public string CollatType { get; private set; } = default!;
+    public long HostCollatID { get; private set; } = default!;
 
     private CollateralMaster()
     {
     }
 
-    public static CollateralMaster Create(string collateralType, string description)
+    private CollateralMaster(string collateralType, long hostCollateralId)
     {
         ArgumentNullException.ThrowIfNull(collateralType);
-        ArgumentNullException.ThrowIfNull(description);
+    
+        CollatType = collateralType;
+        HostCollatID = hostCollateralId;
+    }
 
-        return new CollateralMaster
-        {
-            CollateralType = collateralType,
-            Description = description,
-        };
+    public static CollateralMaster Create(string collatType, long hostCollatID)
+    {
+        ArgumentNullException.ThrowIfNull(collatType);
+
+        return new CollateralMaster(
+            collatType,
+            hostCollatID
+        );
     }
 }

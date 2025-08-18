@@ -9,9 +9,7 @@ public class CollateralBuilding : Entity<long>
     public string BuiltOnTitleNo { get; private set; } = default!;
     public string Owner { get; private set; } = default!;
 
-    private CollateralBuilding()
-    {
-    }
+    private CollateralBuilding() { }
 
     private CollateralBuilding(
         long collatId,
@@ -39,6 +37,13 @@ public class CollateralBuilding : Entity<long>
         string owner
     )
     {
-        return new CollateralBuilding(collatId, buildingNo, modelName, houseNo, builtOnTitleNo, owner);
+        return new CollateralBuilding(
+            collatId,
+            buildingNo,
+            modelName,
+            houseNo,
+            builtOnTitleNo,
+            owner
+        );
     }
 }

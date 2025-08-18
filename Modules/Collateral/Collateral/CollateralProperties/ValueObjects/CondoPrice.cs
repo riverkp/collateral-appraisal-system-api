@@ -23,10 +23,6 @@ public class CondoPrice : ValueObject
         decimal? forceSellingPrice
     )
     {
-        return new CondoPrice(
-            buildingInsurancePrice,
-            sellingPrice,
-            forceSellingPrice
-        );
+        return new CondoPrice(buildingInsurancePrice, sellingPrice, forceSellingPrice);
     }
 }

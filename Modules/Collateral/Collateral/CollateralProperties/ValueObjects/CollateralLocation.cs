@@ -7,7 +7,12 @@ public class CollateralLocation : ValueObject
     public string Province { get; private set; } = default!;
     public string LandOffice { get; private set; } = default!;
 
-    private CollateralLocation(string subDistrict, string district, string province, string landOffice)
+    private CollateralLocation(
+        string subDistrict,
+        string district,
+        string province,
+        string landOffice
+    )
     {
         SubDistrict = subDistrict;
         District = district;
@@ -15,7 +20,12 @@ public class CollateralLocation : ValueObject
         LandOffice = landOffice;
     }
 
-    public static CollateralLocation Create(string subDistrict, string district, string province, string landOffice)
+    public static CollateralLocation Create(
+        string subDistrict,
+        string district,
+        string province,
+        string landOffice
+    )
     {
         return new CollateralLocation(subDistrict, district, province, landOffice);
     }

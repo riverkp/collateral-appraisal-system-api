@@ -10,7 +10,8 @@ public class BuildingAppraisalDetail : Entity<long>
     public BuildingTypeDetail BuildingTypeDetail { get; private set; } = default!;
     public DecorationDetail DecorationDetail { get; private set; } = default!;
     public Encroachment Encroachment { get; private set; } = default!;
-    public BuildingConstructionInformation BuildingConstructionInformation { get; private set; } = default!;
+    public BuildingConstructionInformation BuildingConstructionInformation { get; private set; } =
+        default!;
     public string? BuildingMaterial { get; private set; }
     public string? BuildingStyle { get; private set; }
     public RasidentialStatus RasidentialStatus { get; private set; } = default!;
@@ -20,13 +21,15 @@ public class BuildingAppraisalDetail : Entity<long>
 
     // BuildingAppraisalSurface
     private readonly List<BuildingAppraisalSurface> _buildingAppraisalSurfaces = [];
-    public IReadOnlyList<BuildingAppraisalSurface> BuildingAppraisalSurfaces => _buildingAppraisalSurfaces.AsReadOnly();
+    public IReadOnlyList<BuildingAppraisalSurface> BuildingAppraisalSurfaces =>
+        _buildingAppraisalSurfaces.AsReadOnly();
 
     // BuildingAppraisalDepreciationDetail
-    private readonly List<BuildingAppraisalDepreciationDetail> _buildingAppraisalDepreciationDetails = [];
+    private readonly List<BuildingAppraisalDepreciationDetail> _buildingAppraisalDepreciationDetails =
+    [];
     public IReadOnlyList<BuildingAppraisalDepreciationDetail> BuildingAppraisalDepreciationDetails =>
         _buildingAppraisalDepreciationDetails.AsReadOnly();
-    
+
     private BuildingAppraisalDetail() { }
 
     private BuildingAppraisalDetail(

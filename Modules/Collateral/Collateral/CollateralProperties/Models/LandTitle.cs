@@ -17,9 +17,7 @@ public class LandTitle : Entity<long>
     public decimal? PricePerSquareWa { get; private set; }
     public decimal? GovernmentPrice { get; private set; }
 
-    private LandTitle()
-    {
-    }
+    private LandTitle() { }
 
     private LandTitle(
         long collatId,

@@ -13,7 +13,11 @@ public class Encroachment : ValueObject
         EncroachArea = encroachArea;
     }
 
-    public static Encroachment Create(bool? isEncroached, string? isEncroachedRemark, decimal? encroachArea)
+    public static Encroachment Create(
+        bool? isEncroached,
+        string? isEncroachedRemark,
+        decimal? encroachArea
+    )
     {
         return new Encroachment(isEncroached, isEncroachedRemark, encroachArea);
     }

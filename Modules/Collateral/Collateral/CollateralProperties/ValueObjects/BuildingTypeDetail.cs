@@ -15,7 +15,11 @@ public class BuildingTypeDetail : ValueObject
         TotalFloor = totalFloor;
     }
 
-    public static BuildingTypeDetail Create(string buildingType, string? buildingTypeOther, short? totalFloor)
+    public static BuildingTypeDetail Create(
+        string buildingType,
+        string? buildingTypeOther,
+        short? totalFloor
+    )
     {
         return new BuildingTypeDetail(buildingType, buildingTypeOther, totalFloor);
     }

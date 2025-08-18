@@ -17,9 +17,7 @@ public class CollateralCondo : Entity<long>
     public Coordinate Coordinate { get; private set; } = default!;
     public string Owner { get; private set; } = default!;
 
-    private CollateralCondo()
-    {
-    }
+    private CollateralCondo() { }
 
     private CollateralCondo(
         long collatId,

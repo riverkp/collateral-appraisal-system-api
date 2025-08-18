@@ -13,7 +13,11 @@ public class RasidentialStatus : ValueObject
         DueTo = dueTo;
     }
 
-    public static RasidentialStatus Create(string? isResidential, short? buildingYear, string? dueTo)
+    public static RasidentialStatus Create(
+        string? isResidential,
+        short? buildingYear,
+        string? dueTo
+    )
     {
         return new RasidentialStatus(isResidential, buildingYear, dueTo);
     }

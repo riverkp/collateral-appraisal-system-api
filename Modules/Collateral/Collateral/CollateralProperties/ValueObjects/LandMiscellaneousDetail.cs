@@ -27,11 +27,6 @@ public class LandMiscellaneousDetail : ValueObject
         string? hasBuildingOther
     )
     {
-        return new LandMiscellaneousDetail(
-            pondArea,
-            depthPit,
-            hasBuilding,
-            hasBuildingOther
-        );
+        return new LandMiscellaneousDetail(pondArea, depthPit, hasBuilding, hasBuildingOther);
     }
 }

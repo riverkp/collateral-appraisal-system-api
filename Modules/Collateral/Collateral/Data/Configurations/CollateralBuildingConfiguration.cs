@@ -10,25 +10,21 @@ public class CollateralBuildingConfiguration : IEntityTypeConfiguration<Collater
         builder.HasKey(p => p.Id);
         builder.Property(p => p.Id).UseIdentityColumn().HasColumnName("BuildingId");
 
-        builder.HasOne<CollateralMaster.Models.CollateralMaster>()
+        builder
+            .HasOne<CollateralMaster.Models.CollateralMaster>()
             .WithOne(p => p.CollateralBuilding)
             .HasForeignKey<CollateralBuilding>(p => p.CollatId);
 
         builder.Property(p => p.CollatId).HasColumnName("CollatID");
 
-        builder.Property(p => p.BuildingNo)
-            .UseTinyStringConfig();
+        builder.Property(p => p.BuildingNo).UseTinyStringConfig();
 
-        builder.Property(p => p.ModelName)
-            .UseTinyStringConfig();
+        builder.Property(p => p.ModelName).UseTinyStringConfig();
 
-        builder.Property(p => p.HouseNo)
-            .UseTinyStringConfig();
+        builder.Property(p => p.HouseNo).UseTinyStringConfig();
 
-        builder.Property(p => p.BuiltOnTitleNo)
-            .UseTinyStringConfig();
+        builder.Property(p => p.BuiltOnTitleNo).UseTinyStringConfig();
 
-        builder.Property(p => p.Owner)
-            .HasMaxLength(30);
+        builder.Property(p => p.Owner).HasMaxLength(30);
     }
 }

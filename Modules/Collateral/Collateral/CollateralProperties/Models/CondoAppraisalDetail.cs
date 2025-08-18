@@ -18,11 +18,10 @@ public class CondoAppraisalDetail : Entity<long>
 
     // CondoAppraisalAreaDetail
     private readonly List<CondoAppraisalAreaDetail> _condoAppraisalAreaDetails = [];
-    public IReadOnlyList<CondoAppraisalAreaDetail> CondoAppraisalAreaDetails => _condoAppraisalAreaDetails.AsReadOnly();
+    public IReadOnlyList<CondoAppraisalAreaDetail> CondoAppraisalAreaDetails =>
+        _condoAppraisalAreaDetails.AsReadOnly();
 
-    private CondoAppraisalDetail()
-    {
-    }
+    private CondoAppraisalDetail() { }
 
     private CondoAppraisalDetail(
         long collatId,

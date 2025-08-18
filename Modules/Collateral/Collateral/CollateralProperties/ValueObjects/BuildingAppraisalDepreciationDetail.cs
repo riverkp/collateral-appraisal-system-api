@@ -14,8 +14,10 @@ public class BuildingAppraisalDepreciationDetail : ValueObject
     public bool? AppraisalMethod { get; private set; }
 
     // BuildingAppraisalDepreciationPeriod
-    private readonly List<BuildingAppraisalDepreciationPeriod> _buildingAppraisalDepreciationPeriods = [];
-    public IReadOnlyList<BuildingAppraisalDepreciationPeriod> BuildingAppraisalDepreciationPeriods => _buildingAppraisalDepreciationPeriods.AsReadOnly();
+    private readonly List<BuildingAppraisalDepreciationPeriod> _buildingAppraisalDepreciationPeriods =
+    [];
+    public IReadOnlyList<BuildingAppraisalDepreciationPeriod> BuildingAppraisalDepreciationPeriods =>
+        _buildingAppraisalDepreciationPeriods.AsReadOnly();
 
     private BuildingAppraisalDepreciationDetail(
         string areaDesc,

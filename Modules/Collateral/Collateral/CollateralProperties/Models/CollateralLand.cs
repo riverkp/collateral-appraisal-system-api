@@ -10,9 +10,7 @@ public class CollateralLand : Entity<long>
     public string LandDesc { get; private set; } = default!;
     public string Owner { get; private set; } = default!;
 
-    private CollateralLand()
-    {
-    }
+    private CollateralLand() { }
 
     private CollateralLand(
         long collatId,

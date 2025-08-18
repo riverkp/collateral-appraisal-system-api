@@ -17,9 +17,7 @@ public class LandAppraisalDetail : Entity<long>
     public ConsecutiveArea ConsecutiveArea { get; private set; } = default!;
     public LandMiscellaneousDetail LandMiscellaneousDetail { get; private set; } = default!;
 
-    private LandAppraisalDetail()
-    {
-    }
+    private LandAppraisalDetail() { }
 
     private LandAppraisalDetail(
         long collatId,

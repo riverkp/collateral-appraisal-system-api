@@ -27,11 +27,6 @@ public class FrontageRoad : ValueObject
         string? landAccessibilityDesc
     )
     {
-        return new FrontageRoad(
-            roadWidth,
-            rightOfWay,
-            landAccessibility,
-            landAccessibilityDesc
-        );
+        return new FrontageRoad(roadWidth, rightOfWay, landAccessibility, landAccessibilityDesc);
     }
 }

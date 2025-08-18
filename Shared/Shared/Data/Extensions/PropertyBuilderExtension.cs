@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Shared.Data.Extensions;
@@ -13,7 +14,7 @@ public static class PropertyBuilderExtension
     // Code
     public static PropertyBuilder<T> UseCodeConfig<T>(this PropertyBuilder<T> builder)
     {
-        return builder.HasMaxLength(10);
+        return builder.HasColumnType("varchar(10)").HasMaxLength(10);
     }
 
     // Remark
@@ -34,14 +35,44 @@ public static class PropertyBuilderExtension
         return builder.HasPrecision(19, 4);
     }
 
-    public static PropertyBuilder<string?> UseShortStringConfig(this PropertyBuilder<string?> builder)
+    public static PropertyBuilder<T> UseMaxLengthNVarcharConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasColumnType("nvarchar(max)");
+    }
+
+    public static PropertyBuilder<T> UseTinyStringConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasMaxLength(10);
+    }
+
+    public static PropertyBuilder<T> UseVeryShortStringConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasMaxLength(20);
+    }
+
+    public static PropertyBuilder<T> UseShortStringConfig<T>(this PropertyBuilder<T> builder)
     {
         return builder.HasMaxLength(25);
     }
 
-    public static PropertyBuilder<string?> UseSubStringConfig(this PropertyBuilder<string?> builder)
+    public static PropertyBuilder<T> UseMediumStringConfig<T>(this PropertyBuilder<T> builder)
     {
         return builder.HasMaxLength(50);
+    }
+
+    public static PropertyBuilder<T> UseLongStringConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasMaxLength(100);
+    }
+
+    public static PropertyBuilder<T> UseLongerStringConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasMaxLength(200);
+    }
+
+    public static PropertyBuilder<T> UseDescriptionConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasMaxLength(250);
     }
 
     public static PropertyBuilder<string?> UseNameConfig(this PropertyBuilder<string?> builder)
@@ -49,9 +80,24 @@ public static class PropertyBuilderExtension
         return builder.HasMaxLength(100);
     }
 
-    public static PropertyBuilder<decimal?> UseAreaConfig(this PropertyBuilder<decimal?> builder)
+    public static PropertyBuilder<T> UseMultiSelectConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasMaxLength(100);
+    }
+
+    public static PropertyBuilder<T> UseMeasurementConfig<T>(this PropertyBuilder<T> builder)
     {
         return builder.HasPrecision(5, 2);
+    }
+
+    public static PropertyBuilder<T> UseAreaConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasPrecision(5, 2);
+    }
+
+    public static PropertyBuilder<T> UseLargeAreaConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasPrecision(19, 4);
     }
 
     public static PropertyBuilder<decimal?> UseSizeConfig(this PropertyBuilder<decimal?> builder)
@@ -59,8 +105,38 @@ public static class PropertyBuilderExtension
         return builder.HasPrecision(7, 2);
     }
 
+    public static PropertyBuilder<decimal> UseLatLonConfig(this PropertyBuilder<decimal> builder)
+    {
+        return builder.HasPrecision(9, 6);
+    }
+
     public static PropertyBuilder<decimal?> UseLatLonConfig(this PropertyBuilder<decimal?> builder)
     {
         return builder.HasPrecision(9, 6);
+    }
+
+    public static PropertyBuilder<decimal> UseCompactPriceConfig(this PropertyBuilder<decimal> builder)
+    {
+        return builder.HasPrecision(10, 2);
+    }
+
+    public static PropertyBuilder<decimal?> UseCompactPriceConfig(this PropertyBuilder<decimal?> builder)
+    {
+        return builder.HasPrecision(10, 2);
+    }
+
+    public static PropertyBuilder<T> UseRaiConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasPrecision(3, 0);
+    }
+
+    public static PropertyBuilder<T> UseNganConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasPrecision(5, 0);
+    }
+
+    public static PropertyBuilder<T> UseWaConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasPrecision(4, 2);
     }
 }

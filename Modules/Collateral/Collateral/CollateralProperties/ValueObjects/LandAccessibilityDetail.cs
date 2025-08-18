@@ -14,6 +14,8 @@ public class LandAccessibilityDetail : ValueObject
     public string? Transportation { get; }
     public string? TransportationOther { get; }
 
+    private LandAccessibilityDetail() { }
+
     private LandAccessibilityDetail(
         FrontageRoad frontageRoad,
         string? roadSurface,

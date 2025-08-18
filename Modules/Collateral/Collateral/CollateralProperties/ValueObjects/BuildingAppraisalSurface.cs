@@ -2,8 +2,8 @@ namespace Collateral.CollateralProperties.ValueObjects;
 
 public class BuildingAppraisalSurface : ValueObject
 {
-    public decimal? FromFloorNo { get; private set; }
-    public decimal? ToFloorNo { get; private set; }
+    public short? FromFloorNo { get; private set; }
+    public short? ToFloorNo { get; private set; }
     public string? FloorType { get; private set; }
     public string? FloorStructure { get; private set; }
     public string? FloorStructureOther { get; private set; }
@@ -11,8 +11,8 @@ public class BuildingAppraisalSurface : ValueObject
     public string? FloorSurfaceOther { get; private set; }
 
     private BuildingAppraisalSurface(
-        decimal? fromFloorNo,
-        decimal? toFloorNo,
+        short? fromFloorNo,
+        short? toFloorNo,
         string? floorType,
         string? floorStructure,
         string? floorStructureOther,
@@ -30,8 +30,8 @@ public class BuildingAppraisalSurface : ValueObject
     }
 
     public static BuildingAppraisalSurface Create(
-        decimal? fromFloorNo,
-        decimal? toFloorNo,
+        short? fromFloorNo,
+        short? toFloorNo,
         string? floorType,
         string? floorStructure,
         string? floorStructureOther,

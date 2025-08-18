@@ -6,6 +6,8 @@ public class BuildingTypeDetail : ValueObject
     public string? BuildingTypeOther { get; }
     public short? TotalFloor { get; }
 
+    private BuildingTypeDetail() { }
+
     private BuildingTypeDetail(string buildingType, string? buildingTypeOther, short? totalFloor)
     {
         BuildingType = buildingType;

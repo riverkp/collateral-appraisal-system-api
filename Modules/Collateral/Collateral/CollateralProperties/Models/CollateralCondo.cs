@@ -4,8 +4,7 @@ namespace Collateral.CollateralProperties.Models;
 
 public class CollateralCondo : Entity<long>
 {
-    public long CondoID { get; private set; }
-    public long CollateralID { get; private set; }
+    public long CollatId { get; private set; }
     public string CondoName { get; private set; } = default!;
     public string BuildingNo { get; private set; } = default!;
     public string ModelName { get; private set; } = default!;
@@ -17,4 +16,68 @@ public class CollateralCondo : Entity<long>
     public CollateralLocation CollateralLocation { get; private set; } = default!;
     public Coordinate Coordinate { get; private set; } = default!;
     public string Owner { get; private set; } = default!;
+
+    private CollateralCondo()
+    {
+    }
+
+    private CollateralCondo(
+        long collatId,
+        string condoName,
+        string buildingNo,
+        string modelName,
+        string builtOnTitleNo,
+        string condoRegisNo,
+        string roomNo,
+        int floorNo,
+        decimal usableArea,
+        CollateralLocation collateralLocation,
+        Coordinate coordinate,
+        string owner
+    )
+    {
+        CollatId = collatId;
+        CondoName = condoName;
+        BuildingNo = buildingNo;
+        ModelName = modelName;
+        BuiltOnTitleNo = builtOnTitleNo;
+        CondoRegisNo = condoRegisNo;
+        RoomNo = roomNo;
+        FloorNo = floorNo;
+        UsableArea = usableArea;
+        CollateralLocation = collateralLocation;
+        Coordinate = coordinate;
+        Owner = owner;
+    }
+
+    public static CollateralCondo Create(
+        long collatId,
+        string condoName,
+        string buildingNo,
+        string modelName,
+        string builtOnTitleNo,
+        string condoRegisNo,
+        string roomNo,
+        int floorNo,
+        decimal usableArea,
+        CollateralLocation collateralLocation,
+        Coordinate coordinate,
+        string owner
+    )
+    {
+        return new CollateralCondo(
+            collatId,
+            condoName,
+            buildingNo,
+            modelName,
+            builtOnTitleNo,
+            condoRegisNo,
+            roomNo,
+            floorNo,
+            usableArea,
+            collateralLocation,
+            coordinate,
+            owner
+        );
+    }
 }

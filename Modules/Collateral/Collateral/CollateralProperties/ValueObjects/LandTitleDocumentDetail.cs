@@ -2,13 +2,14 @@ namespace Collateral.CollateralProperties.ValueObjects;
 
 public class LandTitleDocumentDetail : ValueObject
 {
-    public string TitleNo { get; } = default!;
-    public string BookNo { get; } = default!;
-    public string PageNo { get; } = default!;
-    public string LandNo { get; } = default!;
-    public string SurveyNo { get; } = default!;
+    public string TitleNo { get; }
+    public string BookNo { get; }
+    public string PageNo { get; }
+    public string LandNo { get; }
+    public string SurveyNo { get; }
     public string? SheetNo { get; }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     private LandTitleDocumentDetail(
         string titleNo,
         string bookNo,
@@ -26,6 +27,7 @@ public class LandTitleDocumentDetail : ValueObject
         SheetNo = sheetNo;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     public static LandTitleDocumentDetail Create(
         string titleNo,
         string bookNo,

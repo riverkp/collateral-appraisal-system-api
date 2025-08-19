@@ -2,16 +2,17 @@ namespace Collateral.CollateralProperties.ValueObjects;
 
 public class CondominiumLocation : ValueObject
 {
-    public bool? CondoLocation { get; private set; }
-    public string? Street { get; private set; }
-    public string? Soi { get; private set; }
-    public decimal? Distance { get; private set; }
-    public decimal? RoadWidth { get; private set; }
-    public decimal? RightOfWay { get; private set; }
-    public string? RoadSurface { get; private set; }
-    public string? PublicUtility { get; private set; }
-    public string? PublicUtilityOther { get; private set; }
+    public bool? CondoLocation { get; }
+    public string? Street { get; }
+    public string? Soi { get; }
+    public decimal? Distance { get; }
+    public decimal? RoadWidth { get; }
+    public decimal? RightOfWay { get; }
+    public string? RoadSurface { get; }
+    public string? PublicUtility { get; }
+    public string? PublicUtilityOther { get; }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     private CondominiumLocation(
         bool? condoLocation,
         string? street,
@@ -35,6 +36,7 @@ public class CondominiumLocation : ValueObject
         PublicUtilityOther = publicUtilityOther;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     public static CondominiumLocation Create(
         bool? condoLocation,
         string? street,

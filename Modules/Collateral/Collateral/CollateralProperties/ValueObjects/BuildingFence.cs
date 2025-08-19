@@ -2,8 +2,8 @@ namespace Collateral.CollateralProperties.ValueObjects;
 
 public class BuildingFence : ValueObject
 {
-    public string? Fence { get; private set; }
-    public string? FenceOther { get; private set; }
+    public string? Fence { get; }
+    public string? FenceOther { get; }
 
     private BuildingFence(string? fence, string? fenceOther)
     {

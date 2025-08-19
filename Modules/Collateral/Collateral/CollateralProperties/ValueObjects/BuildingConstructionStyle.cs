@@ -2,8 +2,8 @@ namespace Collateral.CollateralProperties.ValueObjects;
 
 public class BuildingConstructionStyle : ValueObject
 {
-    public string? ConstStyle { get; private set; }
-    public string? ConstStyleRemark { get; private set; }
+    public string? ConstStyle { get; }
+    public string? ConstStyleRemark { get; }
 
     private BuildingConstructionStyle(string? constStyle, string? constStyleRemark)
     {

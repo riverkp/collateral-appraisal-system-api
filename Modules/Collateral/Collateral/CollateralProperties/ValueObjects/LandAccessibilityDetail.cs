@@ -16,6 +16,7 @@ public class LandAccessibilityDetail : ValueObject
 
     private LandAccessibilityDetail() { }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     private LandAccessibilityDetail(
         FrontageRoad frontageRoad,
         string? roadSurface,
@@ -43,6 +44,7 @@ public class LandAccessibilityDetail : ValueObject
         TransportationOther = transportationOther;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     public static LandAccessibilityDetail Create(
         FrontageRoad frontageRoad,
         string? roadSurface,

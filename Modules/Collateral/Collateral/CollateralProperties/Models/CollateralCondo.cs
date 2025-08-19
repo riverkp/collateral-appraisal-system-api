@@ -19,6 +19,7 @@ public class CollateralCondo : Entity<long>
 
     private CollateralCondo() { }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     private CollateralCondo(
         long collatId,
         string condoName,
@@ -48,6 +49,7 @@ public class CollateralCondo : Entity<long>
         Owner = owner;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     public static CollateralCondo Create(
         long collatId,
         string condoName,

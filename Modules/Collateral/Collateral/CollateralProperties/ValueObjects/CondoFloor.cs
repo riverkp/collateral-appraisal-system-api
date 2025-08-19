@@ -2,12 +2,12 @@ namespace Collateral.CollateralProperties.ValueObjects;
 
 public class CondoFloor : ValueObject
 {
-    public string? GroundFloorMaterial { get; private set; }
-    public string? GroundFloorMaterialOther { get; private set; }
-    public string? UpperFloorMaterial { get; private set; }
-    public string? UpperFloorMaterialOther { get; private set; }
-    public string? BathroomFloorMaterial { get; private set; }
-    public string? BathroomFloorMaterialOther { get; private set; }
+    public string? GroundFloorMaterial { get; }
+    public string? GroundFloorMaterialOther { get; }
+    public string? UpperFloorMaterial { get; }
+    public string? UpperFloorMaterialOther { get; }
+    public string? BathroomFloorMaterial { get; }
+    public string? BathroomFloorMaterialOther { get; }
 
     private CondoFloor(
         string? groundFloorMaterial,

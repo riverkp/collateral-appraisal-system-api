@@ -19,6 +19,7 @@ public class LandTitle : Entity<long>
 
     private LandTitle() { }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     private LandTitle(
         long collatId,
         int seqNo,
@@ -48,6 +49,7 @@ public class LandTitle : Entity<long>
         GovernmentPrice = governmentPrice;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     public static LandTitle Create(
         long collatId,
         int seqNo,

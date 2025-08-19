@@ -2,8 +2,8 @@ namespace Collateral.CollateralProperties.ValueObjects;
 
 public class BuildingAppraisalDepreciationPeriod : ValueObject
 {
-    public int AtYear { get; private set; }
-    public decimal DepreciationPerYear { get; private set; }
+    public int AtYear { get; }
+    public decimal DepreciationPerYear { get; }
 
     private BuildingAppraisalDepreciationPeriod(int atYear, decimal depreciationPerYear)
     {

@@ -2,8 +2,8 @@ namespace Collateral.CollateralProperties.ValueObjects;
 
 public class BuildingGeneralStructure : ValueObject
 {
-    public string? GeneralStructure { get; private set; }
-    public string? GeneralStructureOther { get; private set; }
+    public string? GeneralStructure { get; }
+    public string? GeneralStructureOther { get; }
 
     private BuildingGeneralStructure(string? generalStructure, string? generalStructureOther)
     {

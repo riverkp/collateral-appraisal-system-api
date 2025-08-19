@@ -19,6 +19,7 @@ public class LandAppraisalDetail : Entity<long>
 
     private LandAppraisalDetail() { }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     private LandAppraisalDetail(
         long collatId,
         long apprID,
@@ -48,6 +49,7 @@ public class LandAppraisalDetail : Entity<long>
         LandMiscellaneousDetail = landMiscellaneousDetail;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     public static LandAppraisalDetail Create(
         long collatId,
         long apprID,

@@ -8,7 +8,7 @@ public class BuildingInformation : ValueObject
     public string? BuildingStatus { get; }
     public DateTime? LicenseExpirationDate { get; }
     public string? IsAppraise { get; }
-    public ObligationDetail ObligationDetail { get; private set; } = default!;
+    public ObligationDetail ObligationDetail { get; } = default!;
 
     private BuildingInformation() { }
 

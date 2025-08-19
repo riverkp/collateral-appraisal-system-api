@@ -2,16 +2,16 @@ namespace Collateral.CollateralProperties.ValueObjects;
 
 public class BuildingAppraisalDepreciationDetail : ValueObject
 {
-    public string AreaDesc { get; private set; } = default!;
-    public decimal Area { get; private set; }
-    public decimal PricePerSqM { get; private set; }
-    public decimal PriceBeforeDegradation { get; private set; }
-    public short Year { get; private set; }
-    public decimal DegradationYearPct { get; private set; }
-    public decimal TotalDegradationPct { get; private set; }
-    public decimal PriceDegradation { get; private set; }
-    public decimal TotalPrice { get; private set; }
-    public bool? AppraisalMethod { get; private set; }
+    public string AreaDesc { get; } = default!;
+    public decimal Area { get; }
+    public decimal PricePerSqM { get; }
+    public decimal PriceBeforeDegradation { get; }
+    public short Year { get; }
+    public decimal DegradationYearPct { get; }
+    public decimal TotalDegradationPct { get; }
+    public decimal PriceDegradation { get; }
+    public decimal TotalPrice { get; }
+    public bool? AppraisalMethod { get; }
 
     // BuildingAppraisalDepreciationPeriod
     private readonly List<BuildingAppraisalDepreciationPeriod> _buildingAppraisalDepreciationPeriods =

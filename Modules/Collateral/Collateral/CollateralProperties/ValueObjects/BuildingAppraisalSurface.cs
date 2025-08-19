@@ -2,13 +2,13 @@ namespace Collateral.CollateralProperties.ValueObjects;
 
 public class BuildingAppraisalSurface : ValueObject
 {
-    public short? FromFloorNo { get; private set; }
-    public short? ToFloorNo { get; private set; }
-    public string? FloorType { get; private set; }
-    public string? FloorStructure { get; private set; }
-    public string? FloorStructureOther { get; private set; }
-    public string? FloorSurface { get; private set; }
-    public string? FloorSurfaceOther { get; private set; }
+    public short? FromFloorNo { get; }
+    public short? ToFloorNo { get; }
+    public string? FloorType { get; }
+    public string? FloorStructure { get; }
+    public string? FloorStructureOther { get; }
+    public string? FloorSurface { get; }
+    public string? FloorSurfaceOther { get; }
 
     private BuildingAppraisalSurface(
         short? fromFloorNo,

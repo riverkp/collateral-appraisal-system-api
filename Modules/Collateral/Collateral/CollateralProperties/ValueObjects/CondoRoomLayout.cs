@@ -2,8 +2,8 @@ namespace Collateral.CollateralProperties.ValueObjects;
 
 public class CondoRoomLayout : ValueObject
 {
-    public string? RoomLayout { get; private set; }
-    public string? RoomLayoutOther { get; private set; }
+    public string? RoomLayout { get; }
+    public string? RoomLayoutOther { get; }
 
     private CondoRoomLayout(string? roomLayout, string? roomLayoutOther)
     {

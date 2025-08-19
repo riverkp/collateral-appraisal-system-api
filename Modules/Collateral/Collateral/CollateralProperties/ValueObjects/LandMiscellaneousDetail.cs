@@ -2,10 +2,10 @@ namespace Collateral.CollateralProperties.ValueObjects;
 
 public class LandMiscellaneousDetail : ValueObject
 {
-    public decimal? PondArea { get; private set; }
-    public decimal? DepthPit { get; private set; }
-    public string? HasBuilding { get; private set; }
-    public string? HasBuildingOther { get; private set; }
+    public decimal? PondArea { get; }
+    public decimal? DepthPit { get; }
+    public string? HasBuilding { get; }
+    public string? HasBuildingOther { get; }
 
     private LandMiscellaneousDetail(
         decimal? pondArea,

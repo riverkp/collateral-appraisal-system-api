@@ -2,10 +2,10 @@ namespace Collateral.CollateralProperties.ValueObjects;
 
 public class BuildingWall : ValueObject
 {
-    public string? InteriorWall { get; private set; }
-    public string? InteriorWallOther { get; private set; }
-    public string? ExteriorWall { get; private set; }
-    public string? ExteriorWallOther { get; private set; }
+    public string? InteriorWall { get; }
+    public string? InteriorWallOther { get; }
+    public string? ExteriorWall { get; }
+    public string? ExteriorWallOther { get; }
 
     private BuildingWall(
         string? interiorWall,

@@ -2,8 +2,8 @@ namespace Collateral.CollateralProperties.ValueObjects;
 
 public class BuildingConstructionType : ValueObject
 {
-    public string? ConstType { get; private set; }
-    public string? ConstTypeOther { get; private set; }
+    public string? ConstType { get; }
+    public string? ConstTypeOther { get; }
 
     private BuildingConstructionType(string? constType, string? constTypeOther)
     {

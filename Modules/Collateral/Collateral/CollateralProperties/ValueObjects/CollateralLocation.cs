@@ -2,10 +2,10 @@ namespace Collateral.CollateralProperties.ValueObjects;
 
 public class CollateralLocation : ValueObject
 {
-    public string SubDistrict { get; private set; } = default!;
-    public string District { get; private set; } = default!;
-    public string Province { get; private set; } = default!;
-    public string LandOffice { get; private set; } = default!;
+    public string SubDistrict { get; } = default!;
+    public string District { get; } = default!;
+    public string Province { get; } = default!;
+    public string LandOffice { get; } = default!;
 
     private CollateralLocation(
         string subDistrict,

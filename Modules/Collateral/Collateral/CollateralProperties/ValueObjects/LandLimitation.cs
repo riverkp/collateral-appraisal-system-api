@@ -2,14 +2,14 @@ namespace Collateral.CollateralProperties.ValueObjects;
 
 public class LandLimitation : ValueObject
 {
-    public Expropriation Expropriation { get; private set; } = default!;
-    public Encroachment Encroachment { get; private set; } = default!;
-    public string? Electricity { get; private set; }
-    public decimal? ElectricityDistance { get; private set; }
-    public bool? IsLandlocked { get; private set; }
-    public string? IsLandlockedRemark { get; private set; }
-    public ForestBoundary ForestBoundary { get; private set; } = default!;
-    public string? LimitationOther { get; private set; }
+    public Expropriation Expropriation { get; } = default!;
+    public Encroachment Encroachment { get; } = default!;
+    public string? Electricity { get; }
+    public decimal? ElectricityDistance { get; }
+    public bool? IsLandlocked { get; }
+    public string? IsLandlockedRemark { get; }
+    public ForestBoundary ForestBoundary { get; } = default!;
+    public string? LimitationOther { get; }
 
     private LandLimitation() { }
 

@@ -2,8 +2,8 @@ namespace Collateral.CollateralProperties.ValueObjects;
 
 public class BuildingCeiling : ValueObject
 {
-    public string? Ceiling { get; private set; }
-    public string? CeilingOther { get; private set; }
+    public string? Ceiling { get; }
+    public string? CeilingOther { get; }
 
     private BuildingCeiling(string? ceiling, string? ceilingOther)
     {

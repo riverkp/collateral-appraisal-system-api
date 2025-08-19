@@ -271,7 +271,7 @@ namespace Collateral.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BuildingAppraisalDepreciationDetail",
+                name: "BuildingAppraisalDepreciationDetails",
                 schema: "collateral",
                 columns: table => new
                 {
@@ -291,9 +291,9 @@ namespace Collateral.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BuildingAppraisalDepreciationDetail", x => x.BuildingDepreciationID);
+                    table.PrimaryKey("PK_BuildingAppraisalDepreciationDetails", x => x.BuildingDepreciationID);
                     table.ForeignKey(
-                        name: "FK_BuildingAppraisalDepreciationDetail_BuildingAppraisalDetails_BuildingApprID",
+                        name: "FK_BuildingAppraisalDepreciationDetails_BuildingAppraisalDetails_BuildingApprID",
                         column: x => x.BuildingApprID,
                         principalSchema: "collateral",
                         principalTable: "BuildingAppraisalDetails",
@@ -302,7 +302,7 @@ namespace Collateral.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BuildingAppraisalSurface",
+                name: "BuildingAppraisalSurfaces",
                 schema: "collateral",
                 columns: table => new
                 {
@@ -319,9 +319,9 @@ namespace Collateral.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BuildingAppraisalSurface", x => x.SurfaceID);
+                    table.PrimaryKey("PK_BuildingAppraisalSurfaces", x => x.SurfaceID);
                     table.ForeignKey(
-                        name: "FK_BuildingAppraisalSurface_BuildingAppraisalDetails_BuildingApprID",
+                        name: "FK_BuildingAppraisalSurfaces_BuildingAppraisalDetails_BuildingApprID",
                         column: x => x.BuildingApprID,
                         principalSchema: "collateral",
                         principalTable: "BuildingAppraisalDetails",
@@ -722,7 +722,7 @@ namespace Collateral.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BuildingAppraisalDepreciationPeriod",
+                name: "BuildingAppraisalDepreciationPeriods",
                 schema: "collateral",
                 columns: table => new
                 {
@@ -734,32 +734,32 @@ namespace Collateral.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BuildingAppraisalDepreciationPeriod", x => x.BuildingDpcPeriodID);
+                    table.PrimaryKey("PK_BuildingAppraisalDepreciationPeriods", x => x.BuildingDpcPeriodID);
                     table.ForeignKey(
-                        name: "FK_BuildingAppraisalDepreciationPeriod_BuildingAppraisalDepreciationDetail_BuildingDepreciationID",
+                        name: "FK_BuildingAppraisalDepreciationPeriods_BuildingAppraisalDepreciationDetails_BuildingDepreciationID",
                         column: x => x.BuildingDepreciationID,
                         principalSchema: "collateral",
-                        principalTable: "BuildingAppraisalDepreciationDetail",
+                        principalTable: "BuildingAppraisalDepreciationDetails",
                         principalColumn: "BuildingDepreciationID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BuildingAppraisalDepreciationDetail_BuildingApprID",
+                name: "IX_BuildingAppraisalDepreciationDetails_BuildingApprID",
                 schema: "collateral",
-                table: "BuildingAppraisalDepreciationDetail",
+                table: "BuildingAppraisalDepreciationDetails",
                 column: "BuildingApprID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BuildingAppraisalDepreciationPeriod_BuildingDepreciationID",
+                name: "IX_BuildingAppraisalDepreciationPeriods_BuildingDepreciationID",
                 schema: "collateral",
-                table: "BuildingAppraisalDepreciationPeriod",
+                table: "BuildingAppraisalDepreciationPeriods",
                 column: "BuildingDepreciationID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BuildingAppraisalSurface_BuildingApprID",
+                name: "IX_BuildingAppraisalSurfaces_BuildingApprID",
                 schema: "collateral",
-                table: "BuildingAppraisalSurface",
+                table: "BuildingAppraisalSurfaces",
                 column: "BuildingApprID");
 
             migrationBuilder.CreateIndex(
@@ -843,11 +843,11 @@ namespace Collateral.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BuildingAppraisalDepreciationPeriod",
+                name: "BuildingAppraisalDepreciationPeriods",
                 schema: "collateral");
 
             migrationBuilder.DropTable(
-                name: "BuildingAppraisalSurface",
+                name: "BuildingAppraisalSurfaces",
                 schema: "collateral");
 
             migrationBuilder.DropTable(
@@ -903,7 +903,7 @@ namespace Collateral.Data.Migrations
                 schema: "collateral");
 
             migrationBuilder.DropTable(
-                name: "BuildingAppraisalDepreciationDetail",
+                name: "BuildingAppraisalDepreciationDetails",
                 schema: "collateral");
 
             migrationBuilder.DropTable(

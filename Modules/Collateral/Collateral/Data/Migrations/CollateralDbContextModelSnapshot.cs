@@ -1136,7 +1136,7 @@ namespace Collateral.Data.Migrations
 
                             b1.HasIndex("BuildingApprID");
 
-                            b1.ToTable("BuildingAppraisalDepreciationDetail", "collateral");
+                            b1.ToTable("BuildingAppraisalDepreciationDetails", "collateral");
 
                             b1.WithOwner()
                                 .HasForeignKey("BuildingApprID");
@@ -1165,7 +1165,7 @@ namespace Collateral.Data.Migrations
 
                                     b2.HasIndex("BuildingDepreciationID");
 
-                                    b2.ToTable("BuildingAppraisalDepreciationPeriod", "collateral");
+                                    b2.ToTable("BuildingAppraisalDepreciationPeriods", "collateral");
 
                                     b2.WithOwner()
                                         .HasForeignKey("BuildingDepreciationID");
@@ -1220,7 +1220,7 @@ namespace Collateral.Data.Migrations
 
                             b1.HasIndex("BuildingApprID");
 
-                            b1.ToTable("BuildingAppraisalSurface", "collateral");
+                            b1.ToTable("BuildingAppraisalSurfaces", "collateral");
 
                             b1.WithOwner()
                                 .HasForeignKey("BuildingApprID");

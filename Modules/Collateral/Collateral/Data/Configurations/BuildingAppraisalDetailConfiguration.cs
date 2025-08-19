@@ -286,7 +286,7 @@ public class BuildingAppraisalDetailConfiguration
             p => p.BuildingAppraisalSurfaces,
             surface =>
             {
-                surface.ToTable("BuildingAppraisalSurface");
+                surface.ToTable("BuildingAppraisalSurfaces");
                 surface.WithOwner().HasForeignKey("BuildingApprID");
 
                 surface.Property<long>("SurfaceID");
@@ -322,7 +322,7 @@ public class BuildingAppraisalDetailConfiguration
             p => p.BuildingAppraisalDepreciationDetails,
             detail =>
             {
-                detail.ToTable("BuildingAppraisalDepreciationDetail");
+                detail.ToTable("BuildingAppraisalDepreciationDetails");
                 detail.WithOwner().HasForeignKey("BuildingApprID");
 
                 detail.Property<long>("BuildingDepreciationID");
@@ -368,7 +368,7 @@ public class BuildingAppraisalDetailConfiguration
                     p => p.BuildingAppraisalDepreciationPeriods,
                     period =>
                     {
-                        period.ToTable("BuildingAppraisalDepreciationPeriod");
+                        period.ToTable("BuildingAppraisalDepreciationPeriods");
                         period.WithOwner().HasForeignKey("BuildingDepreciationID");
 
                         period.Property<long>("BuildingDpcPeriodID");

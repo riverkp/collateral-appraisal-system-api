@@ -699,7 +699,7 @@ namespace Collateral.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CondoAppraisalAreaDetail",
+                name: "CondoAppraisalAreaDetails",
                 schema: "collateral",
                 columns: table => new
                 {
@@ -711,9 +711,9 @@ namespace Collateral.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CondoAppraisalAreaDetail", x => x.CondoAreaDetID);
+                    table.PrimaryKey("PK_CondoAppraisalAreaDetails", x => x.CondoAreaDetID);
                     table.ForeignKey(
-                        name: "FK_CondoAppraisalAreaDetail_CondoAppraisalDetails_CondoApprID",
+                        name: "FK_CondoAppraisalAreaDetails_CondoAppraisalDetails_CondoApprID",
                         column: x => x.CondoApprID,
                         principalSchema: "collateral",
                         principalTable: "CondoAppraisalDetails",
@@ -805,9 +805,9 @@ namespace Collateral.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_CondoAppraisalAreaDetail_CondoApprID",
+                name: "IX_CondoAppraisalAreaDetails_CondoApprID",
                 schema: "collateral",
-                table: "CondoAppraisalAreaDetail",
+                table: "CondoAppraisalAreaDetails",
                 column: "CondoApprID");
 
             migrationBuilder.CreateIndex(
@@ -875,7 +875,7 @@ namespace Collateral.Data.Migrations
                 schema: "collateral");
 
             migrationBuilder.DropTable(
-                name: "CondoAppraisalAreaDetail",
+                name: "CondoAppraisalAreaDetails",
                 schema: "collateral");
 
             migrationBuilder.DropTable(

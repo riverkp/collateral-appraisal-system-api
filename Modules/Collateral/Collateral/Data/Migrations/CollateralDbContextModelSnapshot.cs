@@ -1875,7 +1875,7 @@ namespace Collateral.Data.Migrations
 
                             b1.HasIndex("CondoApprID");
 
-                            b1.ToTable("CondoAppraisalAreaDetail", "collateral");
+                            b1.ToTable("CondoAppraisalAreaDetails", "collateral");
 
                             b1.WithOwner()
                                 .HasForeignKey("CondoApprID");

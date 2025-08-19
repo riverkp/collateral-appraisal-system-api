@@ -8,7 +8,7 @@ public class CollateralLandConfiguration : IEntityTypeConfiguration<CollateralLa
     public void Configure(EntityTypeBuilder<CollateralLand> builder)
     {
         builder.HasKey(p => p.Id);
-        builder.Property(p => p.Id).UseIdentityColumn().HasColumnName("LandId");
+        builder.Property(p => p.Id).UseIdentityColumn().HasColumnName("LandID");
 
         builder
             .HasOne<CollateralMaster>()

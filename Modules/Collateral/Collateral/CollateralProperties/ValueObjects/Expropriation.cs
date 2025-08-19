@@ -5,21 +5,21 @@ public class Expropriation : ValueObject
     public bool? IsExpropriate { get; }
     public string? IsExpropriateRemark { get; }
     public bool? InLineExpropriate { get; }
-    public string? InLineExpropriatemark { get; }
+    public string? InLineExpropriateRemark { get; }
     public string? RoyalDecree { get; }
 
     private Expropriation(
         bool? isExpropriate,
         string? isExpropriateRemark,
         bool? inLineExpropriate,
-        string? inLineExpropriatemark,
+        string? inLineExpropriateRemark,
         string? royalDecree
     )
     {
         IsExpropriate = isExpropriate;
         IsExpropriateRemark = isExpropriateRemark;
         InLineExpropriate = inLineExpropriate;
-        InLineExpropriatemark = inLineExpropriatemark;
+        InLineExpropriateRemark = inLineExpropriateRemark;
         RoyalDecree = royalDecree;
     }
 
@@ -27,7 +27,7 @@ public class Expropriation : ValueObject
         bool? isExpropriate,
         string? isExpropriateRemark,
         bool? inLineExpropriate,
-        string? inLineExpropriatemark,
+        string? inLineExpropriateRemark,
         string? royalDecree
     )
     {
@@ -35,7 +35,7 @@ public class Expropriation : ValueObject
             isExpropriate,
             isExpropriateRemark,
             inLineExpropriate,
-            inLineExpropriatemark,
+            inLineExpropriateRemark,
             royalDecree
         );
     }

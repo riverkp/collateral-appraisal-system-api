@@ -37,13 +37,21 @@ public class CollateralCondoConfiguration : IEntityTypeConfiguration<CollateralC
             p => p.CollateralLocation,
             location =>
             {
-                location.Property(p => p.SubDistrict).HasMaxLength(10).HasColumnName("SubDistrict");
+                location.Property(p => p.SubDistrict)
+                    .UseMediumStringConfig()
+                    .HasColumnName("SubDistrict");
 
-                location.Property(p => p.District).HasMaxLength(10).HasColumnName("District");
+                location.Property(p => p.District)
+                    .UseMediumStringConfig()
+                    .HasColumnName("District");
 
-                location.Property(p => p.Province).HasMaxLength(10).HasColumnName("Province");
+                location.Property(p => p.Province)
+                    .UseMediumStringConfig()
+                    .HasColumnName("Province");
 
-                location.Property(p => p.LandOffice).HasMaxLength(10).HasColumnName("LandOffice");
+                location.Property(p => p.LandOffice)
+                    .UseMediumStringConfig()
+                    .HasColumnName("LandOffice");
             }
         );
 

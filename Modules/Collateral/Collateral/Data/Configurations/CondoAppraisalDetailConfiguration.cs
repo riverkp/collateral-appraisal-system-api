@@ -168,9 +168,9 @@ public class CondoAppraisalDetailConfiguration : IEntityTypeConfiguration<CondoA
                 expropriation.Property(p => p.InLineExpropriate).HasColumnName("InLineExpropriate");
 
                 expropriation
-                    .Property(p => p.InLineExpropriatemark)
+                    .Property(p => p.InLineExpropriateRemark)
                     .UseMaxLengthNVarcharConfig()
-                    .HasColumnName("InLineExpropriatemark");
+                    .HasColumnName("InLineExpropriateRemark");
 
                 expropriation
                     .Property(p => p.RoyalDecree)

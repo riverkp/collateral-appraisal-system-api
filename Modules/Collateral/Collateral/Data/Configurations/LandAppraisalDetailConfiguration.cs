@@ -161,9 +161,9 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
                             .HasColumnName("InLineExpropriate");
 
                         expropriation
-                            .Property(p => p.InLineExpropriatemark)
+                            .Property(p => p.InLineExpropriateRemark)
                             .UseMaxLengthNVarcharConfig()
-                            .HasColumnName("InLineExpropriatemark");
+                            .HasColumnName("InLineExpropriateRemark");
 
                         expropriation
                             .Property(p => p.RoyalDecree)

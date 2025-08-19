@@ -8,6 +8,8 @@ public class VesselAppraisalDetailConfigurations : IEntityTypeConfiguration<Vess
             .HasForeignKey<VesselAppraisalDetail>(p => p.CollatId)
             .IsRequired();
 
+        builder.Property(p => p.Id).HasColumnName("VesselApprID");
+
         builder.OwnsOne(p => p.AppraisalDetail, machineAppraisalDetail =>
         {
             machineAppraisalDetail.Property(p => p.CanUse).HasColumnName("CanUse");

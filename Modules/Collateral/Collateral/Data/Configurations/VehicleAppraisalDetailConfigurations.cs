@@ -8,6 +8,8 @@ public class VehicleAppraisalDetailConfigurations : IEntityTypeConfiguration<Veh
             .HasForeignKey<VehicleAppraisalDetail>(p => p.CollatId)
             .IsRequired();
 
+        builder.Property(p => p.Id).HasColumnName("VehicleApprID");
+
         builder.OwnsOne(p => p.AppraisalDetail, machineAppraisalDetail =>
         {
             machineAppraisalDetail.Property(p => p.CanUse).HasColumnName("CanUse");

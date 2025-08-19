@@ -8,6 +8,8 @@ public class MachineAppraisalDetailConfigurations : IEntityTypeConfiguration<Mac
             .HasForeignKey<MachineAppraisalDetail>(p => p.CollatId)
             .IsRequired();
 
+        builder.Property(p => p.Id).HasColumnName("MachineApprID");
+
         builder.OwnsOne(p => p.AppraisalDetail, machineAppraisalDetail =>
         {
             machineAppraisalDetail.Property(p => p.CanUse).HasColumnName("CanUse");

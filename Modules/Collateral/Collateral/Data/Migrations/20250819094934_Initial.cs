@@ -81,7 +81,7 @@ namespace Collateral.Data.Migrations
                 schema: "collateral",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    CollatId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CollatType = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false),
                     HostCollatId = table.Column<long>(type: "bigint", nullable: false),
@@ -92,7 +92,7 @@ namespace Collateral.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CollateralMasters", x => x.Id);
+                    table.PrimaryKey("PK_CollateralMasters", x => x.CollatId);
                 });
 
             migrationBuilder.CreateTable(
@@ -236,7 +236,7 @@ namespace Collateral.Data.Migrations
                 schema: "collateral",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    MachDetId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ApprId = table.Column<long>(type: "bigint", nullable: false),
                     Assignment = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -267,7 +267,7 @@ namespace Collateral.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MachineAppraisalAdditionalInfos", x => x.Id);
+                    table.PrimaryKey("PK_MachineAppraisalAdditionalInfos", x => x.MachDetId);
                 });
 
             migrationBuilder.CreateTable(
@@ -355,7 +355,7 @@ namespace Collateral.Data.Migrations
                         column: x => x.CollatId,
                         principalSchema: "collateral",
                         principalTable: "CollateralMasters",
-                        principalColumn: "Id",
+                        principalColumn: "CollatId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -395,7 +395,7 @@ namespace Collateral.Data.Migrations
                         column: x => x.CollatId,
                         principalSchema: "collateral",
                         principalTable: "CollateralMasters",
-                        principalColumn: "Id",
+                        principalColumn: "CollatId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -428,7 +428,7 @@ namespace Collateral.Data.Migrations
                         column: x => x.CollatId,
                         principalSchema: "collateral",
                         principalTable: "CollateralMasters",
-                        principalColumn: "Id",
+                        principalColumn: "CollatId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -468,7 +468,7 @@ namespace Collateral.Data.Migrations
                         column: x => x.CollatId,
                         principalSchema: "collateral",
                         principalTable: "CollateralMasters",
-                        principalColumn: "Id",
+                        principalColumn: "CollatId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -508,7 +508,7 @@ namespace Collateral.Data.Migrations
                         column: x => x.CollatId,
                         principalSchema: "collateral",
                         principalTable: "CollateralMasters",
-                        principalColumn: "Id",
+                        principalColumn: "CollatId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -548,7 +548,7 @@ namespace Collateral.Data.Migrations
                         column: x => x.CollatId,
                         principalSchema: "collateral",
                         principalTable: "CollateralMasters",
-                        principalColumn: "Id",
+                        principalColumn: "CollatId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -592,7 +592,7 @@ namespace Collateral.Data.Migrations
                         column: x => x.CollatId,
                         principalSchema: "collateral",
                         principalTable: "CollateralMasters",
-                        principalColumn: "Id",
+                        principalColumn: "CollatId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -601,7 +601,7 @@ namespace Collateral.Data.Migrations
                 schema: "collateral",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    MachineApprID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CollatId = table.Column<long>(type: "bigint", nullable: false),
                     ApprId = table.Column<long>(type: "bigint", nullable: false),
@@ -620,13 +620,13 @@ namespace Collateral.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MachineAppraisalDetails", x => x.Id);
+                    table.PrimaryKey("PK_MachineAppraisalDetails", x => x.MachineApprID);
                     table.ForeignKey(
                         name: "FK_MachineAppraisalDetails_CollateralMasters_CollatId",
                         column: x => x.CollatId,
                         principalSchema: "collateral",
                         principalTable: "CollateralMasters",
-                        principalColumn: "Id",
+                        principalColumn: "CollatId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -635,7 +635,7 @@ namespace Collateral.Data.Migrations
                 schema: "collateral",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    VehicleApprID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CollatId = table.Column<long>(type: "bigint", nullable: false),
                     ApprId = table.Column<long>(type: "bigint", nullable: false),
@@ -654,13 +654,13 @@ namespace Collateral.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VehicleAppraisalDetails", x => x.Id);
+                    table.PrimaryKey("PK_VehicleAppraisalDetails", x => x.VehicleApprID);
                     table.ForeignKey(
                         name: "FK_VehicleAppraisalDetails_CollateralMasters_CollatId",
                         column: x => x.CollatId,
                         principalSchema: "collateral",
                         principalTable: "CollateralMasters",
-                        principalColumn: "Id",
+                        principalColumn: "CollatId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -669,7 +669,7 @@ namespace Collateral.Data.Migrations
                 schema: "collateral",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    VesselApprID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CollatId = table.Column<long>(type: "bigint", nullable: false),
                     ApprId = table.Column<long>(type: "bigint", nullable: false),
@@ -688,13 +688,13 @@ namespace Collateral.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VesselAppraisalDetails", x => x.Id);
+                    table.PrimaryKey("PK_VesselAppraisalDetails", x => x.VesselApprID);
                     table.ForeignKey(
                         name: "FK_VesselAppraisalDetails_CollateralMasters_CollatId",
                         column: x => x.CollatId,
                         principalSchema: "collateral",
                         principalTable: "CollateralMasters",
-                        principalColumn: "Id",
+                        principalColumn: "CollatId",
                         onDelete: ReferentialAction.Cascade);
                 });
 

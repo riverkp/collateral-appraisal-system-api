@@ -4,6 +4,9 @@ public class MachineAppraisalAdditionalInfoConfigurations : IEntityTypeConfigura
 {
     public void Configure(EntityTypeBuilder<MachineAppraisalAdditionalInfo> builder)
     {
+
+        builder.Property(p => p.Id).HasColumnName("MachDetId");
+
         builder.OwnsOne(p => p.PurposeAndLocationMachine, purpose =>
         {
             purpose.Property(p => p.Assignment).HasColumnName("Assignment");

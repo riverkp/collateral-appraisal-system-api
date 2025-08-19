@@ -11,7 +11,10 @@ public class BuildingGeneralStructure : ValueObject
         GeneralStructureOther = generalStructureOther;
     }
 
-    public static BuildingGeneralStructure Create(string? generalStructure, string? generalStructureOther)
+    public static BuildingGeneralStructure Create(
+        string? generalStructure,
+        string? generalStructureOther
+    )
     {
         return new BuildingGeneralStructure(generalStructure, generalStructureOther);
     }

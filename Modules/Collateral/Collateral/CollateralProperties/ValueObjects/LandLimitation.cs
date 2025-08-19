@@ -11,6 +11,8 @@ public class LandLimitation : ValueObject
     public ForestBoundary ForestBoundary { get; private set; } = default!;
     public string? LimitationOther { get; private set; }
 
+    private LandLimitation() { }
+
     private LandLimitation(
         Expropriation expropriation,
         Encroachment encroachment,

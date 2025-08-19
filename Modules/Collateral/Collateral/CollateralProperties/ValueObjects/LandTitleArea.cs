@@ -7,12 +7,7 @@ public class LandTitleArea : ValueObject
     public decimal? Wa { get; }
     public decimal? TotalAreaInSqWa { get; }
 
-    private LandTitleArea(
-        decimal? rai,
-        decimal? ngan,
-        decimal? wa,
-        decimal? totalAreaInSqWa
-    )
+    private LandTitleArea(decimal? rai, decimal? ngan, decimal? wa, decimal? totalAreaInSqWa)
     {
         Rai = rai;
         Ngan = ngan;
@@ -27,11 +22,6 @@ public class LandTitleArea : ValueObject
         decimal? totalAreaInSqWa
     )
     {
-        return new LandTitleArea(
-            rai,
-            ngan,
-            wa,
-            totalAreaInSqWa
-        );
+        return new LandTitleArea(rai, ngan, wa, totalAreaInSqWa);
     }
 }

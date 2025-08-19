@@ -11,7 +11,10 @@ public class BuildingConstructionInformation : ValueObject
         UnderConstPct = underConstPct;
     }
 
-    public static BuildingConstructionInformation Create(decimal? originalBuildingPct, decimal? underConstPct)
+    public static BuildingConstructionInformation Create(
+        decimal? originalBuildingPct,
+        decimal? underConstPct
+    )
     {
         return new BuildingConstructionInformation(originalBuildingPct, underConstPct);
     }

@@ -9,8 +9,10 @@ public class CondoAttribute : ValueObject
     public string? ConstMaterial { get; }
     public CondoRoomLayout CondoRoomLayout { get; } = default!;
     public CondoFloor CondoFloor { get; } = default!;
-    public BuildingRoof BuildingRoof { get; } = default!;
+    public CondoRoof CondoRoof { get; } = default!;
     public decimal? TotalAreaInSqM { get; }
+
+    private CondoAttribute() { }
 
     private CondoAttribute(
         string? decoration,
@@ -20,7 +22,7 @@ public class CondoAttribute : ValueObject
         string? constMaterial,
         CondoRoomLayout condoRoomLayout,
         CondoFloor condoFloor,
-        BuildingRoof buildingRoof,
+        CondoRoof condoRoof,
         decimal? totalAreaInSqM
     )
     {
@@ -31,7 +33,7 @@ public class CondoAttribute : ValueObject
         ConstMaterial = constMaterial;
         CondoRoomLayout = condoRoomLayout;
         CondoFloor = condoFloor;
-        BuildingRoof = buildingRoof;
+        CondoRoof = condoRoof;
         TotalAreaInSqM = totalAreaInSqM;
     }
 
@@ -43,7 +45,7 @@ public class CondoAttribute : ValueObject
         string? constMaterial,
         CondoRoomLayout condoRoomLayout,
         CondoFloor condoFloor,
-        BuildingRoof buildingRoof,
+        CondoRoof condoRoof,
         decimal? totalAreaInSqM
     )
     {
@@ -55,7 +57,7 @@ public class CondoAttribute : ValueObject
             constMaterial,
             condoRoomLayout,
             condoFloor,
-            buildingRoof,
+            condoRoof,
             totalAreaInSqM
         );
     }

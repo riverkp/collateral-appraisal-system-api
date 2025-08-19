@@ -7,8 +7,12 @@ public class BuildingWall : ValueObject
     public string? ExteriorWall { get; private set; }
     public string? ExteriorWallOther { get; private set; }
 
-
-    private BuildingWall(string? interiorWall, string? interiorWallOther, string? exteriorWall, string? exteriorWallOther)
+    private BuildingWall(
+        string? interiorWall,
+        string? interiorWallOther,
+        string? exteriorWall,
+        string? exteriorWallOther
+    )
     {
         InteriorWall = interiorWall;
         InteriorWallOther = interiorWallOther;
@@ -16,7 +20,12 @@ public class BuildingWall : ValueObject
         ExteriorWallOther = exteriorWallOther;
     }
 
-    public static BuildingWall Create(string? interiorWall, string? interiorWallOther, string? exteriorWall, string? exteriorWallOther)
+    public static BuildingWall Create(
+        string? interiorWall,
+        string? interiorWallOther,
+        string? exteriorWall,
+        string? exteriorWallOther
+    )
     {
         return new BuildingWall(interiorWall, interiorWallOther, exteriorWall, exteriorWallOther);
     }

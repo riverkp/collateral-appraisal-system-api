@@ -35,13 +35,6 @@ public class LandTitleDocumentDetail : ValueObject
         string? sheetNo
     )
     {
-        return new LandTitleDocumentDetail(
-            titleNo,
-            bookNo,
-            pageNo,
-            landNo,
-            surveyNo,
-            sheetNo
-        );
+        return new LandTitleDocumentDetail(titleNo, bookNo, pageNo, landNo, surveyNo, sheetNo);
     }
 }

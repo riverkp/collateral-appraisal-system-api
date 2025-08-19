@@ -11,55 +11,63 @@ public class BuildingAppraisalDepreciationDetail : ValueObject
     public decimal TotalDegradationPct { get; private set; }
     public decimal PriceDegradation { get; private set; }
     public decimal TotalPrice { get; private set; }
-    public string? AppraisalMethod { get; private set; }
+    public bool? AppraisalMethod { get; private set; }
+
+    // BuildingAppraisalDepreciationPeriod
+    private readonly List<BuildingAppraisalDepreciationPeriod> _buildingAppraisalDepreciationPeriods =
+    [];
+    public IReadOnlyList<BuildingAppraisalDepreciationPeriod> BuildingAppraisalDepreciationPeriods =>
+        _buildingAppraisalDepreciationPeriods.AsReadOnly();
 
     private BuildingAppraisalDepreciationDetail(
-        string AreaDesc,
-        decimal Area,
-        decimal PricePerSqM,
-        decimal PriceBeforeDegradation,
-        short Year,
-        decimal DegradationYearPct,
-        decimal TotalDegradationPct,
-        decimal PriceDegradation,
-        decimal TotalPrice,
-        string? AppraisalMethod
-    ) {
-        this.AreaDesc = AreaDesc;
-        this.Area = Area;
-        this.PricePerSqM = PricePerSqM;
-        this.PriceBeforeDegradation = PriceBeforeDegradation;
-        this.Year = Year;
-        this.DegradationYearPct = DegradationYearPct;
-        this.TotalDegradationPct = TotalDegradationPct;
-        this.PriceDegradation = PriceDegradation;
-        this.TotalPrice = TotalPrice;
-        this.AppraisalMethod = AppraisalMethod;
+        string areaDesc,
+        decimal area,
+        decimal pricePerSqM,
+        decimal priceBeforeDegradation,
+        short year,
+        decimal degradationYearPct,
+        decimal totalDegradationPct,
+        decimal priceDegradation,
+        decimal totalPrice,
+        bool? appraisalMethod
+    )
+    {
+        AreaDesc = areaDesc;
+        Area = area;
+        PricePerSqM = pricePerSqM;
+        PriceBeforeDegradation = priceBeforeDegradation;
+        Year = year;
+        DegradationYearPct = degradationYearPct;
+        TotalDegradationPct = totalDegradationPct;
+        PriceDegradation = priceDegradation;
+        TotalPrice = totalPrice;
+        AppraisalMethod = appraisalMethod;
     }
 
     public static BuildingAppraisalDepreciationDetail Create(
-        string AreaDesc,
-        decimal Area,
-        decimal PricePerSqM,
-        decimal PriceBeforeDegradation,
-        short Year,
-        decimal DegradationYearPct,
-        decimal TotalDegradationPct,
-        decimal PriceDegradation,
-        decimal TotalPrice,
-        string? AppraisalMethod
-    ) {
+        string areaDesc,
+        decimal area,
+        decimal pricePerSqM,
+        decimal priceBeforeDegradation,
+        short year,
+        decimal degradationYearPct,
+        decimal totalDegradationPct,
+        decimal priceDegradation,
+        decimal totalPrice,
+        bool? appraisalMethod
+    )
+    {
         return new BuildingAppraisalDepreciationDetail(
-            AreaDesc,
-            Area,
-            PricePerSqM,
-            PriceBeforeDegradation,
-            Year,
-            DegradationYearPct,
-            TotalDegradationPct,
-            PriceDegradation,
-            TotalPrice,
-            AppraisalMethod
+            areaDesc,
+            area,
+            pricePerSqM,
+            priceBeforeDegradation,
+            year,
+            degradationYearPct,
+            totalDegradationPct,
+            priceDegradation,
+            totalPrice,
+            appraisalMethod
         );
     }
 }

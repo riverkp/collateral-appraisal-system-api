@@ -2,16 +2,16 @@ namespace Collateral.CollateralProperties.ValueObjects;
 
 public class Expropriation : ValueObject
 {
-    public string? IsExpropriate { get; }
+    public bool? IsExpropriate { get; }
     public string? IsExpropriateRemark { get; }
-    public string? InLineExpropriate { get; }
+    public bool? InLineExpropriate { get; }
     public string? InLineExpropriatemark { get; }
     public string? RoyalDecree { get; }
 
     private Expropriation(
-        string? isExpropriate,
+        bool? isExpropriate,
         string? isExpropriateRemark,
-        string? inLineExpropriate,
+        bool? inLineExpropriate,
         string? inLineExpropriatemark,
         string? royalDecree
     )
@@ -24,9 +24,9 @@ public class Expropriation : ValueObject
     }
 
     public static Expropriation Create(
-        string? isExpropriate,
+        bool? isExpropriate,
         string? isExpropriateRemark,
-        string? inLineExpropriate,
+        bool? inLineExpropriate,
         string? inLineExpropriatemark,
         string? royalDecree
     )

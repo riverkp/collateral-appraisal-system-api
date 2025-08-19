@@ -8,9 +8,10 @@ public class BuildingStructureDetail : ValueObject
     public BuildingRoof BuildingRoof { get; } = default!;
     public BuildingCeiling BuildingCeiling { get; } = default!;
     public BuildingWall BuildingWall { get; } = default!;
-    public string? Painting { get; }
     public BuildingFence BuildingFence { get; } = default!;
     public BuildingConstructionType ConstType { get; } = default!;
+
+    private BuildingStructureDetail() { }
 
     private BuildingStructureDetail(
         BuildingConstructionStyle buildingConstructionStyle,
@@ -19,7 +20,6 @@ public class BuildingStructureDetail : ValueObject
         BuildingRoof buildingRoof,
         BuildingCeiling buildingCeiling,
         BuildingWall buildingWall,
-        string? painting,
         BuildingFence buildingFence,
         BuildingConstructionType constType
     )
@@ -30,7 +30,6 @@ public class BuildingStructureDetail : ValueObject
         BuildingRoof = buildingRoof;
         BuildingCeiling = buildingCeiling;
         BuildingWall = buildingWall;
-        Painting = painting;
         BuildingFence = buildingFence;
         ConstType = constType;
     }
@@ -42,7 +41,6 @@ public class BuildingStructureDetail : ValueObject
         BuildingRoof buildingRoof,
         BuildingCeiling buildingCeiling,
         BuildingWall buildingWall,
-        string? painting,
         BuildingFence buildingFence,
         BuildingConstructionType constType
     )
@@ -54,7 +52,6 @@ public class BuildingStructureDetail : ValueObject
             buildingRoof,
             buildingCeiling,
             buildingWall,
-            painting,
             buildingFence,
             constType
         );

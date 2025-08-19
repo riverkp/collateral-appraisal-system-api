@@ -1,3 +1,5 @@
+using Collateral.CollateralProperties.Models;
+
 namespace Collateral.CollateralMasters.Models;
 
 public class CollateralMaster : Aggregate<long>
@@ -10,6 +12,11 @@ public class CollateralMaster : Aggregate<long>
     public VehicleAppraisalDetail VehicleAppraisalDetail { get; private set; } = default!;
     public CollateralVessel CollateralVessel { get; private set; } = default!;
     public VesselAppraisalDetail VesselAppraisalDetail { get; private set; } = default!;
+
+    public CollateralLand CollateralLand { get; private set; } = default!;
+    public CollateralBuilding CollateralBuilding { get; private set; } = default!;
+    public CollateralCondo CollateralCondo { get; private set; } = default!;
+    public LandTitle LandTitle { get; private set; } = default!;
 
     private CollateralMaster()
     {

@@ -1,3 +1,5 @@
+using Collateral.CollateralProperties.Models;
+
 namespace Collateral.Data;
 
 public class CollateralDbContext : DbContext
@@ -16,6 +18,15 @@ public class CollateralDbContext : DbContext
     public DbSet<VesselAppraisalDetail> VesselAppraisalDetails => Set<VesselAppraisalDetail>();
     // public DbSet<CollateralVehicle.Models.CollateralVehicle> CollateralVehicles => Set<CollateralVehicle.Models.CollateralVehicle>();
     // public DbSet<CollateralVessel.Models.CollateralVessel> CollateralVessels => Set<CollateralVessel.Models.CollateralVessel>();
+    // public DbSet<CollateralMaster.Models.CollateralMaster> CollateralMasters => Set<CollateralMaster.Models.CollateralMaster>();
+    public DbSet<CollateralLand> CollateralLands => Set<CollateralLand>();
+    public DbSet<CollateralBuilding> CollateralBuildings => Set<CollateralBuilding>();
+    public DbSet<CollateralCondo> CollateralCondos => Set<CollateralCondo>();
+    public DbSet<LandTitle> LandTitles => Set<LandTitle>();
+    public DbSet<LandAppraisalDetail> LandAppraisalDetails => Set<LandAppraisalDetail>();
+    public DbSet<BuildingAppraisalDetail> BuildingAppraisalDetails => Set<BuildingAppraisalDetail>();
+    public DbSet<CondoAppraisalDetail> CondoAppraisalDetails => Set<CondoAppraisalDetail>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Configure the default schema for the database

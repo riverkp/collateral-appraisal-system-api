@@ -19,7 +19,8 @@ public class ConsecutiveArea : ValueObject
         string? eConsecutiveArea,
         decimal? eEstimateLength,
         string? wConsecutiveArea,
-        decimal? wEstimateLength)
+        decimal? wEstimateLength
+    )
     {
         NConsecutiveArea = nConsecutiveArea;
         NEstimateLength = nEstimateLength;
@@ -39,8 +40,18 @@ public class ConsecutiveArea : ValueObject
         string? eConsecutiveArea,
         decimal? eEstimateLength,
         string? wConsecutiveArea,
-        decimal? wEstimateLength)
+        decimal? wEstimateLength
+    )
     {
-        return new ConsecutiveArea(nConsecutiveArea, nEstimateLength, sConsecutiveArea, sEstimateLength, eConsecutiveArea, eEstimateLength, wConsecutiveArea, wEstimateLength);
+        return new ConsecutiveArea(
+            nConsecutiveArea,
+            nEstimateLength,
+            sConsecutiveArea,
+            sEstimateLength,
+            eConsecutiveArea,
+            eEstimateLength,
+            wConsecutiveArea,
+            wEstimateLength
+        );
     }
 }

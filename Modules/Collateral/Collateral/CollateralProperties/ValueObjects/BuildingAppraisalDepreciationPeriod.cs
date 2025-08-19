@@ -11,7 +11,10 @@ public class BuildingAppraisalDepreciationPeriod : ValueObject
         DepreciationPerYear = depreciationPerYear;
     }
 
-    public static BuildingAppraisalDepreciationPeriod Create(int atYear, decimal depreciationPerYear)
+    public static BuildingAppraisalDepreciationPeriod Create(
+        int atYear,
+        decimal depreciationPerYear
+    )
     {
         return new BuildingAppraisalDepreciationPeriod(atYear, depreciationPerYear);
     }

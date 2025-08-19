@@ -11,6 +11,8 @@ public class CollateralMachineConfigurations : IEntityTypeConfiguration<Collater
         builder.HasOne<CollateralMaster>().WithOne(p => p.CollateralMachine)
             .HasForeignKey<CollateralMachine>(p => p.CollatId)
             .IsRequired();
+            
+        builder.Property(p => p.ChassisNo).UseShortStringConfig();
 
         builder.OwnsOne(p => p.CollateralMachineProperty, machineProperty =>
         {

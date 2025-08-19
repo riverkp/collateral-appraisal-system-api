@@ -11,7 +11,7 @@ public class LandTitleConfiguration : IEntityTypeConfiguration<LandTitle>
         builder.Property(p => p.Id).UseIdentityColumn().HasColumnName("LandTitleID");
 
         builder
-            .HasOne<CollateralMaster.Models.CollateralMaster>()
+            .HasOne<CollateralMaster>()
             .WithOne(p => p.LandTitle)
             .HasForeignKey<LandTitle>(p => p.CollatId);
 

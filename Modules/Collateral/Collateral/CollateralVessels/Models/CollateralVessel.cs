@@ -7,7 +7,6 @@ public class CollateralVessel : Aggregate<long>
     public CollateralProperty CollateralVesselProperty { get; private set; } = default!;
     public CollateralDetail CollateralVesselDetail { get; private set; } = default!;
     public CollateralSize CollateralVesselSize { get; private set; } = default!;
-    public string ChassisNo { get; private set; } = default!;
 
     private CollateralVessel() { }
 
@@ -16,8 +15,7 @@ public class CollateralVessel : Aggregate<long>
         long apprId,
         CollateralProperty collateralVesselProperty,
         CollateralDetail collateralVesselDetail,
-        CollateralSize collateralVesselSize,
-        string chassisNo
+        CollateralSize collateralVesselSize
     )
     {
         CollatId = collatId;
@@ -25,15 +23,13 @@ public class CollateralVessel : Aggregate<long>
         CollateralVesselProperty = collateralVesselProperty;
         CollateralVesselDetail = collateralVesselDetail;
         CollateralVesselSize = collateralVesselSize;
-        ChassisNo = chassisNo;
     }
     public static CollateralVessel Create(
         long collatId,
         long apprId,
         CollateralProperty collateralVesselProperty,
         CollateralDetail collateralVesselDetail,
-        CollateralSize collateralVesselSize,
-        string chassisNo
+        CollateralSize collateralVesselSize
     )
     {
         return new CollateralVessel(
@@ -41,8 +37,7 @@ public class CollateralVessel : Aggregate<long>
             apprId,
             collateralVesselProperty,
             collateralVesselDetail,
-            collateralVesselSize,
-            chassisNo
+            collateralVesselSize
         );
     }
 }

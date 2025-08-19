@@ -6,52 +6,50 @@ public class CollateralVesselConfigurations : IEntityTypeConfiguration<Collatera
     {
         builder.HasKey(p => p.Id);
         builder.Property(p => p.Id).UseIdentityColumn();
-        builder.Property(p => p.Id).HasColumnName("VesselName");
+        builder.Property(p => p.Id).HasColumnName("VesselId");
 
         builder.HasOne<CollateralMaster>().WithOne(p => p.CollateralVessel)
             .HasForeignKey<CollateralVessel>(p => p.CollatId)
             .IsRequired();
 
-        builder.Property(p => p.ChassisNo).HasColumnName("ChassisNo")
-            .HasMaxLength(25);
 
-        builder.OwnsOne(p => p.CollateralVesselProperty, machineProperty =>
+        builder.OwnsOne(p => p.CollateralVesselProperty, vesselProperty =>
         {
-            machineProperty.Property(p => p.Name).UseNameConfig()
-                .HasColumnName("MachineName");
-            machineProperty.Property(p => p.Brand).UseNameConfig()
+            vesselProperty.Property(p => p.Name).UseNameConfig()
+                .HasColumnName("VesselName");
+            vesselProperty.Property(p => p.Brand).UseNameConfig()
                 .HasColumnName("Brand");
-            machineProperty.Property(p => p.Model).UseNameConfig()
+            vesselProperty.Property(p => p.Model).UseNameConfig()
                 .HasColumnName("Model");
-            machineProperty.Property(p => p.EnergyUse).UseMediumStringConfig()
+            vesselProperty.Property(p => p.EnergyUse).UseMediumStringConfig()
                 .HasColumnName("EnergyUse");
         });
 
-        builder.OwnsOne(p => p.CollateralVesselDetail, machineDetail =>
+        builder.OwnsOne(p => p.CollateralVesselDetail, vesselDetail =>
         {
-            machineDetail.Property(p => p.EngineNo).UseShortStringConfig()
+            vesselDetail.Property(p => p.EngineNo).UseShortStringConfig()
                 .HasColumnName("EngineNo");
-            machineDetail.Property(p => p.RegistrationNo).HasMaxLength(30)
+            vesselDetail.Property(p => p.RegistrationNo).HasMaxLength(30)
                 .HasColumnName("RegistrationNo");
-            machineDetail.Property(p => p.YearOfManufacture)
+            vesselDetail.Property(p => p.YearOfManufacture)
                 .HasColumnName("YearOfManufacture");
-            machineDetail.Property(p => p.CountryOfManufacture).UseCodeConfig()
+            vesselDetail.Property(p => p.CountryOfManufacture).UseCodeConfig()
                 .HasColumnName("CountryOfManufacture");
-            machineDetail.Property(p => p.PurchaseDate).HasMaxLength(30)
+            vesselDetail.Property(p => p.PurchaseDate).HasMaxLength(30)
                 .HasColumnName("PurchaseDate");
-            machineDetail.Property(p => p.PurchasePrice).HasPrecision(19, 4)
+            vesselDetail.Property(p => p.PurchasePrice).HasPrecision(19, 4)
                 .HasColumnName("PurchasePrice");
         });
 
-        builder.OwnsOne(p => p.CollateralVesselSize, machineSize =>
+        builder.OwnsOne(p => p.CollateralVesselSize, vesselSize =>
         {
-            machineSize.Property(p => p.Capacity).UseMediumStringConfig()
+            vesselSize.Property(p => p.Capacity).UseMediumStringConfig()
                 .HasColumnName("Capacity");
-            machineSize.Property(p => p.Width).UseSizeConfig()
+            vesselSize.Property(p => p.Width).UseSizeConfig()
                 .HasColumnName("Width");
-            machineSize.Property(p => p.Length).UseSizeConfig()
+            vesselSize.Property(p => p.Length).UseSizeConfig()
                 .HasColumnName("Length");
-            machineSize.Property(p => p.Height).UseSizeConfig()
+            vesselSize.Property(p => p.Height).UseSizeConfig()
                 .HasColumnName("Height");
         });
     }

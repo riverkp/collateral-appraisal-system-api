@@ -11,6 +11,7 @@ public class LandLocationDetail : ValueObject
     public string? Village { get; }
     public string? Location { get; }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     private LandLocationDetail(
         string? landLocation,
         string? landCheck,
@@ -32,6 +33,7 @@ public class LandLocationDetail : ValueObject
         Location = location;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     public static LandLocationDetail Create(
         string? landLocation,
         string? landCheck,

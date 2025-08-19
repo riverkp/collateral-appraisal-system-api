@@ -32,6 +32,7 @@ public class BuildingAppraisalDetail : Entity<long>
 
     private BuildingAppraisalDetail() { }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     private BuildingAppraisalDetail(
         long collatId,
         long apprID,
@@ -63,6 +64,7 @@ public class BuildingAppraisalDetail : Entity<long>
         Remark = remark;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     public static BuildingAppraisalDetail Create(
         long collatId,
         long apprID,

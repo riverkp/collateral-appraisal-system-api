@@ -13,6 +13,7 @@ public class LandLimitation : ValueObject
 
     private LandLimitation() { }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     private LandLimitation(
         Expropriation expropriation,
         Encroachment encroachment,
@@ -34,6 +35,7 @@ public class LandLimitation : ValueObject
         LimitationOther = limitationOther;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     public static LandLimitation Create(
         Expropriation expropriation,
         Encroachment encroachment,

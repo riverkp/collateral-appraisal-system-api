@@ -19,6 +19,7 @@ public class BuildingAppraisalDepreciationDetail : ValueObject
     public IReadOnlyList<BuildingAppraisalDepreciationPeriod> BuildingAppraisalDepreciationPeriods =>
         _buildingAppraisalDepreciationPeriods.AsReadOnly();
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     private BuildingAppraisalDepreciationDetail(
         string areaDesc,
         decimal area,
@@ -44,6 +45,7 @@ public class BuildingAppraisalDepreciationDetail : ValueObject
         AppraisalMethod = appraisalMethod;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     public static BuildingAppraisalDepreciationDetail Create(
         string areaDesc,
         decimal area,

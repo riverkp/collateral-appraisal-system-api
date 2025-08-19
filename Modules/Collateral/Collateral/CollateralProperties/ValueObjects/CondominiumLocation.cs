@@ -12,6 +12,7 @@ public class CondominiumLocation : ValueObject
     public string? PublicUtility { get; }
     public string? PublicUtilityOther { get; }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     private CondominiumLocation(
         bool? condoLocation,
         string? street,
@@ -35,6 +36,7 @@ public class CondominiumLocation : ValueObject
         PublicUtilityOther = publicUtilityOther;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     public static CondominiumLocation Create(
         bool? condoLocation,
         string? street,

@@ -13,6 +13,7 @@ public class BuildingStructureDetail : ValueObject
 
     private BuildingStructureDetail() { }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     private BuildingStructureDetail(
         BuildingConstructionStyle buildingConstructionStyle,
         BuildingGeneralStructure buildingGeneralStructure,
@@ -34,6 +35,7 @@ public class BuildingStructureDetail : ValueObject
         ConstType = constType;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     public static BuildingStructureDetail Create(
         BuildingConstructionStyle buildingConstructionStyle,
         BuildingGeneralStructure buildingGeneralStructure,

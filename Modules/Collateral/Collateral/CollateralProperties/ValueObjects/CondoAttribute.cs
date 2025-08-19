@@ -14,6 +14,7 @@ public class CondoAttribute : ValueObject
 
     private CondoAttribute() { }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     private CondoAttribute(
         string? decoration,
         int? buildingYear,
@@ -37,6 +38,7 @@ public class CondoAttribute : ValueObject
         TotalAreaInSqM = totalAreaInSqM;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     public static CondoAttribute Create(
         string? decoration,
         int? buildingYear,

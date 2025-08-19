@@ -11,6 +11,7 @@ public class ConsecutiveArea : ValueObject
     public string? WConsecutiveArea { get; }
     public decimal? WEstimateLength { get; }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     private ConsecutiveArea(
         string? nConsecutiveArea,
         decimal? nEstimateLength,
@@ -32,6 +33,7 @@ public class ConsecutiveArea : ValueObject
         WEstimateLength = wEstimateLength;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     public static ConsecutiveArea Create(
         string? nConsecutiveArea,
         decimal? nEstimateLength,

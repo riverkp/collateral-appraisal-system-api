@@ -2,7 +2,7 @@ namespace Collateral.CollateralProperties.ValueObjects;
 
 public class DecorationDetail : ValueObject
 {
-    public string Decoration { get; } = default!;
+    public string Decoration { get; }
     public string? DecorationOther { get; }
 
     private DecorationDetail(string decoration, string? decorationOther)

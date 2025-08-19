@@ -2,7 +2,7 @@ namespace Collateral.CollateralProperties.ValueObjects;
 
 public class BuildingAppraisalDepreciationDetail : ValueObject
 {
-    public string AreaDesc { get; } = default!;
+    public string AreaDesc { get; }
     public decimal Area { get; }
     public decimal PricePerSqM { get; }
     public decimal PriceBeforeDegradation { get; }

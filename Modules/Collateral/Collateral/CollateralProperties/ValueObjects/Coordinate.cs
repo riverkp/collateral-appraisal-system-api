@@ -2,8 +2,8 @@ namespace Collateral.CollateralProperties.ValueObjects;
 
 public class Coordinate : ValueObject
 {
-    public decimal Latitude { get; } = default!;
-    public decimal Longitude { get; } = default!;
+    public decimal Latitude { get; }
+    public decimal Longitude { get; }
 
     private Coordinate(decimal latitude, decimal longitude)
     {

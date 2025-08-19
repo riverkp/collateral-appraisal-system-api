@@ -5,7 +5,7 @@ public class LandLocationDetail : ValueObject
     public string? LandLocation { get; }
     public string? LandCheck { get; }
     public string? LandCheckOther { get; }
-    public string Street { get; } = default!;
+    public string Street { get; }
     public string? Soi { get; }
     public decimal? Distance { get; }
     public string? Village { get; }

@@ -4,6 +4,7 @@ using Collateral.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Collateral.Data.Migrations
 {
     [DbContext(typeof(CollateralDbContext))]
-    partial class CollateralDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250815095520_Debug2")]
+    partial class Debug2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,7 +141,7 @@ namespace Collateral.Data.Migrations
                     b.Property<string>("CollatType")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(10)
@@ -332,7 +335,7 @@ namespace Collateral.Data.Migrations
 
                             b1.Property<string>("CountryOfManufacture")
                                 .HasMaxLength(10)
-                                .HasColumnType("varchar(10)")
+                                .HasColumnType("nvarchar(10)")
                                 .HasColumnName("CountryOfManufacture");
 
                             b1.Property<string>("EngineNo")
@@ -700,7 +703,7 @@ namespace Collateral.Data.Migrations
 
                             b1.Property<string>("CountryOfManufacture")
                                 .HasMaxLength(10)
-                                .HasColumnType("varchar(10)")
+                                .HasColumnType("nvarchar(10)")
                                 .HasColumnName("CountryOfManufacture");
 
                             b1.Property<string>("EngineNo")
@@ -886,7 +889,7 @@ namespace Collateral.Data.Migrations
 
                             b1.Property<string>("CountryOfManufacture")
                                 .HasMaxLength(10)
-                                .HasColumnType("varchar(10)")
+                                .HasColumnType("nvarchar(10)")
                                 .HasColumnName("CountryOfManufacture");
 
                             b1.Property<string>("EngineNo")

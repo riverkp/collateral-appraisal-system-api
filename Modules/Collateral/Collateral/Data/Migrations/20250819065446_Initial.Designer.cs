@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Collateral.Data.Migrations
 {
     [DbContext(typeof(CollateralDbContext))]
-    [Migration("20250819063701_Initial")]
+    [Migration("20250819065446_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -1878,7 +1878,7 @@ namespace Collateral.Data.Migrations
 
                             b1.HasIndex("CondoApprID");
 
-                            b1.ToTable("CondoAppraisalAreaDetail", "collateral");
+                            b1.ToTable("CondoAppraisalAreaDetails", "collateral");
 
                             b1.WithOwner()
                                 .HasForeignKey("CondoApprID");

@@ -11,7 +11,7 @@ public class CollateralBuildingConfiguration : IEntityTypeConfiguration<Collater
         builder.Property(p => p.Id).UseIdentityColumn().HasColumnName("BuildingId");
 
         builder
-            .HasOne<CollateralMaster.Models.CollateralMaster>()
+            .HasOne<CollateralMaster>()
             .WithOne(p => p.CollateralBuilding)
             .HasForeignKey<CollateralBuilding>(p => p.CollatId);
 

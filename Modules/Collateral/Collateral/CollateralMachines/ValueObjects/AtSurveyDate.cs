@@ -1,0 +1,64 @@
+namespace Collateral.CollateralMachines.ValueObjects;
+
+public class AtSurveyDate : ValueObject
+{
+    public int? Installed { get; }
+    public string? ApprScrap { get; }
+    public int? NoOfAppraise { get; }
+    public int? NotInstalled { get; }
+    public string? Maintenance { get; }
+    public string? Exterior { get; }
+    public string? Performance { get; }
+    public bool? MarketDemand { get; }
+    public string? MarketDemandRemark { get; }
+
+    private AtSurveyDate() { }
+
+    private AtSurveyDate(
+        int installed,
+        string apprScrap,
+        int noOfAppraise,
+        int notInstalled,
+        string maintenance,
+        string exterior,
+        string performance,
+        bool marketDemand,
+        string marketDemandRemark
+    )
+    {
+        Installed = installed;
+        ApprScrap = apprScrap;
+        NoOfAppraise = noOfAppraise;
+        NotInstalled = notInstalled;
+        Maintenance = maintenance;
+        Exterior = exterior;
+        Performance = performance;
+        MarketDemand = marketDemand;
+        MarketDemandRemark = marketDemandRemark;
+    }
+
+    public static AtSurveyDate Create(
+        int installed,
+        string apprScrap,
+        int noOfAppraise,
+        int notInstalled,
+        string maintenance,
+        string exterior,
+        string performance,
+        bool marketDemand,
+        string marketDemandRemark
+    )
+    {
+        return new AtSurveyDate(
+            installed,
+            apprScrap,
+            noOfAppraise,
+            notInstalled,
+            maintenance,
+            exterior,
+            performance,
+            marketDemand,
+            marketDemandRemark
+        );
+    }
+}

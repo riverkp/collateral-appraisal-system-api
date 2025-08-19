@@ -8,7 +8,17 @@ public class CollateralDbContext : DbContext
     {
     }
 
-    public DbSet<CollateralMaster.Models.CollateralMaster> CollateralMasters => Set<CollateralMaster.Models.CollateralMaster>();
+    public DbSet<CollateralMaster> CollateralMasters => Set<CollateralMaster>();
+    public DbSet<CollateralMachine> CollateralMachines => Set<CollateralMachine>();
+    public DbSet<MachineAppraisalDetail> MachineAppraisalDetails => Set<MachineAppraisalDetail>();
+    public DbSet<MachineAppraisalAdditionalInfo> MachineAppraisalAdditionalInfos => Set<MachineAppraisalAdditionalInfo>();
+    public DbSet<CollateralVehicle> CollateralVehicles => Set<CollateralVehicle>();
+    public DbSet<VehicleAppraisalDetail> VehicleAppraisalDetails => Set<VehicleAppraisalDetail>();
+    public DbSet<CollateralVessel> CollateralVessels => Set<CollateralVessel>();
+    public DbSet<VesselAppraisalDetail> VesselAppraisalDetails => Set<VesselAppraisalDetail>();
+    // public DbSet<CollateralVehicle.Models.CollateralVehicle> CollateralVehicles => Set<CollateralVehicle.Models.CollateralVehicle>();
+    // public DbSet<CollateralVessel.Models.CollateralVessel> CollateralVessels => Set<CollateralVessel.Models.CollateralVessel>();
+    // public DbSet<CollateralMaster.Models.CollateralMaster> CollateralMasters => Set<CollateralMaster.Models.CollateralMaster>();
     public DbSet<CollateralLand> CollateralLands => Set<CollateralLand>();
     public DbSet<CollateralBuilding> CollateralBuildings => Set<CollateralBuilding>();
     public DbSet<CollateralCondo> CollateralCondos => Set<CollateralCondo>();

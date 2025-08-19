@@ -13,16 +13,17 @@ public class AppraisalDetail : ValueObject
 
     private AppraisalDetail() { }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     private AppraisalDetail(
-        bool? canUse,
-        string? location,
-        string? conditionUse,
-        string? usePurpose,
-        string? part,
-        string? remark,
-        string? other,
-        string? appraiserOpinion
-    )
+            bool? canUse,
+            string? location,
+            string? conditionUse,
+            string? usePurpose,
+            string? part,
+            string? remark,
+            string? other,
+            string? appraiserOpinion
+        )
     {
         CanUse = canUse;
         Location = location;
@@ -34,16 +35,17 @@ public class AppraisalDetail : ValueObject
         AppraiserOpinion = appraiserOpinion;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     public static AppraisalDetail Create(
-        bool? canUse,
-        string? location,
-        string? conditionUse,
-        string? usePurpose,
-        string? part,
-        string? remark,
-        string? other,
-        string? appraiserOpinion
-    )
+            bool? canUse,
+            string? location,
+            string? conditionUse,
+            string? usePurpose,
+            string? part,
+            string? remark,
+            string? other,
+            string? appraiserOpinion
+        )
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(location);
         ArgumentException.ThrowIfNullOrWhiteSpace(conditionUse);

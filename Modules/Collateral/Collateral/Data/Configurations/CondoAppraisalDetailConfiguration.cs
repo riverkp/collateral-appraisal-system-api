@@ -8,9 +8,9 @@ public class CondoAppraisalDetailConfiguration : IEntityTypeConfiguration<CondoA
     public void Configure(EntityTypeBuilder<CondoAppraisalDetail> builder)
     {
         builder.HasKey(p => p.Id);
-        builder.Property(p => p.Id).UseIdentityColumn().HasColumnName("CondoApprID");
+        builder.Property(p => p.Id).UseIdentityColumn().HasColumnName("CondoApprId");
 
-        builder.Property(p => p.CollatId).HasColumnName("CollatID");
+        builder.Property(p => p.CollatId).HasColumnName("CollatId");
 
         builder.OwnsOne(
             p => p.ObligationDetail,
@@ -234,10 +234,10 @@ public class CondoAppraisalDetailConfiguration : IEntityTypeConfiguration<CondoA
             detail =>
             {
                 detail.ToTable("CondoAppraisalAreaDetails");
-                detail.WithOwner().HasForeignKey("CondoApprID");
+                detail.WithOwner().HasForeignKey("CondoApprId");
 
-                detail.Property<long>("CondoAreaDetID");
-                detail.HasKey("CondoAreaDetID");
+                detail.Property<long>("CondoAreaDetId");
+                detail.HasKey("CondoAreaDetId");
 
                 detail.Property(p => p.AreaDesc).UseLongerStringConfig().HasColumnName("AreaDesc");
 

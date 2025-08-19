@@ -5,7 +5,7 @@ namespace Collateral.CollateralProperties.Models;
 public class CondoAppraisalDetail : Entity<long>
 {
     public long CollatId { get; private set; }
-    public long AppraisalID { get; private set; }
+    public long ApprId { get; private set; }
     public ObligationDetail ObligationDetail { get; private set; } = default!;
     public string? DocValidate { get; private set; }
     public CondominiumLocation CondominiumLocation { get; private set; } = default!;
@@ -26,7 +26,7 @@ public class CondoAppraisalDetail : Entity<long>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     private CondoAppraisalDetail(
         long collatId,
-        long appraisalID,
+        long apprId,
         ObligationDetail obligationDetail,
         string? docValidate,
         CondominiumLocation condominiumLocation,
@@ -39,7 +39,7 @@ public class CondoAppraisalDetail : Entity<long>
     )
     {
         CollatId = collatId;
-        AppraisalID = appraisalID;
+        ApprId = apprId;
         ObligationDetail = obligationDetail;
         DocValidate = docValidate;
         CondominiumLocation = condominiumLocation;
@@ -54,7 +54,7 @@ public class CondoAppraisalDetail : Entity<long>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     public static CondoAppraisalDetail Create(
         long collatId,
-        long appraisalID,
+        long apprId,
         ObligationDetail obligationDetail,
         string? docValidate,
         CondominiumLocation condominiumLocation,
@@ -68,7 +68,7 @@ public class CondoAppraisalDetail : Entity<long>
     {
         return new CondoAppraisalDetail(
             collatId,
-            appraisalID,
+            apprId,
             obligationDetail,
             docValidate,
             condominiumLocation,

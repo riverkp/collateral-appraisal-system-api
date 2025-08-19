@@ -5,7 +5,7 @@ namespace Collateral.CollateralProperties.Models;
 public class LandAppraisalDetail : Entity<long>
 {
     public long CollatId { get; private set; }
-    public long ApprID { get; private set; }
+    public long ApprId { get; private set; }
     public ObligationDetail ObligationDetail { get; private set; } = default!;
     public LandLocationDetail LandLocationDetail { get; private set; } = default!;
     public LandFillDetail LandFillDetail { get; private set; } = default!;
@@ -22,7 +22,7 @@ public class LandAppraisalDetail : Entity<long>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     private LandAppraisalDetail(
         long collatId,
-        long apprID,
+        long apprId,
         ObligationDetail obligationDetail,
         LandLocationDetail landLocationDetail,
         LandFillDetail landFillDetail,
@@ -36,7 +36,7 @@ public class LandAppraisalDetail : Entity<long>
     )
     {
         CollatId = collatId;
-        ApprID = apprID;
+        ApprId = apprId;
         ObligationDetail = obligationDetail;
         LandLocationDetail = landLocationDetail;
         LandFillDetail = landFillDetail;
@@ -52,7 +52,7 @@ public class LandAppraisalDetail : Entity<long>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     public static LandAppraisalDetail Create(
         long collatId,
-        long apprID,
+        long apprId,
         ObligationDetail obligationDetail,
         LandLocationDetail landLocationDetail,
         LandFillDetail landFillDetail,
@@ -67,7 +67,7 @@ public class LandAppraisalDetail : Entity<long>
     {
         return new LandAppraisalDetail(
             collatId,
-            apprID,
+            apprId,
             obligationDetail,
             landLocationDetail,
             landFillDetail,

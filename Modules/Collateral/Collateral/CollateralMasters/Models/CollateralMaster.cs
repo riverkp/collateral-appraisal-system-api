@@ -5,7 +5,7 @@ namespace Collateral.CollateralMasters.Models;
 public class CollateralMaster : Aggregate<long>
 {
     public string CollatType { get; private set; } = default!;
-    public long HostCollatID { get; private set; } = default!;
+    public long HostCollatId { get; private set; } = default!;
     public CollateralMachine CollateralMachine { get; private set; } = default!;
     public MachineAppraisalDetail MachineAppraisalDetail { get; private set; } = default!;
     public CollateralVehicle CollateralVehicle { get; private set; } = default!;
@@ -27,16 +27,16 @@ public class CollateralMaster : Aggregate<long>
         ArgumentNullException.ThrowIfNull(collateralType);
 
         CollatType = collateralType;
-        HostCollatID = hostCollateralId;
+        HostCollatId = hostCollateralId;
     }
 
-    public static CollateralMaster Create(string collatType, long hostCollatID)
+    public static CollateralMaster Create(string collatType, long hostCollatId)
     {
         ArgumentNullException.ThrowIfNull(collatType);
 
         return new CollateralMaster(
             collatType,
-            hostCollatID
+            hostCollatId
         );
     }
 }

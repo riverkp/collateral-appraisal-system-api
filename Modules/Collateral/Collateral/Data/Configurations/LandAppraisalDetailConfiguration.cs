@@ -8,9 +8,9 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
     public void Configure(EntityTypeBuilder<LandAppraisalDetail> builder)
     {
         builder.HasKey(p => p.Id);
-        builder.Property(p => p.Id).UseIdentityColumn().HasColumnName("LandApprID");
+        builder.Property(p => p.Id).UseIdentityColumn().HasColumnName("LandApprId");
 
-        builder.Property(p => p.CollatId).HasColumnName("CollatID");
+        builder.Property(p => p.CollatId).HasColumnName("CollatId");
 
         builder.OwnsOne(
             p => p.ObligationDetail,

@@ -6,7 +6,7 @@ public class CollateralMachineConfigurations : IEntityTypeConfiguration<Collater
     {
         builder.HasKey(p => p.Id);
         builder.Property(p => p.Id).UseIdentityColumn();
-        builder.Property(p => p.Id).HasColumnName("MachineID");
+        builder.Property(p => p.Id).HasColumnName("MachineId");
 
         builder.HasOne<CollateralMaster>().WithOne(p => p.CollateralMachine)
             .HasForeignKey<CollateralMachine>(p => p.CollatId)

@@ -19,10 +19,10 @@ namespace Collateral.Data.Migrations
                 schema: "collateral",
                 columns: table => new
                 {
-                    BuildingApprID = table.Column<long>(type: "bigint", nullable: false)
+                    BuildingApprId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CollatID = table.Column<long>(type: "bigint", nullable: false),
-                    ApprID = table.Column<long>(type: "bigint", nullable: false),
+                    CollatId = table.Column<long>(type: "bigint", nullable: false),
+                    ApprId = table.Column<long>(type: "bigint", nullable: false),
                     NoHouseNumber = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false),
                     LandArea = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: true),
                     BuildingCondition = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: true),
@@ -73,7 +73,7 @@ namespace Collateral.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BuildingAppraisalDetails", x => x.BuildingApprID);
+                    table.PrimaryKey("PK_BuildingAppraisalDetails", x => x.BuildingApprId);
                 });
 
             migrationBuilder.CreateTable(
@@ -84,7 +84,7 @@ namespace Collateral.Data.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CollatType = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false),
-                    HostCollatID = table.Column<long>(type: "bigint", nullable: false),
+                    HostCollatId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -100,10 +100,10 @@ namespace Collateral.Data.Migrations
                 schema: "collateral",
                 columns: table => new
                 {
-                    CondoApprID = table.Column<long>(type: "bigint", nullable: false)
+                    CondoApprId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CollatID = table.Column<long>(type: "bigint", nullable: false),
-                    AppraisalID = table.Column<long>(type: "bigint", nullable: false),
+                    CollatId = table.Column<long>(type: "bigint", nullable: false),
+                    ApprId = table.Column<long>(type: "bigint", nullable: false),
                     IsObligation = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false),
                     Obligation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DocValidate = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: true),
@@ -135,7 +135,7 @@ namespace Collateral.Data.Migrations
                     IsExpropriate = table.Column<bool>(type: "bit", nullable: true),
                     IsExpropriateRemark = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     InLineExpropriate = table.Column<bool>(type: "bit", nullable: true),
-                    InLineExpropriatemark = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InLineExpropriateRemark = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RoyalDecree = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     CondoFacility = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     CondoFacilityOther = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -152,7 +152,7 @@ namespace Collateral.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CondoAppraisalDetails", x => x.CondoApprID);
+                    table.PrimaryKey("PK_CondoAppraisalDetails", x => x.CondoApprId);
                 });
 
             migrationBuilder.CreateTable(
@@ -160,10 +160,10 @@ namespace Collateral.Data.Migrations
                 schema: "collateral",
                 columns: table => new
                 {
-                    LandApprID = table.Column<long>(type: "bigint", nullable: false)
+                    LandApprId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CollatID = table.Column<long>(type: "bigint", nullable: false),
-                    ApprID = table.Column<long>(type: "bigint", nullable: false),
+                    CollatId = table.Column<long>(type: "bigint", nullable: false),
+                    ApprId = table.Column<long>(type: "bigint", nullable: false),
                     IsObligation = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false),
                     Obligation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LandLocation = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: true),
@@ -195,7 +195,7 @@ namespace Collateral.Data.Migrations
                     IsExpropriate = table.Column<bool>(type: "bit", nullable: true),
                     IsExpropriateRemark = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     InLineExpropriate = table.Column<bool>(type: "bit", nullable: true),
-                    InLineExpropriatemark = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InLineExpropriateRemark = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RoyalDecree = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     IsEncroached = table.Column<bool>(type: "bit", nullable: true),
                     IsEncroachedRemark = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -228,7 +228,7 @@ namespace Collateral.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LandAppraisalDetails", x => x.LandApprID);
+                    table.PrimaryKey("PK_LandAppraisalDetails", x => x.LandApprId);
                 });
 
             migrationBuilder.CreateTable(
@@ -275,7 +275,7 @@ namespace Collateral.Data.Migrations
                 schema: "collateral",
                 columns: table => new
                 {
-                    BuildingDepreciationID = table.Column<long>(type: "bigint", nullable: false)
+                    BuildingDepreciationId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AreaDesc = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Area = table.Column<decimal>(type: "decimal(5,3)", precision: 5, scale: 3, nullable: false),
@@ -287,17 +287,17 @@ namespace Collateral.Data.Migrations
                     PriceDegradation = table.Column<decimal>(type: "decimal(19,4)", precision: 19, scale: 4, nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(19,4)", precision: 19, scale: 4, nullable: false),
                     AppraisalMethod = table.Column<bool>(type: "bit", nullable: true),
-                    BuildingApprID = table.Column<long>(type: "bigint", nullable: false)
+                    BuildingApprd = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BuildingAppraisalDepreciationDetails", x => x.BuildingDepreciationID);
+                    table.PrimaryKey("PK_BuildingAppraisalDepreciationDetails", x => x.BuildingDepreciationId);
                     table.ForeignKey(
-                        name: "FK_BuildingAppraisalDepreciationDetails_BuildingAppraisalDetails_BuildingApprID",
-                        column: x => x.BuildingApprID,
+                        name: "FK_BuildingAppraisalDepreciationDetails_BuildingAppraisalDetails_BuildingApprd",
+                        column: x => x.BuildingApprd,
                         principalSchema: "collateral",
                         principalTable: "BuildingAppraisalDetails",
-                        principalColumn: "BuildingApprID",
+                        principalColumn: "BuildingApprId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -306,7 +306,7 @@ namespace Collateral.Data.Migrations
                 schema: "collateral",
                 columns: table => new
                 {
-                    SurfaceID = table.Column<long>(type: "bigint", nullable: false)
+                    SurfaceId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FromFloorNo = table.Column<short>(type: "smallint", nullable: true),
                     ToFloorNo = table.Column<short>(type: "smallint", nullable: true),
@@ -315,17 +315,17 @@ namespace Collateral.Data.Migrations
                     FloorStructureOther = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FloorSurface = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: true),
                     FloorSurfaceOther = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BuildingApprID = table.Column<long>(type: "bigint", nullable: false)
+                    BuildingApprId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BuildingAppraisalSurfaces", x => x.SurfaceID);
+                    table.PrimaryKey("PK_BuildingAppraisalSurfaces", x => x.SurfaceId);
                     table.ForeignKey(
-                        name: "FK_BuildingAppraisalSurfaces_BuildingAppraisalDetails_BuildingApprID",
-                        column: x => x.BuildingApprID,
+                        name: "FK_BuildingAppraisalSurfaces_BuildingAppraisalDetails_BuildingApprId",
+                        column: x => x.BuildingApprId,
                         principalSchema: "collateral",
                         principalTable: "BuildingAppraisalDetails",
-                        principalColumn: "BuildingApprID",
+                        principalColumn: "BuildingApprId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -336,7 +336,7 @@ namespace Collateral.Data.Migrations
                 {
                     BuildingId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CollatID = table.Column<long>(type: "bigint", nullable: false),
+                    CollatId = table.Column<long>(type: "bigint", nullable: false),
                     BuildingNo = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     ModelName = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     HouseNo = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
@@ -351,8 +351,8 @@ namespace Collateral.Data.Migrations
                 {
                     table.PrimaryKey("PK_CollateralBuildings", x => x.BuildingId);
                     table.ForeignKey(
-                        name: "FK_CollateralBuildings_CollateralMasters_CollatID",
-                        column: x => x.CollatID,
+                        name: "FK_CollateralBuildings_CollateralMasters_CollatId",
+                        column: x => x.CollatId,
                         principalSchema: "collateral",
                         principalTable: "CollateralMasters",
                         principalColumn: "Id",
@@ -364,9 +364,9 @@ namespace Collateral.Data.Migrations
                 schema: "collateral",
                 columns: table => new
                 {
-                    CondoID = table.Column<long>(type: "bigint", nullable: false)
+                    CondoId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CollatID = table.Column<long>(type: "bigint", nullable: false),
+                    CollatId = table.Column<long>(type: "bigint", nullable: false),
                     CondoName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     BuildingNo = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     ModelName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
@@ -375,10 +375,10 @@ namespace Collateral.Data.Migrations
                     RoomNo = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     FloorNo = table.Column<int>(type: "int", nullable: false),
                     UsableArea = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: false),
-                    SubDistrict = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    District = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Province = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    LandOffice = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    SubDistrict = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    District = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Province = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LandOffice = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Latitude = table.Column<decimal>(type: "decimal(9,6)", precision: 9, scale: 6, nullable: false),
                     Longitude = table.Column<decimal>(type: "decimal(9,6)", precision: 9, scale: 6, nullable: false),
                     Owner = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
@@ -389,10 +389,10 @@ namespace Collateral.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CollateralCondos", x => x.CondoID);
+                    table.PrimaryKey("PK_CollateralCondos", x => x.CondoId);
                     table.ForeignKey(
-                        name: "FK_CollateralCondos_CollateralMasters_CollatID",
-                        column: x => x.CollatID,
+                        name: "FK_CollateralCondos_CollateralMasters_CollatId",
+                        column: x => x.CollatId,
                         principalSchema: "collateral",
                         principalTable: "CollateralMasters",
                         principalColumn: "Id",
@@ -406,7 +406,7 @@ namespace Collateral.Data.Migrations
                 {
                     LandId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CollatID = table.Column<long>(type: "bigint", nullable: false),
+                    CollatId = table.Column<long>(type: "bigint", nullable: false),
                     Latitude = table.Column<decimal>(type: "decimal(9,6)", precision: 9, scale: 6, nullable: false),
                     Longitude = table.Column<decimal>(type: "decimal(9,6)", precision: 9, scale: 6, nullable: false),
                     SubDistrict = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
@@ -424,8 +424,8 @@ namespace Collateral.Data.Migrations
                 {
                     table.PrimaryKey("PK_CollateralLands", x => x.LandId);
                     table.ForeignKey(
-                        name: "FK_CollateralLands_CollateralMasters_CollatID",
-                        column: x => x.CollatID,
+                        name: "FK_CollateralLands_CollateralMasters_CollatId",
+                        column: x => x.CollatId,
                         principalSchema: "collateral",
                         principalTable: "CollateralMasters",
                         principalColumn: "Id",
@@ -437,7 +437,7 @@ namespace Collateral.Data.Migrations
                 schema: "collateral",
                 columns: table => new
                 {
-                    MachineID = table.Column<long>(type: "bigint", nullable: false)
+                    MachineId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CollatId = table.Column<long>(type: "bigint", nullable: false),
                     MachineName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
@@ -462,7 +462,7 @@ namespace Collateral.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CollateralMachines", x => x.MachineID);
+                    table.PrimaryKey("PK_CollateralMachines", x => x.MachineId);
                     table.ForeignKey(
                         name: "FK_CollateralMachines_CollateralMasters_CollatId",
                         column: x => x.CollatId,
@@ -557,9 +557,9 @@ namespace Collateral.Data.Migrations
                 schema: "collateral",
                 columns: table => new
                 {
-                    LandTitleID = table.Column<long>(type: "bigint", nullable: false)
+                    LandTitleId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CollatID = table.Column<long>(type: "bigint", nullable: false),
+                    CollatId = table.Column<long>(type: "bigint", nullable: false),
                     SeqNo = table.Column<int>(type: "int", nullable: false),
                     TitleNo = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     BookNo = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
@@ -586,10 +586,10 @@ namespace Collateral.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LandTitles", x => x.LandTitleID);
+                    table.PrimaryKey("PK_LandTitles", x => x.LandTitleId);
                     table.ForeignKey(
-                        name: "FK_LandTitles_CollateralMasters_CollatID",
-                        column: x => x.CollatID,
+                        name: "FK_LandTitles_CollateralMasters_CollatId",
+                        column: x => x.CollatId,
                         principalSchema: "collateral",
                         principalTable: "CollateralMasters",
                         principalColumn: "Id",
@@ -703,21 +703,21 @@ namespace Collateral.Data.Migrations
                 schema: "collateral",
                 columns: table => new
                 {
-                    CondoAreaDetID = table.Column<long>(type: "bigint", nullable: false)
+                    CondoAreaDetId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AreaDesc = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     AreaSize = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: true),
-                    CondoApprID = table.Column<long>(type: "bigint", nullable: false)
+                    CondoApprId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CondoAppraisalAreaDetails", x => x.CondoAreaDetID);
+                    table.PrimaryKey("PK_CondoAppraisalAreaDetails", x => x.CondoAreaDetId);
                     table.ForeignKey(
-                        name: "FK_CondoAppraisalAreaDetails_CondoAppraisalDetails_CondoApprID",
-                        column: x => x.CondoApprID,
+                        name: "FK_CondoAppraisalAreaDetails_CondoAppraisalDetails_CondoApprId",
+                        column: x => x.CondoApprId,
                         principalSchema: "collateral",
                         principalTable: "CondoAppraisalDetails",
-                        principalColumn: "CondoApprID",
+                        principalColumn: "CondoApprId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -726,61 +726,61 @@ namespace Collateral.Data.Migrations
                 schema: "collateral",
                 columns: table => new
                 {
-                    BuildingDpcPeriodID = table.Column<long>(type: "bigint", nullable: false)
+                    BuildingDpcPeriodId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AtYear = table.Column<int>(type: "int", nullable: false),
                     DepreciationPerYear = table.Column<decimal>(type: "decimal(19,4)", precision: 19, scale: 4, nullable: false),
-                    BuildingDepreciationID = table.Column<long>(type: "bigint", nullable: false)
+                    BuildingDepreciationId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BuildingAppraisalDepreciationPeriods", x => x.BuildingDpcPeriodID);
+                    table.PrimaryKey("PK_BuildingAppraisalDepreciationPeriods", x => x.BuildingDpcPeriodId);
                     table.ForeignKey(
-                        name: "FK_BuildingAppraisalDepreciationPeriods_BuildingAppraisalDepreciationDetails_BuildingDepreciationID",
-                        column: x => x.BuildingDepreciationID,
+                        name: "FK_BuildingAppraisalDepreciationPeriods_BuildingAppraisalDepreciationDetails_BuildingDepreciationId",
+                        column: x => x.BuildingDepreciationId,
                         principalSchema: "collateral",
                         principalTable: "BuildingAppraisalDepreciationDetails",
-                        principalColumn: "BuildingDepreciationID",
+                        principalColumn: "BuildingDepreciationId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BuildingAppraisalDepreciationDetails_BuildingApprID",
+                name: "IX_BuildingAppraisalDepreciationDetails_BuildingApprd",
                 schema: "collateral",
                 table: "BuildingAppraisalDepreciationDetails",
-                column: "BuildingApprID");
+                column: "BuildingApprd");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BuildingAppraisalDepreciationPeriods_BuildingDepreciationID",
+                name: "IX_BuildingAppraisalDepreciationPeriods_BuildingDepreciationId",
                 schema: "collateral",
                 table: "BuildingAppraisalDepreciationPeriods",
-                column: "BuildingDepreciationID");
+                column: "BuildingDepreciationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BuildingAppraisalSurfaces_BuildingApprID",
+                name: "IX_BuildingAppraisalSurfaces_BuildingApprId",
                 schema: "collateral",
                 table: "BuildingAppraisalSurfaces",
-                column: "BuildingApprID");
+                column: "BuildingApprId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CollateralBuildings_CollatID",
+                name: "IX_CollateralBuildings_CollatId",
                 schema: "collateral",
                 table: "CollateralBuildings",
-                column: "CollatID",
+                column: "CollatId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_CollateralCondos_CollatID",
+                name: "IX_CollateralCondos_CollatId",
                 schema: "collateral",
                 table: "CollateralCondos",
-                column: "CollatID",
+                column: "CollatId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_CollateralLands_CollatID",
+                name: "IX_CollateralLands_CollatId",
                 schema: "collateral",
                 table: "CollateralLands",
-                column: "CollatID",
+                column: "CollatId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -805,16 +805,16 @@ namespace Collateral.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_CondoAppraisalAreaDetails_CondoApprID",
+                name: "IX_CondoAppraisalAreaDetails_CondoApprId",
                 schema: "collateral",
                 table: "CondoAppraisalAreaDetails",
-                column: "CondoApprID");
+                column: "CondoApprId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LandTitles_CollatID",
+                name: "IX_LandTitles_CollatId",
                 schema: "collateral",
                 table: "LandTitles",
-                column: "CollatID",
+                column: "CollatId",
                 unique: true);
 
             migrationBuilder.CreateIndex(

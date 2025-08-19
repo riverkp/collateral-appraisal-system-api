@@ -8,14 +8,14 @@ public class CollateralBuildingConfiguration : IEntityTypeConfiguration<Collater
     public void Configure(EntityTypeBuilder<CollateralBuilding> builder)
     {
         builder.HasKey(p => p.Id);
-        builder.Property(p => p.Id).UseIdentityColumn().HasColumnName("BuildingID");
+        builder.Property(p => p.Id).UseIdentityColumn().HasColumnName("BuildingId");
 
         builder
             .HasOne<CollateralMaster>()
             .WithOne(p => p.CollateralBuilding)
             .HasForeignKey<CollateralBuilding>(p => p.CollatId);
 
-        builder.Property(p => p.CollatId).HasColumnName("CollatID");
+        builder.Property(p => p.CollatId).HasColumnName("CollatId");
 
         builder.Property(p => p.BuildingNo).UseTinyStringConfig();
 

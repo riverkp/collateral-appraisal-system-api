@@ -5,7 +5,7 @@ namespace Collateral.CollateralProperties.Models;
 public class BuildingAppraisalDetail : Entity<long>
 {
     public long CollatId { get; private set; }
-    public long ApprID { get; private set; }
+    public long ApprId { get; private set; }
     public BuildingInformation BuildingInformation { get; private set; } = default!;
     public BuildingTypeDetail BuildingTypeDetail { get; private set; } = default!;
     public DecorationDetail DecorationDetail { get; private set; } = default!;
@@ -35,7 +35,7 @@ public class BuildingAppraisalDetail : Entity<long>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     private BuildingAppraisalDetail(
         long collatId,
-        long apprID,
+        long apprId,
         BuildingInformation buildingInformation,
         BuildingTypeDetail buildingTypeDetail,
         DecorationDetail decorationDetail,
@@ -50,7 +50,7 @@ public class BuildingAppraisalDetail : Entity<long>
     )
     {
         CollatId = collatId;
-        ApprID = apprID;
+        ApprId = apprId;
         BuildingInformation = buildingInformation;
         BuildingTypeDetail = buildingTypeDetail;
         DecorationDetail = decorationDetail;
@@ -67,7 +67,7 @@ public class BuildingAppraisalDetail : Entity<long>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     public static BuildingAppraisalDetail Create(
         long collatId,
-        long apprID,
+        long apprId,
         BuildingInformation buildingInformation,
         BuildingTypeDetail buildingTypeDetail,
         DecorationDetail decorationDetail,
@@ -83,7 +83,7 @@ public class BuildingAppraisalDetail : Entity<long>
     {
         return new BuildingAppraisalDetail(
             collatId,
-            apprID,
+            apprId,
             buildingInformation,
             buildingTypeDetail,
             decorationDetail,

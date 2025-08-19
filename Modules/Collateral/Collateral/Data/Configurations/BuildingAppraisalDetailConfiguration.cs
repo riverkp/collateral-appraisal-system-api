@@ -1,5 +1,4 @@
 using Collateral.CollateralProperties.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Collateral.Data.Configurations;
 
@@ -9,9 +8,9 @@ public class BuildingAppraisalDetailConfiguration
     public void Configure(EntityTypeBuilder<BuildingAppraisalDetail> builder)
     {
         builder.HasKey(p => p.Id);
-        builder.Property(p => p.Id).UseIdentityColumn().HasColumnName("BuildingApprID");
+        builder.Property(p => p.Id).UseIdentityColumn().HasColumnName("BuildingApprId");
 
-        builder.Property(p => p.CollatId).HasColumnName("CollatID");
+        builder.Property(p => p.CollatId).HasColumnName("CollatId");
 
         builder.OwnsOne(
             p => p.BuildingInformation,
@@ -287,10 +286,10 @@ public class BuildingAppraisalDetailConfiguration
             surface =>
             {
                 surface.ToTable("BuildingAppraisalSurfaces");
-                surface.WithOwner().HasForeignKey("BuildingApprID");
+                surface.WithOwner().HasForeignKey("BuildingApprId");
 
-                surface.Property<long>("SurfaceID");
-                surface.HasKey("SurfaceID");
+                surface.Property<long>("SurfaceId");
+                surface.HasKey("SurfaceId");
 
                 surface.Property(p => p.FromFloorNo).HasColumnName("FromFloorNo");
 
@@ -323,10 +322,10 @@ public class BuildingAppraisalDetailConfiguration
             detail =>
             {
                 detail.ToTable("BuildingAppraisalDepreciationDetails");
-                detail.WithOwner().HasForeignKey("BuildingApprID");
+                detail.WithOwner().HasForeignKey("BuildingApprd");
 
-                detail.Property<long>("BuildingDepreciationID");
-                detail.HasKey("BuildingDepreciationID");
+                detail.Property<long>("BuildingDepreciationId");
+                detail.HasKey("BuildingDepreciationId");
 
                 detail.Property(p => p.AreaDesc).UseDescriptionConfig().HasColumnName("AreaDesc");
 
@@ -369,10 +368,10 @@ public class BuildingAppraisalDetailConfiguration
                     period =>
                     {
                         period.ToTable("BuildingAppraisalDepreciationPeriods");
-                        period.WithOwner().HasForeignKey("BuildingDepreciationID");
+                        period.WithOwner().HasForeignKey("BuildingDepreciationId");
 
-                        period.Property<long>("BuildingDpcPeriodID");
-                        period.HasKey("BuildingDpcPeriodID");
+                        period.Property<long>("BuildingDpcPeriodId");
+                        period.HasKey("BuildingDpcPeriodId");
 
                         period.Property(p => p.AtYear).HasColumnName("AtYear");
 

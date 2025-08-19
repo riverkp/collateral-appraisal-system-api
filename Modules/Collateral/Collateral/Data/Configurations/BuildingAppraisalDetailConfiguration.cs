@@ -322,7 +322,7 @@ public class BuildingAppraisalDetailConfiguration
             detail =>
             {
                 detail.ToTable("BuildingAppraisalDepreciationDetails");
-                detail.WithOwner().HasForeignKey("BuildingApprd");
+                detail.WithOwner().HasForeignKey("BuildingApprId");
 
                 detail.Property<long>("BuildingDepreciationId");
                 detail.HasKey("BuildingDepreciationId");

@@ -287,14 +287,14 @@ namespace Collateral.Data.Migrations
                     PriceDegradation = table.Column<decimal>(type: "decimal(19,4)", precision: 19, scale: 4, nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(19,4)", precision: 19, scale: 4, nullable: false),
                     AppraisalMethod = table.Column<bool>(type: "bit", nullable: true),
-                    BuildingApprd = table.Column<long>(type: "bigint", nullable: false)
+                    BuildingApprId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BuildingAppraisalDepreciationDetails", x => x.BuildingDepreciationId);
                     table.ForeignKey(
-                        name: "FK_BuildingAppraisalDepreciationDetails_BuildingAppraisalDetails_BuildingApprd",
-                        column: x => x.BuildingApprd,
+                        name: "FK_BuildingAppraisalDepreciationDetails_BuildingAppraisalDetails_BuildingApprId",
+                        column: x => x.BuildingApprId,
                         principalSchema: "collateral",
                         principalTable: "BuildingAppraisalDetails",
                         principalColumn: "BuildingApprId",
@@ -745,10 +745,10 @@ namespace Collateral.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BuildingAppraisalDepreciationDetails_BuildingApprd",
+                name: "IX_BuildingAppraisalDepreciationDetails_BuildingApprId",
                 schema: "collateral",
                 table: "BuildingAppraisalDepreciationDetails",
-                column: "BuildingApprd");
+                column: "BuildingApprId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BuildingAppraisalDepreciationPeriods_BuildingDepreciationId",

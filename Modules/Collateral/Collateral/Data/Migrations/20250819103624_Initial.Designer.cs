@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Collateral.Data.Migrations
 {
     [DbContext(typeof(CollateralDbContext))]
-    [Migration("20250819094934_Initial")]
+    [Migration("20250819103624_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -1080,6 +1080,108 @@ namespace Collateral.Data.Migrations
 
             modelBuilder.Entity("Collateral.CollateralProperties.Models.BuildingAppraisalDetail", b =>
                 {
+                    b.OwnsMany("Collateral.CollateralProperties.ValueObjects.BuildingAppraisalDepreciationDetail", "BuildingAppraisalDepreciationDetails", b1 =>
+                        {
+                            b1.Property<long>("BuildingDepreciationId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("bigint");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("BuildingDepreciationId"));
+
+                            b1.Property<bool?>("AppraisalMethod")
+                                .HasColumnType("bit")
+                                .HasColumnName("AppraisalMethod");
+
+                            b1.Property<decimal>("Area")
+                                .HasPrecision(5, 3)
+                                .HasColumnType("decimal(5,3)")
+                                .HasColumnName("Area");
+
+                            b1.Property<string>("AreaDesc")
+                                .IsRequired()
+                                .HasMaxLength(250)
+                                .HasColumnType("nvarchar(250)")
+                                .HasColumnName("AreaDesc");
+
+                            b1.Property<long>("BuildingApprId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<decimal>("DegradationYearPct")
+                                .HasPrecision(5, 2)
+                                .HasColumnType("decimal(5,2)")
+                                .HasColumnName("DegradationYearPct");
+
+                            b1.Property<decimal>("PriceBeforeDegradation")
+                                .HasPrecision(19, 4)
+                                .HasColumnType("decimal(19,4)")
+                                .HasColumnName("PriceBeforeDegradation");
+
+                            b1.Property<decimal>("PriceDegradation")
+                                .HasPrecision(19, 4)
+                                .HasColumnType("decimal(19,4)")
+                                .HasColumnName("PriceDegradation");
+
+                            b1.Property<decimal>("PricePerSqM")
+                                .HasPrecision(10, 2)
+                                .HasColumnType("decimal(10,2)")
+                                .HasColumnName("PricePerSqM");
+
+                            b1.Property<decimal>("TotalDegradationPct")
+                                .HasPrecision(5, 2)
+                                .HasColumnType("decimal(5,2)")
+                                .HasColumnName("TotalDegradationPct");
+
+                            b1.Property<decimal>("TotalPrice")
+                                .HasPrecision(19, 4)
+                                .HasColumnType("decimal(19,4)")
+                                .HasColumnName("TotalPrice");
+
+                            b1.Property<short>("Year")
+                                .HasColumnType("smallint")
+                                .HasColumnName("Year");
+
+                            b1.HasKey("BuildingDepreciationId");
+
+                            b1.HasIndex("BuildingApprId");
+
+                            b1.ToTable("BuildingAppraisalDepreciationDetails", "collateral");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BuildingApprId");
+
+                            b1.OwnsMany("Collateral.CollateralProperties.ValueObjects.BuildingAppraisalDepreciationPeriod", "BuildingAppraisalDepreciationPeriods", b2 =>
+                                {
+                                    b2.Property<long>("BuildingDpcPeriodId")
+                                        .ValueGeneratedOnAdd()
+                                        .HasColumnType("bigint");
+
+                                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b2.Property<long>("BuildingDpcPeriodId"));
+
+                                    b2.Property<int>("AtYear")
+                                        .HasColumnType("int")
+                                        .HasColumnName("AtYear");
+
+                                    b2.Property<long>("BuildingDepreciationId")
+                                        .HasColumnType("bigint");
+
+                                    b2.Property<decimal>("DepreciationPerYear")
+                                        .HasPrecision(19, 4)
+                                        .HasColumnType("decimal(19,4)")
+                                        .HasColumnName("DepreciationPerYear");
+
+                                    b2.HasKey("BuildingDpcPeriodId");
+
+                                    b2.HasIndex("BuildingDepreciationId");
+
+                                    b2.ToTable("BuildingAppraisalDepreciationPeriods", "collateral");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("BuildingDepreciationId");
+                                });
+
+                            b1.Navigation("BuildingAppraisalDepreciationPeriods");
+                        });
+
                     b.OwnsMany("Collateral.CollateralProperties.ValueObjects.BuildingAppraisalSurface", "BuildingAppraisalSurfaces", b1 =>
                         {
                             b1.Property<long>("SurfaceId")
@@ -1564,108 +1666,6 @@ namespace Collateral.Data.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("BuildingAppraisalDetailId");
-                        });
-
-                    b.OwnsMany("Collateral.CollateralProperties.ValueObjects.BuildingAppraisalDepreciationDetail", "BuildingAppraisalDepreciationDetails", b1 =>
-                        {
-                            b1.Property<long>("BuildingDepreciationId")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("bigint");
-
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("BuildingDepreciationId"));
-
-                            b1.Property<bool?>("AppraisalMethod")
-                                .HasColumnType("bit")
-                                .HasColumnName("AppraisalMethod");
-
-                            b1.Property<decimal>("Area")
-                                .HasPrecision(5, 3)
-                                .HasColumnType("decimal(5,3)")
-                                .HasColumnName("Area");
-
-                            b1.Property<string>("AreaDesc")
-                                .IsRequired()
-                                .HasMaxLength(250)
-                                .HasColumnType("nvarchar(250)")
-                                .HasColumnName("AreaDesc");
-
-                            b1.Property<long>("BuildingApprd")
-                                .HasColumnType("bigint");
-
-                            b1.Property<decimal>("DegradationYearPct")
-                                .HasPrecision(5, 2)
-                                .HasColumnType("decimal(5,2)")
-                                .HasColumnName("DegradationYearPct");
-
-                            b1.Property<decimal>("PriceBeforeDegradation")
-                                .HasPrecision(19, 4)
-                                .HasColumnType("decimal(19,4)")
-                                .HasColumnName("PriceBeforeDegradation");
-
-                            b1.Property<decimal>("PriceDegradation")
-                                .HasPrecision(19, 4)
-                                .HasColumnType("decimal(19,4)")
-                                .HasColumnName("PriceDegradation");
-
-                            b1.Property<decimal>("PricePerSqM")
-                                .HasPrecision(10, 2)
-                                .HasColumnType("decimal(10,2)")
-                                .HasColumnName("PricePerSqM");
-
-                            b1.Property<decimal>("TotalDegradationPct")
-                                .HasPrecision(5, 2)
-                                .HasColumnType("decimal(5,2)")
-                                .HasColumnName("TotalDegradationPct");
-
-                            b1.Property<decimal>("TotalPrice")
-                                .HasPrecision(19, 4)
-                                .HasColumnType("decimal(19,4)")
-                                .HasColumnName("TotalPrice");
-
-                            b1.Property<short>("Year")
-                                .HasColumnType("smallint")
-                                .HasColumnName("Year");
-
-                            b1.HasKey("BuildingDepreciationId");
-
-                            b1.HasIndex("BuildingApprd");
-
-                            b1.ToTable("BuildingAppraisalDepreciationDetails", "collateral");
-
-                            b1.WithOwner()
-                                .HasForeignKey("BuildingApprd");
-
-                            b1.OwnsMany("Collateral.CollateralProperties.ValueObjects.BuildingAppraisalDepreciationPeriod", "BuildingAppraisalDepreciationPeriods", b2 =>
-                                {
-                                    b2.Property<long>("BuildingDpcPeriodId")
-                                        .ValueGeneratedOnAdd()
-                                        .HasColumnType("bigint");
-
-                                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b2.Property<long>("BuildingDpcPeriodId"));
-
-                                    b2.Property<int>("AtYear")
-                                        .HasColumnType("int")
-                                        .HasColumnName("AtYear");
-
-                                    b2.Property<long>("BuildingDepreciationId")
-                                        .HasColumnType("bigint");
-
-                                    b2.Property<decimal>("DepreciationPerYear")
-                                        .HasPrecision(19, 4)
-                                        .HasColumnType("decimal(19,4)")
-                                        .HasColumnName("DepreciationPerYear");
-
-                                    b2.HasKey("BuildingDpcPeriodId");
-
-                                    b2.HasIndex("BuildingDepreciationId");
-
-                                    b2.ToTable("BuildingAppraisalDepreciationPeriods", "collateral");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("BuildingDepreciationId");
-                                });
-
-                            b1.Navigation("BuildingAppraisalDepreciationPeriods");
                         });
 
                     b.Navigation("BuildingAppraisalDepreciationDetails");

@@ -233,7 +233,7 @@ public class CondoAppraisalDetailConfiguration : IEntityTypeConfiguration<CondoA
             p => p.CondoAppraisalAreaDetails,
             detail =>
             {
-                detail.ToTable("CondoAppraisalAreaDetail");
+                detail.ToTable("CondoAppraisalAreaDetails");
                 detail.WithOwner().HasForeignKey("CondoApprID");
 
                 detail.Property<long>("CondoAreaDetID");

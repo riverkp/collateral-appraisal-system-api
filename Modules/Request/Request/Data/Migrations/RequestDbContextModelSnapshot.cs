@@ -457,7 +457,7 @@ namespace Request.Data.Migrations
                             b1.Property<string>("Channel")
                                 .IsRequired()
                                 .HasMaxLength(10)
-                                .HasColumnType("nvarchar(10)")
+                                .HasColumnType("varchar(10)")
                                 .HasColumnName("Channel");
 
                             b1.Property<bool>("HasAppraisalBook")
@@ -471,13 +471,13 @@ namespace Request.Data.Migrations
                             b1.Property<string>("Priority")
                                 .IsRequired()
                                 .HasMaxLength(10)
-                                .HasColumnType("nvarchar(10)")
+                                .HasColumnType("varchar(10)")
                                 .HasColumnName("Priority");
 
                             b1.Property<string>("Purpose")
                                 .IsRequired()
                                 .HasMaxLength(10)
-                                .HasColumnType("nvarchar(10)")
+                                .HasColumnType("varchar(10)")
                                 .HasColumnName("Purpose");
 
                             b1.HasKey("RequestId");
@@ -530,7 +530,7 @@ namespace Request.Data.Migrations
                                     b2.Property<string>("FeeType")
                                         .IsRequired()
                                         .HasMaxLength(10)
-                                        .HasColumnType("nvarchar(10)")
+                                        .HasColumnType("varchar(10)")
                                         .HasColumnName("FeeType");
 
                                     b2.HasKey("RequestDetailRequestId");
@@ -603,7 +603,7 @@ namespace Request.Data.Migrations
 
                                     b2.Property<string>("District")
                                         .HasMaxLength(10)
-                                        .HasColumnType("nvarchar(10)")
+                                        .HasColumnType("varchar(10)")
                                         .HasColumnName("District");
 
                                     b2.Property<string>("FloorNo")
@@ -623,7 +623,7 @@ namespace Request.Data.Migrations
 
                                     b2.Property<string>("Postcode")
                                         .HasMaxLength(10)
-                                        .HasColumnType("nvarchar(10)")
+                                        .HasColumnType("varchar(10)")
                                         .HasColumnName("Postcode");
 
                                     b2.Property<string>("ProjectName")
@@ -633,7 +633,7 @@ namespace Request.Data.Migrations
 
                                     b2.Property<string>("Province")
                                         .HasMaxLength(10)
-                                        .HasColumnType("nvarchar(10)")
+                                        .HasColumnType("varchar(10)")
                                         .HasColumnName("Province");
 
                                     b2.Property<string>("Road")
@@ -653,7 +653,7 @@ namespace Request.Data.Migrations
 
                                     b2.Property<string>("SubDistrict")
                                         .HasMaxLength(10)
-                                        .HasColumnType("nvarchar(10)")
+                                        .HasColumnType("varchar(10)")
                                         .HasColumnName("SubDistrict");
 
                                     b2.HasKey("RequestDetailRequestId");
@@ -672,19 +672,19 @@ namespace Request.Data.Migrations
                                     b2.Property<string>("RequestorAo")
                                         .IsRequired()
                                         .HasMaxLength(10)
-                                        .HasColumnType("nvarchar(10)")
+                                        .HasColumnType("varchar(10)")
                                         .HasColumnName("RequestorAo");
 
                                     b2.Property<string>("RequestorBranch")
                                         .IsRequired()
                                         .HasMaxLength(10)
-                                        .HasColumnType("nvarchar(10)")
+                                        .HasColumnType("varchar(10)")
                                         .HasColumnName("RequestorBranch");
 
                                     b2.Property<string>("RequestorBusinessUnit")
                                         .IsRequired()
                                         .HasMaxLength(10)
-                                        .HasColumnType("nvarchar(10)")
+                                        .HasColumnType("varchar(10)")
                                         .HasColumnName("RequestorBusinessUnit");
 
                                     b2.Property<string>("RequestorContactNo")
@@ -696,13 +696,13 @@ namespace Request.Data.Migrations
                                     b2.Property<string>("RequestorCostCenter")
                                         .IsRequired()
                                         .HasMaxLength(10)
-                                        .HasColumnType("nvarchar(10)")
+                                        .HasColumnType("varchar(10)")
                                         .HasColumnName("RequestorCostCenter");
 
                                     b2.Property<string>("RequestorDepartment")
                                         .IsRequired()
                                         .HasMaxLength(10)
-                                        .HasColumnType("nvarchar(10)")
+                                        .HasColumnType("varchar(10)")
                                         .HasColumnName("RequestorDepartment");
 
                                     b2.Property<string>("RequestorEmail")
@@ -714,7 +714,7 @@ namespace Request.Data.Migrations
                                     b2.Property<string>("RequestorEmpId")
                                         .IsRequired()
                                         .HasMaxLength(10)
-                                        .HasColumnType("nvarchar(10)")
+                                        .HasColumnType("varchar(10)")
                                         .HasColumnName("RequestorEmpId");
 
                                     b2.Property<string>("RequestorName")
@@ -726,7 +726,7 @@ namespace Request.Data.Migrations
                                     b2.Property<string>("RequestorSection")
                                         .IsRequired()
                                         .HasMaxLength(10)
-                                        .HasColumnType("nvarchar(10)")
+                                        .HasColumnType("varchar(10)")
                                         .HasColumnName("RequestorSection");
 
                                     b2.HasKey("RequestDetailRequestId");
@@ -767,13 +767,13 @@ namespace Request.Data.Migrations
                             b1.Property<string>("BuildingType")
                                 .IsRequired()
                                 .HasMaxLength(10)
-                                .HasColumnType("nvarchar(10)")
+                                .HasColumnType("varchar(10)")
                                 .HasColumnName("BuildingType");
 
                             b1.Property<string>("PropertyType")
                                 .IsRequired()
                                 .HasMaxLength(10)
-                                .HasColumnType("nvarchar(10)")
+                                .HasColumnType("varchar(10)")
                                 .HasColumnName("PropertyType");
 
                             b1.Property<long>("RequestId")
@@ -802,7 +802,7 @@ namespace Request.Data.Migrations
                             b1.Property<string>("Code")
                                 .IsRequired()
                                 .HasMaxLength(10)
-                                .HasColumnType("nvarchar(10)")
+                                .HasColumnType("varchar(10)")
                                 .HasColumnName("Status");
 
                             b1.HasKey("RequestId");

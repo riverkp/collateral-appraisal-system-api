@@ -162,14 +162,14 @@ public class CondoAppraisalDetailConfiguration : IEntityTypeConfiguration<CondoA
 
                 expropriation
                     .Property(p => p.IsExpropriateRemark)
-                    .UseMaxLengthNVarcharConfig()
+                    .UseRemarkConfig()
                     .HasColumnName("IsExpropriateRemark");
 
                 expropriation.Property(p => p.InLineExpropriate).HasColumnName("InLineExpropriate");
 
                 expropriation
                     .Property(p => p.InLineExpropriateRemark)
-                    .UseMaxLengthNVarcharConfig()
+                    .UseRemarkConfig()
                     .HasColumnName("InLineExpropriateRemark");
 
                 expropriation
@@ -221,12 +221,12 @@ public class CondoAppraisalDetailConfiguration : IEntityTypeConfiguration<CondoA
 
                 boundary
                     .Property(p => p.IsForestBoundaryRemark)
-                    .UseMaxLengthNVarcharConfig()
+                    .UseRemarkConfig()
                     .HasColumnName("IsForestBoundaryRemark");
             }
         );
 
-        builder.Property(p => p.Remark).UseMaxLengthNVarcharConfig().HasColumnName("Remark");
+        builder.Property(p => p.Remark).UseRemarkConfig().HasColumnName("Remark");
 
         // CondoAppraisalAreaDetails
         builder.OwnsMany(

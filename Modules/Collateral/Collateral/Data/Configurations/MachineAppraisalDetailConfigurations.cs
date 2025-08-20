@@ -20,7 +20,7 @@ public class MachineAppraisalDetailConfigurations : IEntityTypeConfiguration<Mac
             machineAppraisalDetail.Property(p => p.UsePurpose).HasColumnName("UsePurpose")
                 .UseNameConfig();
             machineAppraisalDetail.Property(p => p.Part).HasColumnName("MachinePart");
-            machineAppraisalDetail.Property(p => p.Remark).HasColumnName("Remark");
+            machineAppraisalDetail.Property(p => p.Remark).UseRemarkConfig().HasColumnName("Remark");
             machineAppraisalDetail.Property(p => p.Other).HasColumnName("Other");
             machineAppraisalDetail.Property(p => p.AppraiserOpinion).HasColumnName("AppraiserOpinion");        
         });

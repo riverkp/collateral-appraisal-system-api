@@ -165,7 +165,7 @@ namespace Request.Data.Migrations
                     ContactPersonContactNo = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     ProjectCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     FeeType = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false),
-                    FeeRemark = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: true),
+                    FeeRemark = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RequestorEmpId = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false),
                     RequestorName = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     RequestorEmail = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),

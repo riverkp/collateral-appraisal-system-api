@@ -91,7 +91,7 @@ public class BuildingAppraisalDetailConfiguration
 
                 encroachment
                     .Property(p => p.IsEncroachedRemark)
-                    .UseMaxLengthNVarcharConfig()
+                    .UseRemarkConfig()
                     .HasColumnName("IsEncroachedRemark");
 
                 encroachment
@@ -151,7 +151,7 @@ public class BuildingAppraisalDetailConfiguration
 
                         style
                             .Property(p => p.ConstStyleRemark)
-                            .UseMaxLengthNVarcharConfig()
+                            .UseRemarkConfig()
                             .HasColumnName("ConstStyleRemark");
                     }
                 );
@@ -278,7 +278,7 @@ public class BuildingAppraisalDetailConfiguration
             }
         );
 
-        builder.Property(p => p.Remark).UseMaxLengthNVarcharConfig();
+        builder.Property(p => p.Remark).UseRemarkConfig();
 
         // BuildingAppraisalSurfaces
         builder.OwnsMany(

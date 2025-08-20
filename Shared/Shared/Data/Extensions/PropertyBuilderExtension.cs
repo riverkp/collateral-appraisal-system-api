@@ -20,7 +20,7 @@ public static class PropertyBuilderExtension
     // Remark
     public static PropertyBuilder<T> UseRemarkConfig<T>(this PropertyBuilder<T> builder)
     {
-        return builder.HasMaxLength(4000);
+        return builder.HasColumnType("nvarchar(max)");
     }
 
     // Money

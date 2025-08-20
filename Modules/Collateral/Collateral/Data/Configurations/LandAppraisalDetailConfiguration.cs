@@ -153,7 +153,7 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
 
                         expropriation
                             .Property(p => p.IsExpropriateRemark)
-                            .UseMaxLengthNVarcharConfig()
+                            .UseRemarkConfig()
                             .HasColumnName("IsExpropriateRemark");
 
                         expropriation
@@ -162,7 +162,7 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
 
                         expropriation
                             .Property(p => p.InLineExpropriateRemark)
-                            .UseMaxLengthNVarcharConfig()
+                            .UseRemarkConfig()
                             .HasColumnName("InLineExpropriateRemark");
 
                         expropriation
@@ -180,7 +180,7 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
 
                         encroachment
                             .Property(p => p.IsEncroachedRemark)
-                            .UseMaxLengthNVarcharConfig()
+                            .UseRemarkConfig()
                             .HasColumnName("IsEncroachedRemark");
 
                         encroachment
@@ -204,7 +204,7 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
 
                 limitation
                     .Property(p => p.IsLandlockedRemark)
-                    .UseMaxLengthNVarcharConfig()
+                    .UseRemarkConfig()
                     .HasColumnName("IsLandlockedRemark");
 
                 limitation.OwnsOne(
@@ -217,7 +217,7 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
 
                         boundary
                             .Property(p => p.IsForestBoundaryRemark)
-                            .UseMaxLengthNVarcharConfig()
+                            .UseRemarkConfig()
                             .HasColumnName("IsForestBoundaryRemark");
                     }
                 );

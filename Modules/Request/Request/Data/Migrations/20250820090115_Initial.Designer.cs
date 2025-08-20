@@ -12,7 +12,7 @@ using Request.Data;
 namespace Request.Data.Migrations
 {
     [DbContext(typeof(RequestDbContext))]
-    [Migration("20250819040558_Initial")]
+    [Migration("20250820090115_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -526,8 +526,7 @@ namespace Request.Data.Migrations
                                         .HasColumnType("bigint");
 
                                     b2.Property<string>("FeeRemark")
-                                        .HasMaxLength(4000)
-                                        .HasColumnType("nvarchar(4000)")
+                                        .HasColumnType("nvarchar(max)")
                                         .HasColumnName("FeeRemark");
 
                                     b2.Property<string>("FeeType")

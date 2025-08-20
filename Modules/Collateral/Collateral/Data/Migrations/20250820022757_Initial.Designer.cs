@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Collateral.Data.Migrations
 {
     [DbContext(typeof(CollateralDbContext))]
-    [Migration("20250819103624_Initial")]
+    [Migration("20250820022757_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -1620,7 +1620,7 @@ namespace Collateral.Data.Migrations
                                 .HasForeignKey("BuildingAppraisalDetailId");
                         });
 
-                    b.OwnsOne("Collateral.CollateralProperties.ValueObjects.RasidentialStatus", "RasidentialStatus", b1 =>
+                    b.OwnsOne("Collateral.CollateralProperties.ValueObjects.ResidentialStatus", "ResidentialStatus", b1 =>
                         {
                             b1.Property<long>("BuildingAppraisalDetailId")
                                 .HasColumnType("bigint");
@@ -1690,7 +1690,7 @@ namespace Collateral.Data.Migrations
                     b.Navigation("Encroachment")
                         .IsRequired();
 
-                    b.Navigation("RasidentialStatus")
+                    b.Navigation("ResidentialStatus")
                         .IsRequired();
 
                     b.Navigation("UtilizationDetail")

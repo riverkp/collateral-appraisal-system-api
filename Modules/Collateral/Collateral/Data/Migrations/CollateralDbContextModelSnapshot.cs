@@ -1617,7 +1617,7 @@ namespace Collateral.Data.Migrations
                                 .HasForeignKey("BuildingAppraisalDetailId");
                         });
 
-                    b.OwnsOne("Collateral.CollateralProperties.ValueObjects.RasidentialStatus", "RasidentialStatus", b1 =>
+                    b.OwnsOne("Collateral.CollateralProperties.ValueObjects.ResidentialStatus", "ResidentialStatus", b1 =>
                         {
                             b1.Property<long>("BuildingAppraisalDetailId")
                                 .HasColumnType("bigint");
@@ -1687,7 +1687,7 @@ namespace Collateral.Data.Migrations
                     b.Navigation("Encroachment")
                         .IsRequired();
 
-                    b.Navigation("RasidentialStatus")
+                    b.Navigation("ResidentialStatus")
                         .IsRequired();
 
                     b.Navigation("UtilizationDetail")

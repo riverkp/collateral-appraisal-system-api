@@ -88,7 +88,7 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
                             .HasColumnName("LandAccessibility");
 
                         road.Property(p => p.LandAccessibilityDesc)
-                            .UseMaxLengthNVarcharConfig()
+                            .UseRemarkConfig()
                             .HasColumnName("LandAccessibilityDesc");
                     }
                 );

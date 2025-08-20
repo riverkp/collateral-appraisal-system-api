@@ -277,7 +277,7 @@ namespace Collateral.Data.Migrations
                 {
                     BuildingDepreciationId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AreaDesc = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    AreaDesc = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Area = table.Column<decimal>(type: "decimal(5,3)", precision: 5, scale: 3, nullable: false),
                     PricePerSqM = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     PriceBeforeDegradation = table.Column<decimal>(type: "decimal(19,4)", precision: 19, scale: 4, nullable: false),
@@ -705,7 +705,7 @@ namespace Collateral.Data.Migrations
                 {
                     CondoAreaDetId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AreaDesc = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    AreaDesc = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AreaSize = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: true),
                     CondoApprId = table.Column<long>(type: "bigint", nullable: false)
                 },

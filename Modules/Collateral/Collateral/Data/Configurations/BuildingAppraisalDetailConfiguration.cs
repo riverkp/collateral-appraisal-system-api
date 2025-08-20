@@ -327,7 +327,7 @@ public class BuildingAppraisalDetailConfiguration
                 detail.Property<long>("BuildingDepreciationId");
                 detail.HasKey("BuildingDepreciationId");
 
-                detail.Property(p => p.AreaDesc).UseDescriptionConfig().HasColumnName("AreaDesc");
+                detail.Property(p => p.AreaDesc).UseRemarkConfig().HasColumnName("AreaDesc");
 
                 detail.Property(p => p.Area).HasPrecision(5, 3).HasColumnName("Area");
 

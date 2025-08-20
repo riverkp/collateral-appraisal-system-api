@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Collateral.Data.Migrations
 {
     [DbContext(typeof(CollateralDbContext))]
-    [Migration("20250820090047_Initial")]
+    [Migration("20250820091800_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -1099,8 +1099,7 @@ namespace Collateral.Data.Migrations
 
                             b1.Property<string>("AreaDesc")
                                 .IsRequired()
-                                .HasMaxLength(250)
-                                .HasColumnType("nvarchar(250)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("AreaDesc");
 
                             b1.Property<long>("BuildingApprId")
@@ -1867,8 +1866,7 @@ namespace Collateral.Data.Migrations
                             SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("CondoAreaDetId"));
 
                             b1.Property<string>("AreaDesc")
-                                .HasMaxLength(200)
-                                .HasColumnType("nvarchar(200)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("AreaDesc");
 
                             b1.Property<decimal?>("AreaSize")

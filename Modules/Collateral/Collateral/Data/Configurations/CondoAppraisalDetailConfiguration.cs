@@ -239,7 +239,7 @@ public class CondoAppraisalDetailConfiguration : IEntityTypeConfiguration<CondoA
                 detail.Property<long>("CondoAreaDetId");
                 detail.HasKey("CondoAreaDetId");
 
-                detail.Property(p => p.AreaDesc).UseLongerStringConfig().HasColumnName("AreaDesc");
+                detail.Property(p => p.AreaDesc).UseRemarkConfig().HasColumnName("AreaDesc");
 
                 detail.Property(p => p.AreaSize).UseAreaConfig().HasColumnName("AreaSize");
             }

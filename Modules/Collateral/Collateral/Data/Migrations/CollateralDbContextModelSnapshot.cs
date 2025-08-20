@@ -1096,8 +1096,7 @@ namespace Collateral.Data.Migrations
 
                             b1.Property<string>("AreaDesc")
                                 .IsRequired()
-                                .HasMaxLength(250)
-                                .HasColumnType("nvarchar(250)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("AreaDesc");
 
                             b1.Property<long>("BuildingApprId")
@@ -1864,8 +1863,7 @@ namespace Collateral.Data.Migrations
                             SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("CondoAreaDetId"));
 
                             b1.Property<string>("AreaDesc")
-                                .HasMaxLength(200)
-                                .HasColumnType("nvarchar(200)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("AreaDesc");
 
                             b1.Property<decimal?>("AreaSize")

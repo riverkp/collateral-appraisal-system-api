@@ -70,11 +70,6 @@ public static class PropertyBuilderExtension
         return builder.HasMaxLength(200);
     }
 
-    public static PropertyBuilder<T> UseDescriptionConfig<T>(this PropertyBuilder<T> builder)
-    {
-        return builder.HasMaxLength(250);
-    }
-
     public static PropertyBuilder<string?> UseNameConfig(this PropertyBuilder<string?> builder)
     {
         return builder.HasMaxLength(100);

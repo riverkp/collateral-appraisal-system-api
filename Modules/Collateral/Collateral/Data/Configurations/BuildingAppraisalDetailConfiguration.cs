@@ -122,7 +122,7 @@ public class BuildingAppraisalDetailConfiguration
         builder.Property(p => p.BuildingStyle).UseCodeConfig();
 
         builder.OwnsOne(
-            p => p.RasidentialStatus,
+            p => p.ResidentialStatus,
             status =>
             {
                 status

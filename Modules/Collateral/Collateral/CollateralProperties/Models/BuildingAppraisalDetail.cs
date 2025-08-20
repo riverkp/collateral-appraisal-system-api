@@ -14,7 +14,7 @@ public class BuildingAppraisalDetail : Entity<long>
         default!;
     public string? BuildingMaterial { get; private set; }
     public string? BuildingStyle { get; private set; }
-    public RasidentialStatus RasidentialStatus { get; private set; } = default!;
+    public ResidentialStatus ResidentialStatus { get; private set; } = default!;
     public BuildingStructureDetail BuildingStructureDetail { get; private set; } = default!;
     public UtilizationDetail UtilizationDetail { get; private set; } = default!;
     public string? Remark { get; private set; }
@@ -43,7 +43,7 @@ public class BuildingAppraisalDetail : Entity<long>
         BuildingConstructionInformation buildingConstructionInformation,
         string? buildingMaterial,
         string? buildingStyle,
-        RasidentialStatus rasidentialStatus,
+        ResidentialStatus residentialStatus,
         BuildingStructureDetail buildingStructureDetail,
         UtilizationDetail utilizationDetail,
         string? remark
@@ -58,7 +58,7 @@ public class BuildingAppraisalDetail : Entity<long>
         BuildingConstructionInformation = buildingConstructionInformation;
         BuildingMaterial = buildingMaterial;
         BuildingStyle = buildingStyle;
-        RasidentialStatus = rasidentialStatus;
+        ResidentialStatus = residentialStatus;
         BuildingStructureDetail = buildingStructureDetail;
         UtilizationDetail = utilizationDetail;
         Remark = remark;
@@ -75,7 +75,7 @@ public class BuildingAppraisalDetail : Entity<long>
         BuildingConstructionInformation buildingConstructionInformation,
         string? buildingMaterial,
         string? buildingStyle,
-        RasidentialStatus rasidentialStatus,
+        ResidentialStatus residentialStatus,
         BuildingStructureDetail buildingStructureDetail,
         UtilizationDetail utilizationDetail,
         string? remark
@@ -91,7 +91,7 @@ public class BuildingAppraisalDetail : Entity<long>
             buildingConstructionInformation,
             buildingMaterial,
             buildingStyle,
-            rasidentialStatus,
+            residentialStatus,
             buildingStructureDetail,
             utilizationDetail,
             remark

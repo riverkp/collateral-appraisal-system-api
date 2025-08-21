@@ -32,20 +32,20 @@ public class CollateralLandConfiguration : IEntityTypeConfiguration<CollateralLa
             {
                 location
                     .Property(p => p.SubDistrict)
-                    .UseMediumStringConfig()
+                    .UseSubDistrictConfig()
                     .HasColumnName("SubDistrict");
 
                 location
                     .Property(p => p.District)
-                    .UseMediumStringConfig()
+                    .UseDistrictConfig()
                     .HasColumnName("District");
 
                 location
                     .Property(p => p.Province)
-                    .UseMediumStringConfig()
+                    .UseProvinceConfig()
                     .HasColumnName("Province");
 
-                location.Property(p => p.LandOffice).UseCodeConfig().HasColumnName("LandOffice");
+                location.Property(p => p.LandOffice).UseLandOfficeConfig().HasColumnName("LandOffice");
             }
         );
 

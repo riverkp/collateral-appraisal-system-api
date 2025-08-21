@@ -9,7 +9,9 @@ public class MachineAppraisalDetailConfigurations : IEntityTypeConfiguration<Mac
         builder.Property(p => p.Id).HasColumnName("MachineApprID")
             .UseIdentityColumn();
 
-        builder.HasOne<RequestAppraisal>().WithOne(p => p.MachineAppraisalDetails)
+        builder
+            .HasOne<RequestAppraisal>()
+            .WithOne(p => p.MachineAppraisalDetail)
             .HasForeignKey<MachineAppraisalDetail>(p => p.ApprId)
             .IsRequired();
         

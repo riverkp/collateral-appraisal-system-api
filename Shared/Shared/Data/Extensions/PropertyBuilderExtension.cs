@@ -75,9 +75,69 @@ public static class PropertyBuilderExtension
         return builder.HasMaxLength(100);
     }
 
+    public static PropertyBuilder<T> UseBuildingNoConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasMaxLength(10);
+    }
+
+    public static PropertyBuilder<T> UseBuildOnTitleNoConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasMaxLength(10);
+    }
+
+    public static PropertyBuilder<T> UseVillageConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasMaxLength(100);
+    }
+
+    public static PropertyBuilder<T> UseSoiConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasMaxLength(100);
+    }
+
+    public static PropertyBuilder<T> UseStreetConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasMaxLength(100);
+    }
+
+    public static PropertyBuilder<T> UseSubDistrictConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasMaxLength(50);
+    }
+
+    public static PropertyBuilder<T> UseDistrictConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasMaxLength(50);
+    }
+
+    public static PropertyBuilder<T> UseProvinceConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasMaxLength(50);
+    }
+
+    public static PropertyBuilder<T> UseLandOfficeConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasMaxLength(50);
+    }
+
     public static PropertyBuilder<T> UseMultiSelectConfig<T>(this PropertyBuilder<T> builder)
     {
         return builder.HasMaxLength(100);
+    }
+
+    public static PropertyBuilder<T> UseObligationConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasColumnType("nvarchar(max)");
+    }
+
+    public static PropertyBuilder<T> UseRoyalDecreeConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasMaxLength(20);
+    }
+
+    public static PropertyBuilder<T> UseDistanceConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasPrecision(5, 2);
     }
 
     public static PropertyBuilder<T> UseMeasurementConfig<T>(this PropertyBuilder<T> builder)
@@ -133,5 +193,15 @@ public static class PropertyBuilderExtension
     public static PropertyBuilder<T> UseWaConfig<T>(this PropertyBuilder<T> builder)
     {
         return builder.HasPrecision(4, 2);
+    }
+
+    public static PropertyBuilder<T> UseRightOfWayConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasPrecision(5, 2);
+    }
+
+    public static PropertyBuilder<T> UseRoadWidthConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasPrecision(5, 2);
     }
 }

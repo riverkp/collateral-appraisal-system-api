@@ -6,7 +6,9 @@ public class VehicleAppraisalDetailConfigurations : IEntityTypeConfiguration<Veh
 {
     public void Configure(EntityTypeBuilder<VehicleAppraisalDetail> builder)
     {
-        builder.HasOne<RequestAppraisal>().WithOne(p => p.VehicleAppraisalDetail)
+        builder
+            .HasOne<RequestAppraisal>()
+            .WithOne(p => p.VehicleAppraisalDetail)
             .HasForeignKey<VehicleAppraisalDetail>(p => p.ApprId)
             .IsRequired();
 

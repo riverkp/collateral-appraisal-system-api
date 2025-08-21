@@ -9,7 +9,9 @@ public class MachineAppraisalAdditionalInfoConfigurations : IEntityTypeConfigura
 
         builder.Property(p => p.Id).HasColumnName("MachDetId");
 
-        builder.HasOne<RequestAppraisal>().WithOne(p => p.MachineAppraisalAdditionalInfo)
+        builder
+            .HasOne<RequestAppraisal>()
+            .WithOne(p => p.MachineAppraisalAdditionalInfo)
             .HasForeignKey<MachineAppraisalAdditionalInfo>(p => p.ApprId)
             .IsRequired();
 

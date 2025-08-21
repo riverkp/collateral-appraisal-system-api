@@ -6,7 +6,9 @@ public class VesselAppraisalDetailConfigurations : IEntityTypeConfiguration<Vess
 {
     public void Configure(EntityTypeBuilder<VesselAppraisalDetail> builder)
     {
-        builder.HasOne<RequestAppraisal>().WithOne(p => p.VesselAppraisalDetail)
+        builder
+            .HasOne<RequestAppraisal>()
+            .WithOne(p => p.VesselAppraisalDetail)
             .HasForeignKey<VesselAppraisalDetail>(p => p.ApprId)
             .IsRequired();
 

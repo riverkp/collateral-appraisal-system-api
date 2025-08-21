@@ -16,13 +16,13 @@ public class CollateralBuildingConfiguration : IEntityTypeConfiguration<Collater
 
         builder.Property(p => p.CollatId).HasColumnName("CollatId");
 
-        builder.Property(p => p.BuildingNo).UseTinyStringConfig();
+        builder.Property(p => p.BuildingNo).UseBuildingNoConfig();
 
         builder.Property(p => p.ModelName).UseTinyStringConfig();
 
         builder.Property(p => p.HouseNo).UseTinyStringConfig();
 
-        builder.Property(p => p.BuiltOnTitleNo).UseTinyStringConfig();
+        builder.Property(p => p.BuiltOnTitleNo).UseBuildOnTitleNoConfig();
 
         builder.Property(p => p.Owner).HasMaxLength(30);
     }

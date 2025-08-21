@@ -1,3 +1,5 @@
+using Appraisal.AppraisalProperties.Models;
+
 namespace Appraisal.Data;
 
 public class AppraisalDbContext : DbContext
@@ -7,6 +9,9 @@ public class AppraisalDbContext : DbContext
     }
 
     public DbSet<RequestAppraisal> Appraisals => Set<RequestAppraisal>();
+    public DbSet<LandAppraisalDetail> LandAppraisalDetails => Set<LandAppraisalDetail>();
+    public DbSet<BuildingAppraisalDetail> BuildingAppraisalDetails => Set<BuildingAppraisalDetail>();
+    public DbSet<CondoAppraisalDetail> CondoAppraisalDetails => Set<CondoAppraisalDetail>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

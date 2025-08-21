@@ -1,5 +1,4 @@
 using Collateral.CollateralProperties.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Collateral.Data.Configurations;
 

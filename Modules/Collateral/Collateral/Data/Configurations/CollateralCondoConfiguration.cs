@@ -18,11 +18,11 @@ public class CollateralCondoConfiguration : IEntityTypeConfiguration<CollateralC
 
         builder.Property(p => p.CondoName).UseLongStringConfig();
 
-        builder.Property(p => p.BuildingNo).UseTinyStringConfig();
+        builder.Property(p => p.BuildingNo).UseBuildingNoConfig();
 
         builder.Property(p => p.ModelName).UseLongStringConfig();
 
-        builder.Property(p => p.BuiltOnTitleNo).UseTinyStringConfig();
+        builder.Property(p => p.BuiltOnTitleNo).UseBuildOnTitleNoConfig();
 
         builder.Property(p => p.CondoRegisNo).UseVeryShortStringConfig();
 
@@ -37,19 +37,19 @@ public class CollateralCondoConfiguration : IEntityTypeConfiguration<CollateralC
             location =>
             {
                 location.Property(p => p.SubDistrict)
-                    .UseMediumStringConfig()
+                    .UseSubDistrictConfig()
                     .HasColumnName("SubDistrict");
 
                 location.Property(p => p.District)
-                    .UseMediumStringConfig()
+                    .UseDistrictConfig()
                     .HasColumnName("District");
 
                 location.Property(p => p.Province)
-                    .UseMediumStringConfig()
+                    .UseProvinceConfig()
                     .HasColumnName("Province");
 
                 location.Property(p => p.LandOffice)
-                    .UseMediumStringConfig()
+                    .UseLandOfficeConfig()
                     .HasColumnName("LandOffice");
             }
         );

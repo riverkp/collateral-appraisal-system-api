@@ -3,8 +3,8 @@ namespace Appraisal.AppraisalProperties.ValueObjects;
 public class CondoAttribute : ValueObject
 {
     public string? Decoration { get; }
-    public int? BuildingYear { get; }
-    public int CondoHeight { get; }
+    public short? BuildingYear { get; }
+    public short CondoHeight { get; }
     public string? BuildingForm { get; }
     public string? ConstMaterial { get; }
     public CondoRoomLayout CondoRoomLayout { get; } = default!;
@@ -17,8 +17,8 @@ public class CondoAttribute : ValueObject
     [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     private CondoAttribute(
         string? decoration,
-        int? buildingYear,
-        int condoHeight,
+        short? buildingYear,
+        short condoHeight,
         string? buildingForm,
         string? constMaterial,
         CondoRoomLayout condoRoomLayout,
@@ -41,8 +41,8 @@ public class CondoAttribute : ValueObject
     [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarQube", "S107:Methods should not have too many parameters")]
     public static CondoAttribute Create(
         string? decoration,
-        int? buildingYear,
-        int condoHeight,
+        short? buildingYear,
+        short condoHeight,
         string? buildingForm,
         string? constMaterial,
         CondoRoomLayout condoRoomLayout,

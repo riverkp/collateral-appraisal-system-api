@@ -53,7 +53,7 @@ public class BuildingAppraisalDetailConfiguration
 
                         detail
                             .Property(p => p.Obligation)
-                            .UseMaxLengthNVarcharConfig()
+                            .UseObligationConfig()
                             .HasColumnName("Obligation");
                     }
                 );

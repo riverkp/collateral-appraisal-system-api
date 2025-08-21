@@ -28,7 +28,7 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
 
                 detail
                     .Property(p => p.Obligation)
-                    .UseMaxLengthNVarcharConfig()
+                    .UseObligationConfig()
                     .HasColumnName("Obligation");
             }
         );
@@ -49,13 +49,13 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
                     .UseLongStringConfig()
                     .HasColumnName("LandCheckOther");
 
-                location.Property(p => p.Street).UseLongStringConfig().HasColumnName("Street");
+                location.Property(p => p.Street).UseStreetConfig().HasColumnName("Street");
 
-                location.Property(p => p.Soi).UseLongStringConfig().HasColumnName("Soi");
+                location.Property(p => p.Soi).UseSoiConfig().HasColumnName("Soi");
 
-                location.Property(p => p.Distance).UseMeasurementConfig().HasColumnName("Distance");
+                location.Property(p => p.Distance).UseDistanceConfig().HasColumnName("Distance");
 
-                location.Property(p => p.Village).UseLongStringConfig().HasColumnName("Village");
+                location.Property(p => p.Village).UseVillageConfig().HasColumnName("Village");
 
                 location.Property(p => p.Location).UseMultiSelectConfig().HasColumnName("Location");
             }
@@ -84,11 +84,11 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
                     road =>
                     {
                         road.Property(p => p.RoadWidth)
-                            .UseMeasurementConfig()
+                            .UseRoadWidthConfig()
                             .HasColumnName("RoadWidth");
 
                         road.Property(p => p.RightOfWay)
-                            .UseMeasurementConfig()
+                            .UseRightOfWayConfig()
                             .HasColumnName("RightOfWay");
 
                         road.Property(p => p.LandAccessibility)
@@ -175,7 +175,7 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
 
                         expropriation
                             .Property(p => p.RoyalDecree)
-                            .UseVeryShortStringConfig()
+                            .UseRoyalDecreeConfig()
                             .HasColumnName("RoyalDecree");
                     }
                 );

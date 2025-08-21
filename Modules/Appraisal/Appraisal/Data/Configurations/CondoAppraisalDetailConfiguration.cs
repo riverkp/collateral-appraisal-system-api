@@ -22,7 +22,7 @@ public class CondoAppraisalDetailConfiguration : IEntityTypeConfiguration<CondoA
 
                 detail
                     .Property(p => p.Obligation)
-                    .UseMaxLengthNVarcharConfig()
+                    .UseObligationConfig()
                     .HasColumnName("Obligation");
             }
         );
@@ -35,20 +35,20 @@ public class CondoAppraisalDetailConfiguration : IEntityTypeConfiguration<CondoA
             {
                 location.Property(p => p.CondoLocation).HasColumnName("CondoLocation");
 
-                location.Property(p => p.Street).UseLongStringConfig().HasColumnName("Street");
+                location.Property(p => p.Street).UseStreetConfig().HasColumnName("Street");
 
-                location.Property(p => p.Soi).UseLongStringConfig().HasColumnName("Soi");
+                location.Property(p => p.Soi).UseSoiConfig().HasColumnName("Soi");
 
-                location.Property(p => p.Distance).UseMeasurementConfig().HasColumnName("Distance");
+                location.Property(p => p.Distance).UseDistanceConfig().HasColumnName("Distance");
 
                 location
                     .Property(p => p.RoadWidth)
-                    .UseMeasurementConfig()
+                    .UseRoadWidthConfig()
                     .HasColumnName("RoadWidth");
 
                 location
                     .Property(p => p.RightOfWay)
-                    .UseMeasurementConfig()
+                    .UseRightOfWayConfig()
                     .HasColumnName("RightOfWay");
 
                 location.Property(p => p.RoadSurface).UseCodeConfig().HasColumnName("RoadSurface");
@@ -176,7 +176,7 @@ public class CondoAppraisalDetailConfiguration : IEntityTypeConfiguration<CondoA
 
                 expropriation
                     .Property(p => p.RoyalDecree)
-                    .UseVeryShortStringConfig()
+                    .UseRoyalDecreeConfig()
                     .HasColumnName("RoyalDecree");
             }
         );

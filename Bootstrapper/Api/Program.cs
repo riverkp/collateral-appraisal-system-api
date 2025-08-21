@@ -1,3 +1,4 @@
+using Appraisal;
 using MassTransit;
 using MassTransit.EntityFrameworkCoreIntegration;
 using Microsoft.EntityFrameworkCore;
@@ -21,9 +22,10 @@ var notificationAssembly = typeof(NotificationModule).Assembly;
 var documentAssembly = typeof(DocumentModule).Assembly;
 var assignmentAssembly = typeof(AssignmentModule).Assembly;
 var collateralAssembly = typeof(CollateralModule).Assembly;
+var appraisalAssembly = typeof(AppraisalModule).Assembly;
 
-builder.Services.AddCarterWithAssemblies(requestAssembly, authAssembly, notificationAssembly, documentAssembly, assignmentAssembly, collateralAssembly);
-builder.Services.AddMediatRWithAssemblies(requestAssembly, authAssembly, notificationAssembly, documentAssembly, assignmentAssembly, collateralAssembly);
+builder.Services.AddCarterWithAssemblies(requestAssembly, authAssembly, notificationAssembly, documentAssembly, assignmentAssembly, collateralAssembly,appraisalAssembly);
+builder.Services.AddMediatRWithAssemblies(requestAssembly, authAssembly, notificationAssembly, documentAssembly, assignmentAssembly, collateralAssembly, appraisalAssembly);
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
@@ -95,7 +97,8 @@ builder.Services
     .AddDocumentModule(builder.Configuration)
     .AddAssignmentModule(builder.Configuration)
     .AddOpenIddictModule(builder.Configuration)
-    .AddCollateralModule(builder.Configuration);
+    .AddCollateralModule(builder.Configuration)
+    .AddAppraisalModule(builder.Configuration);
 
 // Configure JSON serialization
 builder.Services.ConfigureHttpJsonOptions(options =>
@@ -153,7 +156,8 @@ app
     .UseDocumentModule()
     .UseAssignmentModule()
     .UseOpenIddictModule()
-    .UseCollateralModule();
+    .UseCollateralModule()
+    .UseAppraisalModule();
 
 await app.RunAsync();
 

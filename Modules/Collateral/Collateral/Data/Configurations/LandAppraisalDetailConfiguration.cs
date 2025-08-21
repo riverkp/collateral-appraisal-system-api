@@ -12,6 +12,12 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
 
         builder.Property(p => p.CollatId).HasColumnName("CollatId");
 
+        builder.Property(p => p.PropertyName).UseLongStringConfig();
+
+        builder.Property(p => p.CheckOwner).UseCodeConfig();
+
+        builder.Property(p => p.Owner).UseLongStringConfig();
+
         builder.OwnsOne(
             p => p.ObligationDetail,
             detail =>
@@ -38,12 +44,12 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
 
                 location
                     .Property(p => p.LandCheckOther)
-                    .UseMaxLengthNVarcharConfig()
+                    .UseLongStringConfig()
                     .HasColumnName("LandCheckOther");
 
-                location.Property(p => p.Street).UseMediumStringConfig().HasColumnName("Street");
+                location.Property(p => p.Street).UseLongStringConfig().HasColumnName("Street");
 
-                location.Property(p => p.Soi).UseMediumStringConfig().HasColumnName("Soi");
+                location.Property(p => p.Soi).UseLongStringConfig().HasColumnName("Soi");
 
                 location.Property(p => p.Distance).UseMeasurementConfig().HasColumnName("Distance");
 

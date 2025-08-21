@@ -373,11 +373,6 @@ namespace Collateral.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Owner")
-                        .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("nvarchar(80)");
-
                     b.Property<string>("UpdatedBy")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
@@ -457,6 +452,10 @@ namespace Collateral.Data.Migrations
                     b.Property<long>("ApprId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("CheckOwner")
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)");
+
                     b.Property<long>("CollatId")
                         .HasColumnType("bigint")
                         .HasColumnName("CollatId");
@@ -469,6 +468,14 @@ namespace Collateral.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Eviction")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Owner")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PropertyName")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -2566,7 +2573,8 @@ namespace Collateral.Data.Migrations
                                 .HasColumnName("LandCheck");
 
                             b1.Property<string>("LandCheckOther")
-                                .HasColumnType("nvarchar(max)")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
                                 .HasColumnName("LandCheckOther");
 
                             b1.Property<string>("LandLocation")
@@ -2580,14 +2588,14 @@ namespace Collateral.Data.Migrations
                                 .HasColumnName("Location");
 
                             b1.Property<string>("Soi")
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
                                 .HasColumnName("Soi");
 
                             b1.Property<string>("Street")
                                 .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
                                 .HasColumnName("Street");
 
                             b1.Property<string>("Village")

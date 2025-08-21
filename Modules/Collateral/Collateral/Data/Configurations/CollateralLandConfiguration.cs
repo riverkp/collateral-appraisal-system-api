@@ -51,7 +51,5 @@ public class CollateralLandConfiguration : IEntityTypeConfiguration<CollateralLa
         );
 
         builder.Property(p => p.LandDesc).UseRemarkConfig();
-
-        builder.Property(p => p.Owner).HasMaxLength(80);
     }
 }

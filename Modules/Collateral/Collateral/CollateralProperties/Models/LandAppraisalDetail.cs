@@ -6,6 +6,9 @@ public class LandAppraisalDetail : Entity<long>
 {
     public long CollatId { get; private set; }
     public long ApprId { get; private set; }
+    public string? PropertyName { get; private set; }
+    public string? CheckOwner { get; private set; }
+    public string? Owner { get; private set; }
     public ObligationDetail ObligationDetail { get; private set; } = default!;
     public LandLocationDetail LandLocationDetail { get; private set; } = default!;
     public LandFillDetail LandFillDetail { get; private set; } = default!;
@@ -23,6 +26,9 @@ public class LandAppraisalDetail : Entity<long>
     private LandAppraisalDetail(
         long collatId,
         long apprId,
+        string propertyName,
+        string checkOwner,
+        string owner,
         ObligationDetail obligationDetail,
         LandLocationDetail landLocationDetail,
         LandFillDetail landFillDetail,
@@ -37,6 +43,9 @@ public class LandAppraisalDetail : Entity<long>
     {
         CollatId = collatId;
         ApprId = apprId;
+        PropertyName = propertyName;
+        CheckOwner = checkOwner;
+        Owner = owner;
         ObligationDetail = obligationDetail;
         LandLocationDetail = landLocationDetail;
         LandFillDetail = landFillDetail;
@@ -53,6 +62,9 @@ public class LandAppraisalDetail : Entity<long>
     public static LandAppraisalDetail Create(
         long collatId,
         long apprId,
+        string propertyName,
+        string checkOwner,
+        string owner,
         ObligationDetail obligationDetail,
         LandLocationDetail landLocationDetail,
         LandFillDetail landFillDetail,
@@ -68,6 +80,9 @@ public class LandAppraisalDetail : Entity<long>
         return new LandAppraisalDetail(
             collatId,
             apprId,
+            propertyName,
+            checkOwner,
+            owner,
             obligationDetail,
             landLocationDetail,
             landFillDetail,

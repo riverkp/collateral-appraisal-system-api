@@ -8,7 +8,6 @@ public class CollateralLand : Entity<long>
     public Coordinate Coordinate { get; private set; } = default!;
     public CollateralLocation CollateralLocation { get; private set; } = default!;
     public string LandDesc { get; private set; } = default!;
-    public string Owner { get; private set; } = default!;
 
     private CollateralLand() { }
 
@@ -16,15 +15,13 @@ public class CollateralLand : Entity<long>
         long collatId,
         Coordinate coordinate,
         CollateralLocation collateralLocation,
-        string landDesc,
-        string owner
+        string landDesc
     )
     {
         CollatId = collatId;
         Coordinate = coordinate;
         CollateralLocation = collateralLocation;
         LandDesc = landDesc;
-        Owner = owner;
     }
 
     public static CollateralLand Create(
@@ -35,6 +32,6 @@ public class CollateralLand : Entity<long>
         string owner
     )
     {
-        return new CollateralLand(collatId, coordinate, collateralLocation, landDesc, owner);
+        return new CollateralLand(collatId, coordinate, collateralLocation, landDesc);
     }
 }

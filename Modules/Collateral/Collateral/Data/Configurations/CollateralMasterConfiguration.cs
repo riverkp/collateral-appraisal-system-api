@@ -1,4 +1,3 @@
-
 namespace Collateral.Data.Configurations;
 
 public class CollateralMasterConfigurations : IEntityTypeConfiguration<CollateralMaster>

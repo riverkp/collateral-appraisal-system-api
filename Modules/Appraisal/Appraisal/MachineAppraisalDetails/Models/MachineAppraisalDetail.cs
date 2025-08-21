@@ -1,31 +1,28 @@
-namespace Collateral.CollateralVessels.Models;
+namespace Appraisal.MachineAppraisalDetails.Models;
 
-public class VesselAppraisalDetail : Entity<long>
+public class MachineAppraisalDetail : Entity<long>
 {
-    public long CollatId { get; private set; } = default!;
     public long ApprId { get; private set; } = default!;
     public AppraisalDetail AppraisalDetail { get; private set; } = default!;
 
-    private VesselAppraisalDetail() { }
+    private MachineAppraisalDetail() { }
 
-    private VesselAppraisalDetail(
-        long collatId,
+    private MachineAppraisalDetail(
         long apprId,
         AppraisalDetail appraisalDetail
+
     )
     {
-        CollatId = collatId;
         ApprId = apprId;
         AppraisalDetail = appraisalDetail;
     }
-    public static VesselAppraisalDetail Create(
-        long collatId,
+
+    public static MachineAppraisalDetail Create(
         long apprId,
         AppraisalDetail appraisalDetail
     )
     {
-        return new VesselAppraisalDetail(
-            collatId,
+        return new MachineAppraisalDetail(
             apprId,
             appraisalDetail
         );

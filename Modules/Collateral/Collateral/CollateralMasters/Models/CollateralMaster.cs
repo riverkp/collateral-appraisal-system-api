@@ -7,11 +7,8 @@ public class CollateralMaster : Aggregate<long>
     public string CollatType { get; private set; } = default!;
     public long HostCollatId { get; private set; } = default!;
     public CollateralMachine CollateralMachine { get; private set; } = default!;
-    public MachineAppraisalDetail MachineAppraisalDetail { get; private set; } = default!;
     public CollateralVehicle CollateralVehicle { get; private set; } = default!;
-    public VehicleAppraisalDetail VehicleAppraisalDetail { get; private set; } = default!;
     public CollateralVessel CollateralVessel { get; private set; } = default!;
-    public VesselAppraisalDetail VesselAppraisalDetail { get; private set; } = default!;
 
     public CollateralLand CollateralLand { get; private set; } = default!;
     public CollateralBuilding CollateralBuilding { get; private set; } = default!;

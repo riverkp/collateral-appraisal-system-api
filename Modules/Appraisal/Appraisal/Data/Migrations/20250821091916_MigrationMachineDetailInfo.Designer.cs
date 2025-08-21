@@ -4,6 +4,7 @@ using Appraisal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Appraisal.Data.Migrations
 {
     [DbContext(typeof(AppraisalDbContext))]
-    partial class AppraisalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250821091916_MigrationMachineDetailInfo")]
+    partial class MigrationMachineDetailInfo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,74 +126,6 @@ namespace Appraisal.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Appraisals", "Appraisal");
-                });
-
-            modelBuilder.Entity("Appraisal.VehicleAppraisalDetails.Models.VehicleAppraisalDetail", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("VehicleApprID");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("ApprId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApprId")
-                        .IsUnique();
-
-                    b.ToTable("VehicleAppraisalDetails", "Appraisal");
-                });
-
-            modelBuilder.Entity("Appraisal.VesselAppraisalDetails.Models.VesselAppraisalDetail", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("VesselApprID");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("ApprId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApprId")
-                        .IsUnique();
-
-                    b.ToTable("VesselAppraisalDetails", "Appraisal");
                 });
 
             modelBuilder.Entity("Appraisal.MachineAppraisalDetails.Models.MachineAppraisalAdditionalInfo", b =>
@@ -441,138 +376,12 @@ namespace Appraisal.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Appraisal.VehicleAppraisalDetails.Models.VehicleAppraisalDetail", b =>
-                {
-                    b.HasOne("Appraisal.RequestAppraisals.Models.RequestAppraisal", null)
-                        .WithOne("VehicleAppraisalDetail")
-                        .HasForeignKey("Appraisal.VehicleAppraisalDetails.Models.VehicleAppraisalDetail", "ApprId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.OwnsOne("Appraisal.Appraisal.Shared.ValueObjects.AppraisalDetail", "AppraisalDetail", b1 =>
-                        {
-                            b1.Property<long>("VehicleAppraisalDetailId")
-                                .HasColumnType("bigint");
-
-                            b1.Property<string>("AppraiserOpinion")
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("AppraiserOpinion");
-
-                            b1.Property<bool?>("CanUse")
-                                .HasColumnType("bit")
-                                .HasColumnName("CanUse");
-
-                            b1.Property<string>("ConditionUse")
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasColumnName("ConditionUse");
-
-                            b1.Property<string>("Location")
-                                .HasMaxLength(200)
-                                .HasColumnType("nvarchar(200)")
-                                .HasColumnName("Location");
-
-                            b1.Property<string>("Other")
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Other");
-
-                            b1.Property<string>("Part")
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("VehiclePart");
-
-                            b1.Property<string>("Remark")
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Remark");
-
-                            b1.Property<string>("UsePurpose")
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasColumnName("UsePurpose");
-
-                            b1.HasKey("VehicleAppraisalDetailId");
-
-                            b1.ToTable("VehicleAppraisalDetails", "Appraisal");
-
-                            b1.WithOwner()
-                                .HasForeignKey("VehicleAppraisalDetailId");
-                        });
-
-                    b.Navigation("AppraisalDetail")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Appraisal.VesselAppraisalDetails.Models.VesselAppraisalDetail", b =>
-                {
-                    b.HasOne("Appraisal.RequestAppraisals.Models.RequestAppraisal", null)
-                        .WithOne("VesselAppraisalDetail")
-                        .HasForeignKey("Appraisal.VesselAppraisalDetails.Models.VesselAppraisalDetail", "ApprId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.OwnsOne("Appraisal.Appraisal.Shared.ValueObjects.AppraisalDetail", "AppraisalDetail", b1 =>
-                        {
-                            b1.Property<long>("VesselAppraisalDetailId")
-                                .HasColumnType("bigint");
-
-                            b1.Property<string>("AppraiserOpinion")
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("AppraiserOpinion");
-
-                            b1.Property<bool?>("CanUse")
-                                .HasColumnType("bit")
-                                .HasColumnName("CanUse");
-
-                            b1.Property<string>("ConditionUse")
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasColumnName("ConditionUse");
-
-                            b1.Property<string>("Location")
-                                .HasMaxLength(200)
-                                .HasColumnType("nvarchar(200)")
-                                .HasColumnName("Location");
-
-                            b1.Property<string>("Other")
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Other");
-
-                            b1.Property<string>("Part")
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("VesselPart");
-
-                            b1.Property<string>("Remark")
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Remark");
-
-                            b1.Property<string>("UsePurpose")
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasColumnName("UsePurpose");
-
-                            b1.HasKey("VesselAppraisalDetailId");
-
-                            b1.ToTable("VesselAppraisalDetails", "Appraisal");
-
-                            b1.WithOwner()
-                                .HasForeignKey("VesselAppraisalDetailId");
-                        });
-
-                    b.Navigation("AppraisalDetail")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Appraisal.RequestAppraisals.Models.RequestAppraisal", b =>
                 {
                     b.Navigation("MachineAppraisalAdditionalInfo")
                         .IsRequired();
 
                     b.Navigation("MachineAppraisalDetails")
-                        .IsRequired();
-
-                    b.Navigation("VehicleAppraisalDetail")
-                        .IsRequired();
-
-                    b.Navigation("VesselAppraisalDetail")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
 namespace Collateral.Data.Configurations;
 
 public class MachineAppraisalAdditionalInfoConfigurations : IEntityTypeConfiguration<MachineAppraisalAdditionalInfo>
@@ -6,6 +8,10 @@ public class MachineAppraisalAdditionalInfoConfigurations : IEntityTypeConfigura
     {
 
         builder.Property(p => p.Id).HasColumnName("MachDetId");
+
+        builder.HasOne<RequestAppraisal>().WithOne(p => p.MachineAppraisalAdditionalInfo)
+            .HasForeignKey<MachineAppraisalAdditionalInfo>(p => p.ApprId)
+            .IsRequired();
 
         builder.OwnsOne(p => p.PurposeAndLocationMachine, purpose =>
         {
@@ -22,21 +28,21 @@ public class MachineAppraisalAdditionalInfoConfigurations : IEntityTypeConfigura
                 general.Property(p => p.Industrial).HasColumnName("Industrial")
                     .HasMaxLength(40);
                 general.Property(p => p.SurveyNo).HasColumnName("SurveyNo")
-                    .HasMaxLength(10);
+                    .UseTinyStringConfig();
                 general.Property(p => p.ApprNo).HasColumnName("ApprNo")
-                    .HasMaxLength(10);
+                    .UseTinyStringConfig();
             });
 
             machineDetail.OwnsOne(p => p.AtSurveyDate, surveyDate =>
             {
                 surveyDate.Property(p => p.Installed).HasColumnName("Installed")
-                    .HasMaxLength(10);
+                    .UseTinyStringConfig();
                 surveyDate.Property(p => p.ApprScrap).HasColumnName("ApprScrap")
                     .HasMaxLength(40);
                 surveyDate.Property(p => p.NoOfAppraise).HasColumnName("NoOfAppraise")
-                    .HasMaxLength(10);
+                    .UseTinyStringConfig();
                 surveyDate.Property(p => p.NotInstalled).HasColumnName("NotInstalled")
-                    .HasMaxLength(10);
+                    .UseTinyStringConfig();
                 surveyDate.Property(p => p.Maintenance).HasColumnName("Maintenance")
                     .HasMaxLength(40);
                 surveyDate.Property(p => p.Exterior).HasColumnName("Exterior")
@@ -65,6 +71,6 @@ public class MachineAppraisalAdditionalInfoConfigurations : IEntityTypeConfigura
             machineDetail.Navigation(p => p.AtSurveyDate).IsRequired();
             machineDetail.Navigation(p => p.RightsAndConditionsOfLegalRestrictions).IsRequired();
         });
-        
+
     }
 }

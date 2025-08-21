@@ -1,4 +1,4 @@
-namespace Collateral.Collateral.Shared.ValueObjects;
+namespace Appraisal.Appraisal.Shared.ValueObjects;
 
 public class AppraisalDetail : ValueObject
 {

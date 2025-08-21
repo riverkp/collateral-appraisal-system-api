@@ -1,6 +1,4 @@
-using Collateral.CollateralMachines.ValueObjects;
-
-namespace Collateral.CollateralMachines.Models;
+namespace Appraisal.MachineAppraisalDetails.Models;
 
 public class MachineAppraisalAdditionalInfo : Entity<long>
 {

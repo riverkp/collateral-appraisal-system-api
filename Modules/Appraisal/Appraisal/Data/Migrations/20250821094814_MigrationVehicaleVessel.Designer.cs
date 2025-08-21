@@ -4,6 +4,7 @@ using Appraisal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Appraisal.Data.Migrations
 {
     [DbContext(typeof(AppraisalDbContext))]
-    partial class AppraisalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250821094814_MigrationVehicaleVessel")]
+    partial class MigrationVehicaleVessel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -156,7 +159,7 @@ namespace Appraisal.Data.Migrations
                     b.HasIndex("ApprId")
                         .IsUnique();
 
-                    b.ToTable("VehicleAppraisalDetails", "Appraisal");
+                    b.ToTable("VehicleAppraisalDetail", "Appraisal");
                 });
 
             modelBuilder.Entity("Appraisal.VesselAppraisalDetails.Models.VesselAppraisalDetail", b =>
@@ -190,7 +193,7 @@ namespace Appraisal.Data.Migrations
                     b.HasIndex("ApprId")
                         .IsUnique();
 
-                    b.ToTable("VesselAppraisalDetails", "Appraisal");
+                    b.ToTable("VesselAppraisalDetail", "Appraisal");
                 });
 
             modelBuilder.Entity("Appraisal.MachineAppraisalDetails.Models.MachineAppraisalAdditionalInfo", b =>
@@ -491,7 +494,7 @@ namespace Appraisal.Data.Migrations
 
                             b1.HasKey("VehicleAppraisalDetailId");
 
-                            b1.ToTable("VehicleAppraisalDetails", "Appraisal");
+                            b1.ToTable("VehicleAppraisalDetail", "Appraisal");
 
                             b1.WithOwner()
                                 .HasForeignKey("VehicleAppraisalDetailId");
@@ -551,7 +554,7 @@ namespace Appraisal.Data.Migrations
 
                             b1.HasKey("VesselAppraisalDetailId");
 
-                            b1.ToTable("VesselAppraisalDetails", "Appraisal");
+                            b1.ToTable("VesselAppraisalDetail", "Appraisal");
 
                             b1.WithOwner()
                                 .HasForeignKey("VesselAppraisalDetailId");

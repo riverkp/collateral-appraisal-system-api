@@ -1,4 +1,4 @@
-namespace Collateral.CollateralMachines.ValueObjects;
+namespace Appraisal.MachineAppraisalDetails.ValueObjects;
 
 public class GeneralMachinery : ValueObject
 {

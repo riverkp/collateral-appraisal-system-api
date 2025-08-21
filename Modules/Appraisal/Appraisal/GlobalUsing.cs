@@ -6,6 +6,7 @@ global using Microsoft.EntityFrameworkCore.Diagnostics;
 global using Microsoft.EntityFrameworkCore;
 
 global using Appraisal.Data;
+global using Appraisal.RequestAppraisals.Models;
 
 global using Shared.Data.Extensions;
 global using Shared.DDD;

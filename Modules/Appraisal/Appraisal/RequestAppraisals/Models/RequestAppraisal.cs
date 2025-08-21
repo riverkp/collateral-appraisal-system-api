@@ -1,13 +1,13 @@
-namespace Appraisal.Appraisals.Models;
+namespace Appraisal.RequestAppraisals.Models;
 
-public class Appraisal : Aggregate<long>
+public class RequestAppraisal : Aggregate<long>
 {
     public long RequestId { get; private set; } = default!;
     public long CollateralId { get; private set; } = default!;
 
-    private Appraisal() { }
+    private RequestAppraisal() { }
 
-    private Appraisal(
+    private RequestAppraisal(
         long requestId,
         long collateralId
     )
@@ -16,12 +16,12 @@ public class Appraisal : Aggregate<long>
         CollateralId = collateralId;
     }
 
-    public static Appraisal Create(
+    public static RequestAppraisal Create(
         long requestId,
         long collateralId
     )
     {
-        return new Appraisal(
+        return new RequestAppraisal(
             requestId,
             collateralId
         );

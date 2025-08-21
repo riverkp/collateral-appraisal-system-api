@@ -6,7 +6,7 @@ public class AppraisalDbContext : DbContext
     {
     }
 
-    public DbSet<Appraisals.Models.Appraisal> Appraisals => Set<Appraisals.Models.Appraisal>();
+    public DbSet<RequestAppraisal> Appraisals => Set<RequestAppraisal>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

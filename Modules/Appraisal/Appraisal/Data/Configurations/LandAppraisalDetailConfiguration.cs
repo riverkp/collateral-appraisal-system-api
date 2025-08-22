@@ -46,7 +46,7 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
 
                 location
                     .Property(p => p.LandCheckOther)
-                    .UseLongStringConfig()
+                    .UseOtherFieldConfig()
                     .HasColumnName("LandCheckOther");
 
                 location.Property(p => p.Street).UseStreetConfig().HasColumnName("Street");
@@ -57,7 +57,29 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
 
                 location.Property(p => p.Village).UseVillageConfig().HasColumnName("Village");
 
+                location
+                    .Property(p => p.AddressLocation)
+                    .UseLongStringConfig()
+                    .HasColumnName("AddressLocation");
+
+                location.Property(p => p.LandShape).UseCodeConfig().HasColumnName("LandShape");
+
+                location
+                    .Property(p => p.UrbanPlanningType)
+                    .UseCodeConfig()
+                    .HasColumnName("UrbanPlanningType");
+
                 location.Property(p => p.Location).UseMultiSelectConfig().HasColumnName("Location");
+
+                location
+                    .Property(p => p.PlotLocation)
+                    .UseCodeConfig()
+                    .HasColumnName("PlotLocation");
+
+                location
+                    .Property(p => p.PlotLocationOther)
+                    .UseOtherFieldConfig()
+                    .HasColumnName("PlotLocationOther");
             }
         );
 
@@ -91,6 +113,18 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
                             .UseRightOfWayConfig()
                             .HasColumnName("RightOfWay");
 
+                        road.Property(p => p.WideFrontageOfLand)
+                            .HasPrecision(10, 2)
+                            .HasColumnName("WideFrontageOfLand");
+
+                        road.Property(p => p.NoOfSideFacingRoad)
+                            .HasPrecision(10, 2)
+                            .HasColumnName("NoOfSideFacingRoad");
+
+                        road.Property(p => p.RoadPassInFrontOfLand)
+                            .HasPrecision(10, 2)
+                            .HasColumnName("RoadPassInFrontOfLand");
+
                         road.Property(p => p.LandAccessibility)
                             .UseCodeConfig()
                             .HasColumnName("LandAccessibility");
@@ -105,7 +139,7 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
 
                 detail
                     .Property(p => p.RoadSurfaceOther)
-                    .UseMaxLengthNVarcharConfig()
+                    .UseOtherFieldConfig()
                     .HasColumnName("RoadSurfaceOther");
 
                 detail
@@ -115,14 +149,14 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
 
                 detail
                     .Property(p => p.PublicUtilityOther)
-                    .UseMaxLengthNVarcharConfig()
+                    .UseOtherFieldConfig()
                     .HasColumnName("PublicUtilityOther");
 
                 detail.Property(p => p.LandUse).UseMultiSelectConfig().HasColumnName("LandUse");
 
                 detail
                     .Property(p => p.LandUseOther)
-                    .UseMaxLengthNVarcharConfig()
+                    .UseOtherFieldConfig()
                     .HasColumnName("LandUseOther");
 
                 detail
@@ -132,7 +166,7 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
 
                 detail
                     .Property(p => p.LandEntranceExitOther)
-                    .UseMaxLengthNVarcharConfig()
+                    .UseOtherFieldConfig()
                     .HasColumnName("LandEntranceExitOther");
 
                 detail
@@ -142,7 +176,7 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
 
                 detail
                     .Property(p => p.TransportationOther)
-                    .UseMaxLengthNVarcharConfig()
+                    .UseOtherFieldConfig()
                     .HasColumnName("TransportationOther");
             }
         );
@@ -232,7 +266,7 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
 
                 limitation
                     .Property(p => p.LimitationOther)
-                    .UseMaxLengthNVarcharConfig()
+                    .UseOtherFieldConfig()
                     .HasColumnName("LimitationOther");
             }
         );
@@ -291,7 +325,7 @@ public class LandAppraisalDetailConfiguration : IEntityTypeConfiguration<LandApp
 
                 detail
                     .Property(p => p.HasBuildingOther)
-                    .UseMaxLengthNVarcharConfig()
+                    .UseOtherFieldConfig()
                     .HasColumnName("HasBuildingOther");
             }
         );

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Appraisal.Data.Migrations
 {
     [DbContext(typeof(AppraisalDbContext))]
-    [Migration("20250821103035_Initial")]
+    [Migration("20250822022626_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -1441,7 +1441,8 @@ namespace Appraisal.Data.Migrations
                                 .HasColumnName("LandEntranceExit");
 
                             b1.Property<string>("LandEntranceExitOther")
-                                .HasColumnType("nvarchar(max)")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
                                 .HasColumnName("LandEntranceExitOther");
 
                             b1.Property<string>("LandUse")
@@ -1450,7 +1451,8 @@ namespace Appraisal.Data.Migrations
                                 .HasColumnName("LandUse");
 
                             b1.Property<string>("LandUseOther")
-                                .HasColumnType("nvarchar(max)")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
                                 .HasColumnName("LandUseOther");
 
                             b1.Property<string>("PublicUtility")
@@ -1459,7 +1461,8 @@ namespace Appraisal.Data.Migrations
                                 .HasColumnName("PublicUtility");
 
                             b1.Property<string>("PublicUtilityOther")
-                                .HasColumnType("nvarchar(max)")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
                                 .HasColumnName("PublicUtilityOther");
 
                             b1.Property<string>("RoadSurface")
@@ -1468,7 +1471,8 @@ namespace Appraisal.Data.Migrations
                                 .HasColumnName("RoadSurface");
 
                             b1.Property<string>("RoadSurfaceOther")
-                                .HasColumnType("nvarchar(max)")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
                                 .HasColumnName("RoadSurfaceOther");
 
                             b1.Property<string>("Transportation")
@@ -1477,7 +1481,8 @@ namespace Appraisal.Data.Migrations
                                 .HasColumnName("Transportation");
 
                             b1.Property<string>("TransportationOther")
-                                .HasColumnType("nvarchar(max)")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
                                 .HasColumnName("TransportationOther");
 
                             b1.HasKey("LandAppraisalDetailId");
@@ -1501,15 +1506,30 @@ namespace Appraisal.Data.Migrations
                                         .HasColumnType("nvarchar(max)")
                                         .HasColumnName("LandAccessibilityDesc");
 
+                                    b2.Property<decimal?>("NoOfSideFacingRoad")
+                                        .HasPrecision(10, 2)
+                                        .HasColumnType("decimal(10,2)")
+                                        .HasColumnName("NoOfSideFacingRoad");
+
                                     b2.Property<decimal?>("RightOfWay")
                                         .HasPrecision(5, 2)
                                         .HasColumnType("decimal(5,2)")
                                         .HasColumnName("RightOfWay");
 
+                                    b2.Property<decimal?>("RoadPassInFrontOfLand")
+                                        .HasPrecision(10, 2)
+                                        .HasColumnType("decimal(10,2)")
+                                        .HasColumnName("RoadPassInFrontOfLand");
+
                                     b2.Property<decimal?>("RoadWidth")
                                         .HasPrecision(5, 2)
                                         .HasColumnType("decimal(5,2)")
                                         .HasColumnName("RoadWidth");
+
+                                    b2.Property<decimal?>("WideFrontageOfLand")
+                                        .HasPrecision(10, 2)
+                                        .HasColumnType("decimal(10,2)")
+                                        .HasColumnName("WideFrontageOfLand");
 
                                     b2.HasKey("LandAccessibilityDetailLandAppraisalDetailId");
 
@@ -1575,7 +1595,8 @@ namespace Appraisal.Data.Migrations
                                 .HasColumnName("IsLandlockedRemark");
 
                             b1.Property<string>("LimitationOther")
-                                .HasColumnType("nvarchar(max)")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
                                 .HasColumnName("LimitationOther");
 
                             b1.HasKey("LandAppraisalDetailId");
@@ -1681,6 +1702,11 @@ namespace Appraisal.Data.Migrations
                             b1.Property<long>("LandAppraisalDetailId")
                                 .HasColumnType("bigint");
 
+                            b1.Property<string>("AddressLocation")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
+                                .HasColumnName("AddressLocation");
+
                             b1.Property<decimal?>("Distance")
                                 .HasPrecision(5, 2)
                                 .HasColumnType("decimal(5,2)")
@@ -1701,10 +1727,25 @@ namespace Appraisal.Data.Migrations
                                 .HasColumnType("varchar(10)")
                                 .HasColumnName("LandLocation");
 
+                            b1.Property<string>("LandShape")
+                                .HasMaxLength(10)
+                                .HasColumnType("varchar(10)")
+                                .HasColumnName("LandShape");
+
                             b1.Property<string>("Location")
                                 .HasMaxLength(100)
                                 .HasColumnType("nvarchar(100)")
                                 .HasColumnName("Location");
+
+                            b1.Property<string>("PlotLocation")
+                                .HasMaxLength(10)
+                                .HasColumnType("varchar(10)")
+                                .HasColumnName("PlotLocation");
+
+                            b1.Property<string>("PlotLocationOther")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
+                                .HasColumnName("PlotLocationOther");
 
                             b1.Property<string>("Soi")
                                 .HasMaxLength(100)
@@ -1716,6 +1757,11 @@ namespace Appraisal.Data.Migrations
                                 .HasMaxLength(100)
                                 .HasColumnType("nvarchar(100)")
                                 .HasColumnName("Street");
+
+                            b1.Property<string>("UrbanPlanningType")
+                                .HasMaxLength(10)
+                                .HasColumnType("varchar(10)")
+                                .HasColumnName("UrbanPlanningType");
 
                             b1.Property<string>("Village")
                                 .HasMaxLength(100)
@@ -1746,7 +1792,8 @@ namespace Appraisal.Data.Migrations
                                 .HasColumnName("HasBuilding");
 
                             b1.Property<string>("HasBuildingOther")
-                                .HasColumnType("nvarchar(max)")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
                                 .HasColumnName("HasBuildingOther");
 
                             b1.Property<decimal?>("PondArea")

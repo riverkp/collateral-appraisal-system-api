@@ -130,6 +130,11 @@ public static class PropertyBuilderExtension
         return builder.HasColumnType("nvarchar(max)");
     }
 
+    public static PropertyBuilder<T> UseOtherFieldConfig<T>(this PropertyBuilder<T> builder)
+    {
+        return builder.HasMaxLength(100);
+    }
+
     public static PropertyBuilder<T> UseRoyalDecreeConfig<T>(this PropertyBuilder<T> builder)
     {
         return builder.HasMaxLength(20);

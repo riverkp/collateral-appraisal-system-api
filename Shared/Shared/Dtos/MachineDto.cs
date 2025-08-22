@@ -1,5 +1,4 @@
-namespace Request.Contracts.Requests.Dtos;
-
+namespace Shared.Dtos;
 public record MachineDto(
     string? MachineStatus,
     string? MachineType,

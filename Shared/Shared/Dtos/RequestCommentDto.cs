@@ -1,3 +1,3 @@
-namespace Request.Contracts.Requests.Dtos;
+namespace Shared.Dtos;
 
 public record RequestCommentDto(long Id, string Comment, bool IsDeleted);

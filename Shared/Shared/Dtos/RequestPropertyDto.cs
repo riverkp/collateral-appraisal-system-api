@@ -1,4 +1,4 @@
-namespace Request.Contracts.Requests.Dtos;
+namespace Shared.Dtos;
 
 public record RequestPropertyDto(
     string PropertyType,

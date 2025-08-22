@@ -22,6 +22,7 @@ global using Mapster;
 
 // ===== SHARED INFRASTRUCTURE =====
 global using Shared.DDD;
+global using Shared.Dtos;
 global using Shared.Data;
 global using Shared.Data.Extensions;
 global using Shared.Data.Seed;
@@ -34,7 +35,6 @@ global using Request.Data.Repository;
 global using Request.Data.Seed;
 
 // ===== REQUEST MODULE - CONTRACTS =====
-global using Request.Contracts.Requests.Dtos;
 global using Request.Contracts.Requests.Features.GetRequestById;
 
 // ===== REQUEST MODULE - AGGREGATES =====

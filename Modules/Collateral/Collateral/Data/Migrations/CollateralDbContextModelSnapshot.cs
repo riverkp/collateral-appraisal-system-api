@@ -83,7 +83,7 @@ namespace Collateral.Data.Migrations
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("HostCollatId")
+                    b.Property<long?>("HostCollatId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("UpdatedBy")

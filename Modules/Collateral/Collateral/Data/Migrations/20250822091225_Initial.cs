@@ -22,7 +22,7 @@ namespace Collateral.Data.Migrations
                     CollatId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CollatType = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false),
-                    HostCollatId = table.Column<long>(type: "bigint", nullable: false),
+                    HostCollatId = table.Column<long>(type: "bigint", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),

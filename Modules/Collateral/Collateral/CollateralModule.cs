@@ -4,6 +4,7 @@ public static class CollateralModule
 {
     public static IServiceCollection AddCollateralModule(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddScoped<ICollateralRepository, CollateralRepository>();
         services.AddDbContext<CollateralDbContext>((sp, options) =>
         {
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());

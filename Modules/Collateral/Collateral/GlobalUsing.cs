@@ -12,7 +12,10 @@ global using System.Reflection;
 
 global using Collateral.Data;
 global using Collateral.Collateral.Shared.ValueObjects;
+global using Collateral.CollateralProperties.Models;
 global using Collateral.CollateralMachines.Models;
 global using Collateral.CollateralMasters.Models;
 global using Collateral.CollateralVehicles.Models;
 global using Collateral.CollateralVessels.Models;
+
+global using Collateral.Data.Repository;

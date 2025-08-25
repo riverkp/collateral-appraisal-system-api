@@ -1,4 +1,5 @@
 using Collateral.CollateralProperties.ValueObjects;
+using Shared.Dtos;
 
 namespace Collateral.CollateralProperties.Models;
 
@@ -28,10 +29,24 @@ public class CollateralLand : Entity<long>
         long collatId,
         Coordinate coordinate,
         CollateralLocation collateralLocation,
-        string landDesc,
-        string owner
+        string landDesc
     )
     {
         return new CollateralLand(collatId, coordinate, collateralLocation, landDesc);
+    }
+
+    public static CollateralLand FromRequestTitleDto(long collatId, RequestTitleDto requestTitleDto)
+    {
+        return new CollateralLand(
+            collatId,
+            Coordinate.Create(0, 0),
+            CollateralLocation.Create(
+                requestTitleDto.TitleAddress.SubDistrict ?? "",
+                requestTitleDto.TitleAddress.District ?? "",
+                requestTitleDto.TitleAddress.Province ?? "",
+                ""
+            ),
+            ""
+        );
     }
 }

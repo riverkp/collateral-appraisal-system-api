@@ -60,10 +60,10 @@ builder.Services.AddMassTransit(config =>
             r.LockStatementProvider = new SqlServerLockStatementProvider();
         });
 
-    config.AddConsumers(requestAssembly, authAssembly, notificationAssembly, assignmentAssembly);
-    config.AddSagaStateMachines(requestAssembly, authAssembly, notificationAssembly, assignmentAssembly);
-    config.AddSagas(requestAssembly, authAssembly, notificationAssembly, assignmentAssembly);
-    config.AddActivities(requestAssembly, authAssembly, notificationAssembly, assignmentAssembly);
+    config.AddConsumers(requestAssembly, authAssembly, notificationAssembly, assignmentAssembly, collateralAssembly);
+    config.AddSagaStateMachines(requestAssembly, authAssembly, notificationAssembly, assignmentAssembly, collateralAssembly);
+    config.AddSagas(requestAssembly, authAssembly, notificationAssembly, assignmentAssembly, collateralAssembly);
+    config.AddActivities(requestAssembly, authAssembly, notificationAssembly, assignmentAssembly, collateralAssembly);
 
     config.UsingRabbitMq((context, configurator) =>
     {

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Collateral.Data.Migrations
 {
     [DbContext(typeof(CollateralDbContext))]
-    [Migration("20250821102815_Initial")]
+    [Migration("20250822091225_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -86,7 +86,7 @@ namespace Collateral.Data.Migrations
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("HostCollatId")
+                    b.Property<long?>("HostCollatId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("UpdatedBy")

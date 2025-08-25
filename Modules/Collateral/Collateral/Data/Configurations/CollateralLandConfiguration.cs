@@ -9,13 +9,6 @@ public class CollateralLandConfiguration : IEntityTypeConfiguration<CollateralLa
         builder.HasKey(p => p.Id);
         builder.Property(p => p.Id).UseIdentityColumn().HasColumnName("LandId");
 
-        builder
-            .HasOne<CollateralMaster>()
-            .WithOne(p => p.CollateralLand)
-            .HasForeignKey<CollateralLand>(p => p.CollatId);
-
-        builder.Property(p => p.CollatId).HasColumnName("CollatId");
-
         builder.OwnsOne(
             p => p.Coordinate,
             coordinate =>

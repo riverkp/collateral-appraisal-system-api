@@ -8,10 +8,6 @@ public class CollateralVehicleConfigurations : IEntityTypeConfiguration<Collater
         builder.Property(p => p.Id).UseIdentityColumn();
         builder.Property(p => p.Id).HasColumnName("VehicleId");
 
-        builder.HasOne<CollateralMaster>().WithOne(p => p.CollateralVehicle)
-            .HasForeignKey<CollateralVehicle>(p => p.CollatId)
-            .IsRequired();
-
         builder.Property(p => p.ChassisNo).HasColumnName("ChassisNo")
             .HasMaxLength(25);
 

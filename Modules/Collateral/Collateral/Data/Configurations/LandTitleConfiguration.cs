@@ -9,13 +9,6 @@ public class LandTitleConfiguration : IEntityTypeConfiguration<LandTitle>
         builder.HasKey(p => p.Id);
         builder.Property(p => p.Id).UseIdentityColumn().HasColumnName("LandTitleId");
 
-        builder
-            .HasOne<CollateralMaster>()
-            .WithOne(p => p.LandTitle)
-            .HasForeignKey<LandTitle>(p => p.CollatId);
-
-        builder.Property(p => p.CollatId).HasColumnName("CollatId");
-
         builder.OwnsOne(
             p => p.LandTitleDocumentDetail,
             detail =>

@@ -8,11 +8,6 @@ public class CollateralVesselConfigurations : IEntityTypeConfiguration<Collatera
         builder.Property(p => p.Id).UseIdentityColumn();
         builder.Property(p => p.Id).HasColumnName("VesselId");
 
-        builder.HasOne<CollateralMaster>().WithOne(p => p.CollateralVessel)
-            .HasForeignKey<CollateralVessel>(p => p.CollatId)
-            .IsRequired();
-
-
         builder.OwnsOne(p => p.CollateralVesselProperty, vesselProperty =>
         {
             vesselProperty.Property(p => p.Name).UseNameConfig()
